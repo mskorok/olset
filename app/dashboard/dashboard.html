@@ -1,0 +1,84 @@
+<!-- MAIN CONTENT -->
+<div id="content"  ng-controller="DashboardCtrl">
+
+	<div class="row">
+		<!--<big-breadcrumbs items="['Dashboard', 'My Dashboard']" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></big-breadcrumbs>-->
+		<div smart-include="app/layout/partials/sub-header.tpl.html"></div>
+	</div>
+	<!-- widget grid -->
+	<section id="widget-grid" widget-grid>
+		<!--
+		<div class="row">
+			<article class="col-sm-12">
+
+				<div smart-include="app/dashboard/live-feeds.tpl.html" class="placeholder-live-feeds"></div>
+
+			</article>
+		</div> -->
+
+		<!-- end row -->
+
+		<!-- row -->
+		<article class="col-sm-12 col-md-12" style="text-align: center">
+
+			<h1 style="font-size: 3em;">Welcome to OLSET</h1>
+
+
+		</article>
+		<div class="row">
+
+
+
+			<div ng-if="isManager" class="col-sm-12 col-md-12">
+				<!--<div class="col-md-6" jarvis-widget id="chartjs-doughnut-chart" data-widget-editbutton="false">-->
+					<!--<h2>Process by Status</h2>-->
+					<!--<div>-->
+						<!--<div class="widget-body">-->
+							<!--<canvas chartdata="{{olsetStatsInfo.count_organizations[0]}}" stats-organization height="120" ></canvas>-->
+						<!--</div>-->
+					<!--</div>-->
+				<!--</div>-->
+
+				<div  ng-if="isManager" class="col-md-6" jarvis-widget id="chartjs-doughnut-chart" data-widget-editbutton="false">
+					<header>
+						<span class="widget-icon"> <i class="fa fa-bar-chart-o"></i> </span>
+						<h2>Users By Status</h2>
+					</header>
+					<div>
+						<div class="widget-body">
+							<canvas stats-organization countorgrun="{{olsetStatsInfo}}"  height="120" ></canvas>
+						</div>
+					</div>
+				</div>
+				<div  ng-if="isManager" class="col-md-6" jarvis-widget id="chartjs-doughnut-chart" data-widget-editbutton="false">
+					<header>
+						<span class="widget-icon"> <i class="fa fa-bar-chart-o"></i> </span>
+						<h2>Process by Status</h2>
+					</header>
+					<div>
+						<div class="widget-body">
+							<canvas stats-organization countorgrun="{{olsetStatsInfo}}"  height="120" ></canvas>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="panel-group">
+			<div class="panel panel-default" ng-repeat="process in olsetSurvey">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a ui-sref="app.olset.steps({processId : process.processId})">
+							<i class="fa fa-fw fa-plus-circle txt-color-green"></i> {{process.process_title}}
+						</a>
+					</h4>
+				</div>
+			</div>
+		</div>
+
+		<!-- end row -->
+
+	</section>
+	<!-- end widget grid -->
+
+</div>
+<!-- END MAIN CONTENT -->

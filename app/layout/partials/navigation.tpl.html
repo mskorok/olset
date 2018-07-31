@@ -1,0 +1,47 @@
+<aside id="left-panel">
+
+    <!-- User info -->
+    <div login-info></div>
+    <!-- end user info -->
+
+    <nav>
+        <ul data-smart-menu>
+            <li>
+                <a href="#" title="Dashboard"><i class="fa fa-lg fa-fw fa-home"></i> <span
+                        class="menu-item-parent">{{getWord('Dashboard')}}</span></a>
+            </li>
+                <li data-menu-collapse>
+                    <a><i class="fa fa-lg fa-fw fa-question"></i> <span class="menu-item-parent">Administration</span></a>
+                    <ul ng-if="isManager || isAdmin">
+                        <li data-ui-sref-active="active">
+                            <a data-ui-sref="app.users.manager"><i class="fa fa-lg fa-fw fa-user"></i> Users</a>
+                        </li>
+                        <li data-ui-sref-active="active">
+                            <a data-ui-sref="app.departments.manager"><i class="fa fa-lg fa-fw fa-question"></i> <span class="menu-item-parent">Departments</span></a>
+
+                        </li>
+
+                        <li data-ui-sref-active="active">
+                            <a data-ui-sref="app.organization.manage"><i class="fa fa-lg fa-fw fa-question"></i>Organization</a>
+                        </li>
+
+                        <li ng-if="isManager || isAdmin">
+                            <a data-ui-sref="app.groups.manager"><i class="fa fa-lg fa-fw fa-square-o"></i> <span class="menu-item-parent">Groups</span></a>
+                        </li>
+                    </ul>
+                </li>
+            <li ng-if="isManager || isAdmin">
+                <a data-ui-sref="app.olset.index"><i class="fa fa-lg fa-fw fa-sitemap"></i> <span class="menu-item-parent">OLSET Process</span></a>
+
+            </li>
+
+            <li>
+                <a data-ui-sref="app.help.subjects"><i class="fa fa-lg fa-fw fa-info"></i> <span class="menu-item-parent">Help</span></a>
+            </li>
+    </nav>
+
+    <span class="minifyme" data-action="minifyMenu" minify-menu>
+    <i class="fa fa-arrow-circle-left hit"></i>
+  </span>
+
+</aside>

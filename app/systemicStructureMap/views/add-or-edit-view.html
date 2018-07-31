@@ -1,0 +1,28 @@
+<div class="dialog-contents">
+	<div class="dialog-header">
+		<h4 style="padding-left: 20px;">Create Loop</h4>
+	</div>
+
+	<div class="col-md-12">
+		<div style="padding: 0px 9px; margin-top: 20px;" class="form-group">
+			<input type="text" class="form-control" ng-model="loopData.name" name="name" placeholder="Loop Name" required />
+		</div>
+
+		<div style="padding: 0px 9px; margin-top: 20px;" class="form-group">
+			<section>
+				<h5>Loop Primary Items</h5>
+				<select
+						style="width:100%;"
+						ng-options="normal.id as normal.name for normal in normalItemsNodesClear"
+						ng-model="loopData.links" name="itemToData[]" multiple>
+					<option value="">Select items</option>
+					<!--<option value={{group.id}}>{{group.title}}</option>-->
+				</select>
+			</section>
+
+		</div>
+	</div>
+
+		<button style="margin-left: 20px;" type="button" ng-click="sendLoopData(loopData)" class="btn btn-primary">Create loop</button>
+
+</div>

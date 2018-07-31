@@ -1,0 +1,26 @@
+<div class="dialog-contents">
+<div class="dialog-header">
+	<h4>{{addOrEditTitle}}</h4>
+</div>
+	<div class="col-md-12">
+		<form class="smart-form">
+			<div class="form-group">
+				<input type="text" class="form-control" ng-model="sysStructureData.name" name="name" placeholder="Systemic Structure Map Name" required />
+			</div>
+
+			<div class="form-group" style="margin-top:20px;">
+				<label class="date-picker col-md-6">
+					Start Date <input type="datetime-local" class="form-control" ng-model="sysStructureData.startDate" name="startDate" required />
+				</label>
+				<label class="date-picker col-md-6">
+					End Date <input type="datetime-local" class="form-control" ng-model="sysStructureData.endDate" name="endDate" required />
+				</label>
+			</div>
+		</form>
+	</div>
+<div class="ngdialog-buttons">
+	<button type="button" ng-click="closeThisDialog()" class="btn btn-default">Cancel</button>
+	<button type="button" ng-if="modalMode == 0" ng-click="addSysStructureMap()" class="btn btn-primary">New Question</button>
+	<button type="button" ng-if="modalMode == 'edit'" ng-click="editSysStructureMap()" class="btn btn-primary">Edit Question</button>
+</div>
+</div>

@@ -1,0 +1,150 @@
+<div id="content">
+    <div class="row">
+        <!--<big-breadcrumbs items="['UI Elements', 'Nestable Lists']" icon="desktop" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></big-breadcrumbs>-->
+        <div smart-include="app/layout/partials/sub-header.tpl.html"></div>
+    </div>
+    <!-- widget grid -->
+    <section id="widget-grid" data-widget-grid data-easy-pie-chart-container>
+        <!-- row -->
+        <div class="row">
+            <!-- NEW WIDGET START -->
+            <article class="col-sm-12">
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="well" id="my-data-widget" data-jarvis-widget>
+                    <div class="row">
+                        <div>
+                            <!--  <h6>{{sysMapName}}</h6>
+
+                       widget div-->
+                            <div>
+
+                                <div class="widget-body">
+                                    <ul id="myTab1" class="nav nav-tabs bordered">
+                                        <li class="active">
+                                            <a href="#s1" data-toggle="tab">Items Manager<span class="badge bg-color-blue txt-color-white"><i class="fa fa-fw fa-lg fa-gear"></i></span></a>
+                                        </li>
+                                        <li>
+                                            <a href="#s2" data-toggle="tab"><i class="fa fa-fw fa-lg fa-sitemap"></i>Systemic Structure Map</a>
+                                        </li>
+                                    </ul>
+
+                                    <div id="myTabContent1" class="tab-content">
+                                        <div class="tab-pane fade in active" id="s1">
+                                            <div class="col-md-6 sysStructureMapConf">
+                                                <div>
+                                                    <h5 class="col-md-12 col-xs-12">Items</h5>
+                                                    <form style="clear: both;" ng-repeat="normal in normalItemsNodes track by $index">
+                                                        <div>
+                                                            <label class="text col-md-4" style="padding:0px 5px;">
+                                                                <div>Item:</div>
+                                                                <input style="width:100%;" type="text" name="itemname$index" ng-model="normalItemsNodes[$index].name" ng-value="normal.name">
+                                                            </label>
+                                                            <label class="select col-md-4" style="padding:0px 5px;">
+                                                                <div>Groups:</div>
+                                                                <select style="width:100%;" ng-options="group.id as group.title for group in groupsData" ng-model="normalItemsNodes[$index].group" ng-selected="group.id">
+                                                                    <option value="">Select group</option>
+                                                                    <!--<option value={{group.id}}>{{group.title}}</option>-->
+                                                                </select>
+                                                            </label>
+                                                            <div class="col-md-4" style="padding:20px 5px 0px 5px;">
+                                                                <a ng-click="normalItemAction('edit',normal,$index)"><span class="fa fa-lg fa-angle-right"></span> Save</a> |
+                                                                <a class="fa fa-lg fa-trash-o" ng-click="normalItemAction('remove',normal,$index)"></a>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                    <br>
+                                                    <div style="clear:both;  padding-top:10px; padding-bottom:20px;">
+                                                        <a ng-click="normalItemAction('add', '', 'noindx')"><span class="fa fa-lg fa-plus-circle"></span> Add item</a>
+                                                    </div>
+                                                </div>
+
+                                                <div>
+                                                    <h5 class="col-md-12 col-xs-12">Links</h5>
+                                                    <form style="clear: both;" ng-repeat="links in getLinksFromServer track by $index">
+                                                        <div>
+                                                            <label class="select col-md-4" style="padding:0px 5px;">
+                                                                <div>From:</div>
+                                                                <select style="width:100%;" name="selectFrom{{$index}}" ng-options="normal.id as normal.name for normal in fromNormalNodes" ng-model="getLinksFromServer[$index].from_item" ng-selected="normal.id">
+                                                                    <option value="">Select from</option>
+                                                                    <!--<option value={{group.id}}>{{group.title}}</option>-->
+                                                                </select>
+                                                            </label>
+                                                            <label class="select col-md-4" style="padding:0px 5px;">
+                                                                <div>To:</div>
+                                                                <select style="width:100%;" name="selectTo{{$index}}" ng-options="normal.id as normal.name for normal in toNormalNodes" ng-model="getLinksFromServer[$index].to_item" ng-selected="normal.id">
+                                                                    <option value="">Select to</option>
+                                                                    <!--<option value={{group.id}}>{{group.title}}</option>-->
+                                                                </select>
+                                                            </label>
+                                                            <div class="col-md-4" style="padding:20px 5px 0px 5px;">
+                                                                <a ng-if="!links.id" ng-click="linkChainCreate('edit',links,$index)"><span class="fa fa-lg fa-angle-right"></span> Save</a> |
+                                                                <a ng-click="linkChainCreate('remove',links,$index)"><span class="fa fa-lg fa-trash-o"></span> Remove</a>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                    <br>
+                                                    <div style="clear:both;  padding-top:10px; padding-bottom:20px;">
+                                                        <a ng-click="linkChainCreate('add', '', 'noindx')"><span class="fa fa-lg fa-plus-circle"></span> Add link</a>
+                                                    </div>
+                                                </div>
+
+                                                <div>
+                                                    <h5 class="col-md-12 col-xs-12">Loops</h5>
+                                                    <div style="clear: both;">
+                                                        <div ng-repeat="loop in loopItemsNods track by $index">
+                                                            <strong>{{loop.id}} - {{loop.name}}</strong>
+                                                            <a class="fa fa-lg fa-trash-o" ng-click="deleteItem(loop.id)"></a>
+                                                        </div>
+                                                        <div style="clear:both;  padding-top:10px; padding-bottom:20px;">
+                                                            <a ng-click="openModaltoAddOrEdit()"><span class="fa fa-lg fa-plus-circle"></span> Add loop</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+
+                                                <sys-structure-map-iframe theurl="frameUrl" state="0"></sys-structure-map-iframe>
+
+                                            </div>
+
+                                        </div>
+                                        <div class="tab-pane fade" id="s2">
+
+                                            <sys-structure-map-iframe theurl="frameUrl0" state="1"></sys-structure-map-iframe>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- end widget content -->
+
+                            </div>
+                            <!-- end widget div -->
+
+
+
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+                <!-- end widget content -->
+        </div>
+        <!-- end widget div -->
+</div>
+<!-- end widget -->
+</article>
+<!-- WIDGET END -->
+</div>
+<!-- end row -->
+</section>
+<!-- end widget grid -->
+
+
+
+
+
+</div>

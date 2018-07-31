@@ -1,0 +1,52 @@
+<div id="content">
+    <div class="row">
+        <div smart-include="app/layout/partials/sub-header.tpl.html"></div>
+    </div>
+    <div style="margin-bottom:15px;">
+
+    </div>
+    <!-- widget grid -->
+    <section id="widget-grid" data-widget-grid>
+        <!-- row -->
+        <div class="row">
+
+            <!-- NEW WIDGET START -->
+            <article class="col-sm-12 col-md-12 col-lg-12" style="padding: 20px; background-color: #fff;">
+                <header>
+                    <h2>OLSET Evaluation Process</h2>
+                </header>
+                <div>
+                    <div class="widget-body no-padding">
+                        <div class="table-responsive olsetQuestions">
+                            <form>
+                                <div ng-repeat="item in olsetEvaluationData">
+                                    <h4>{{item.question}}</h4>
+                                    <div ng-if="item.answered_type == 2" class="radioQuestions">
+
+                                        <div><input type="radio" name="low{{item.id}}" ng-model="userAnswers[item.id].answer" value="1"> 1</div>
+                                        <div><input type="radio" name="soso{{item.id}}" ng-model="userAnswers[item.id].answer" value="2"> 2</div>
+                                        <div><input type="radio" name="seemsok{{item.id}}" ng-model="userAnswers[item.id].answer" value="3"> 3</div>
+                                        <div><input type="radio" name="nicetry{{item.id}}" ng-model="userAnswers[item.id].answer" value="4"> 4</div>
+                                        <div><input type="radio" name="excellent{{item.id}}" ng-model="userAnswers[item.id].answer" value="5"> 5</div>
+                                    </div>
+                                    <div ng-if="item.answered_type == 1" class="textQuestions">
+                                        <textarea  ng-model="userAnswers[item.id].answer" rows="12" cols="100"></textarea>
+                                    </div>
+
+                                    <input type="text" hidden name="hidden{{item.id}}" ng-init="userAnswers[item.id].questionId = item.id" ng-model="userAnswers[item.id].questionId">
+
+                                </div>
+                                <button ng-click="makeUpdate()">Save Questions</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        </article>
+
+        <div class="row">
+        </div>
+        <!-- end row -->
+    </section>
+    <!-- end widget grid -->
+</div>

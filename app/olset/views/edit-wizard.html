@@ -1,0 +1,168 @@
+<div id="content">
+<div class="row">
+    <div smart-include="app/layout/partials/sub-header.tpl.html"></div>
+</div>
+<div style="margin-bottom:15px;">
+</div>
+<!-- widget grid -->
+<section id="widget-grid" data-widget-grid>
+    <!--<div class="wizardError" ng-if="activateErrors == true"></div>-->
+
+    <div ng-if="activateErrors == true" class="alert adjusted alert-warning fade in" dara-dismisser="">
+        <i class="fa fa-fw fa-lg fa-exclamation"></i>
+        <strong>Required Fields</strong> {{messageContent}} !
+    </div>
+    <!-- row -->
+    <div class="row">
+        <!-- NEW WIDGET START -->
+        <article class="col-sm-12 col-md-12 col-lg-12" style="background-color: #fff; padding: 15px 30px 15px 30px;">
+            <div>
+                <!-- widget content -->
+                <div class="widget-body">
+                    <div class="row">
+                        <row>
+                            <wizard edit-mode="true" on-finish="wizard1CompleteCallback()" on-cancel="cancelledWizard()">
+                                <wz-step wz-title="Current Reality">
+                                    <h1 class="wizardTitle">Basic Informations</h1>
+                                    <form class="wizardForm">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <h4>Title</h4>
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                <span class="input-group-addon"><i
+                                                        class="fa fa-user fa-lg fa-fw"></i></span>
+                                                        <input class="form-control input-lg"
+                                                               placeholder="" type="text" name="title"
+                                                               data-smart-validate-input
+                                                               data-required
+                                                               data-message="Please add the OLSET title"
+                                                               ng-model="olsetProcessData.title">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <h4>Current Reality</h4>
+                                                <div class="form-group">
+                                                    <text-angular ng-model="olsetProcessData.CurrentReality"></text-angular>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <input type="submit" wz-next wz-next value="Next >>" />
+                                </wz-step>
+                                <wz-step wz-title="Initial Intentions">
+                                    <h1 class="wizardTitle">Initial Intentions</h1>
+                                    <form class="wizardForm">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <text-angular ng-model="olsetProcessData.InitialIntentions"></text-angular>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <input type="submit" wz-next value="Next >>" />
+                                </wz-step>
+                                <wz-step wz-title="Permissions">
+                                    <h1>Permissions</h1>
+                                    <form class="wizardForm">
+                                        <!--<div class="input-group">-->
+                                            <!--<span>Is this OLSET for all Organization ?</span>-->
+                                            <!--<span class="input-group-addon">-->
+                                                <!--<span class="onoffswitch">-->
+                                                    <!--<input type="checkbox" class="onoffswitch-checkbox" ng-click="showOverallSelection" ng-model="permissionsData.organization" id="st3" checked>-->
+                                                    <!--<label class="onoffswitch-label" for="st3">-->
+                                                        <!--<span class="onoffswitch-inner" data-swchon-text="YES" data-swchoff-text="NO"></span>-->
+                                                        <!--<span class="onoffswitch-switch"></span>-->
+                                                    <!--</label>-->
+                                                <!--</span>-->
+                                            <!--</span>-->
+                                        <!--</div>-->
+                                        <div class="input-group">
+                                            <h3>Departments</h3>
+                                            <label ng-repeat="index in departmentsData" class="checkbox-inline btn">
+                                                <input
+                                                        type="checkbox"
+                                                        value="{{index.id}}"
+                                                        class="checkbox style-1"
+                                                        ng-checked="permissionsData.department.indexOf(index.id) > -1"
+                                                        ng-click="toggleDepSelection(index.id)"
+                                                >
+                                                <span>{{index.title}}</span>
+                                            </label>
+                                        </div>
+
+                                        <div class="input-group">
+                                            <h3>Users</h3>
+                                            <label ng-repeat="index in usersData" class="checkbox-inline btn">
+                                                <input
+                                                        type="checkbox"
+                                                        value="{{index.id}}"
+                                                        class="checkbox style-0"
+                                                        ng-checked="permissionsData.persons.indexOf(index.id) > -1"
+                                                        ng-click="toggleUserSelection(index.id)"
+                                                >
+                                                <span>{{index.firstName}} {{index.lastName}}</span>
+                                            </label>
+                                        </div>
+
+                                    </form>
+                                    <input type="submit" wz-next wz-next value="Next >>" />
+                                </wz-step>
+                                <wz-step wz-title="Finish OLSET">
+
+                                    <h1 class="wizardTitle">Review Your Submission</h1>
+
+                                    <p>Please review your OLSET and finish the wizard</p>
+
+                                    <div>
+                                        <div>
+                                            <h3>Title</h3>
+                                            <p>{{olsetProcessData.title}}</p>
+                                        </div>
+
+                                        <div>
+                                            <h3>Current Reality</h3>
+                                            <ng-bind-html
+                                                    ng-bind-html="olsetProcessData.CurrentReality">
+                                            </ng-bind-html>
+                                            <!--<p>{{createWizardData.CurrentReality}}</p>-->
+                                        </div>
+
+                                        <div>
+                                            <h3>Initial Intentions</h3>
+                                            <ng-bind-html
+                                                    ng-bind-html="olsetProcessData.InitialIntentions">
+                                            </ng-bind-html>
+                                            <!--<p>{{createWizardData.InitialIntentions}}</p>-->
+                                        </div>
+
+                                        <!--<div>-->
+                                            <!--<h3>Permission</h3>-->
+                                            <!--<p>When is ready tha mpei</p>-->
+                                        <!--</div>-->
+                                    </div>
+                                    <input type="submit" wz-next value="Save OLSET" />
+                                </wz-step>
+                            </wizard>
+                        </row>
+                    </div>
+                </div>
+                <!-- end widget content -->
+            </div>
+        </article>
+        <!-- WIDGET END -->
+    </div>
+    <!-- end row -->
+
+<!-- row -->
+<div class="row">
+</div>
+<!-- end row -->
+</section>
+<!-- end widget grid -->
+</div>

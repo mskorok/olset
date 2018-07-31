@@ -1,0 +1,129 @@
+<!-- MAIN CONTENT -->
+<div id="content">
+<div class="row">
+    <big-breadcrumbs items="['Users', 'Add new']" icon="table"
+                     class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></big-breadcrumbs>
+    <div smart-include="app/layout/partials/sub-header.tpl.html"></div>
+</div>
+
+
+<div class="row">
+</div>
+
+<!-- widget grid -->
+<section id="widget-grid" widget-grid>
+
+<!-- START ROW -->
+<div class="row">
+
+<!-- NEW COL START -->
+<article class="col-sm-12 col-md-12 col-lg-12">
+
+<!-- Widget ID (each widget will need unique ID)-->
+<div jarvis-widget id="form-grid-widget" data-widget-colorbutton="false" data-widget-editbutton="false"
+     data-widget-custombutton="false">
+
+<header>
+    <span class="widget-icon"> <i class="fa fa-edit"></i> </span>
+
+    <h2>Fill out the form to add a new user, select the user role and department </h2>
+
+</header>
+
+<!-- widget div-->
+<div>
+
+   <!-- widget content -->
+    <div class="widget-body no-padding">
+
+        <form class="smart-form">
+            <header>
+                Add a new user
+            </header>
+
+            <fieldset>
+                <div class="row">
+                    <section class="col col-md-6">
+                        <label class="input">
+                            <input type="text" ng-model="userRegistrationData.firstName" placeholder="First Name">
+                        </label>
+                    </section>
+                    <section class="col col-md-6">
+                        <label class="input">
+                            <input type="text" ng-model="userRegistrationData.lastName" placeholder="Last Name">
+                        </label>
+                    </section>
+                    <section class="col col-md-12">
+                        <label class="input">
+                            <input type="email" ng-model="userRegistrationData.email" placeholder="E-mail">
+                        </label>
+                    </section>
+
+				    <section class="col col-md-6">
+					    <label class="label">Departments</label>
+                        <label ng-repeat="dep in departmentData" class="col-md-6">
+                            <input type="checkbox"
+                                   name="selectedDeps[]"
+                                   ng-checked="departmentData.indexOf(dep.id) > -1"
+                                   ng-value="dep.id"
+                                   ng-click="getDepartment(dep.id)">
+                            {{dep.title}}
+                        </label>
+				    </section>
+
+				    <section class="col col-md-6">
+				        <label class="label">User role</label>
+
+				        <div class="inline-group">
+				            <label class="radio">
+				                <input type="radio" ng-model="userRegistrationData.role" value="user" name="user-role">
+				                <i></i>User</label>
+				            <label class="radio">
+				                <input type="radio" ng-model="userRegistrationData.role" name="user-role" value="manager">
+				                <i></i>Manager</label>
+				        </div>
+				    </section>
+
+                    <section class="col col-md-12">
+                        <label class="input">
+                            <input type="text" ng-model="userRegistrationData.username" placeholder="Username">
+                        </label>
+                    </section>
+                    <section class="col col-md-12">
+                        <label class="input">
+                            <input type="password" ng-model="userRegistrationData.password" placeholder="Password">
+                        </label>
+                    </section>
+                </div>
+
+                <footer>
+                <button type="submit" class="btn btn-primary" ng-click="UserRegistration()">
+                    Add user
+                </button>
+                <!--<button type="button" class="btn btn-default" onclick="window.history.back();">
+                    Back
+                </button>-->
+            </footer>
+        </form>
+
+    </div>
+    <!-- end widget content -->
+
+</div>
+<!-- end widget div -->
+
+</div>
+<!-- end widget -->
+
+</article>
+<!-- END COL -->
+
+</div>
+
+<!-- END ROW -->
+
+</section>
+<!-- end widget grid -->
+
+
+</div>

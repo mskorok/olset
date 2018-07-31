@@ -1,0 +1,79 @@
+<!-- MAIN CONTENT -->
+<div id="content">
+
+<div class="row">
+    <big-breadcrumbs items="['Users', 'Manage']" icon="table"
+                     class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></big-breadcrumbs>
+    <div smart-include="app/layout/partials/sub-header.tpl.html"></div>
+</div>
+<!-- widget grid -->
+<section widget-grid id="widget-grid">
+
+
+<div class="row">
+<article class="col-sm-12">
+
+    <div jarvis-widget id="no-padding-table-widget" data-widget-color="darken"
+         data-widget-editbutton="false">
+        <header>
+            <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+
+            <h2>Users Manager</h2>
+        </header>
+        <div>
+            <div class="widget-body no-padding">
+               <!-- <alert type="info" class="no-margin fade in" dismisser>
+                    <i class="fa-fw fa fa-info"></i>
+                    Adds zebra-striping to table row within <code>&lt;table&gt;</code> by adding the <code>.table-striped</code>
+                    with the base class
+                </alert> -->
+                <div class="table-responsive">
+
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>E-mail</th>
+                            <th>Name / Surname</th>
+                            <th>Organization</th>
+                            <th>Role</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>mkoka@koka.al</td>
+                            <td>Margarit Koka</td>
+                            <td>ACME CO.</td>
+                            <td>Manager</td>
+                        </tr>
+                        <tr>
+                            <td>mathew@perry.com</td>
+                            <td>Mathew Pery</td>
+                            <td>LIDL</td>
+                            <td>Manager</td>
+                        </tr>
+                        <tr>
+                            <td>john@doe.net</td>
+                            <td>John Doe</td>
+                            <td>ACME CO.</td>
+                            <td>User</td>
+                        </tr>
+                        <tr>
+                            <td>mariac@acme.com</td>
+                            <td>Maria Christou</td>
+                            <td>LIDL</td>
+                            <td>User</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</article>
+
+</div>
+</section>
+</div>

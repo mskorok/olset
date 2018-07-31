@@ -1,0 +1,19 @@
+<div class="dialog-contents">
+<div class="dialog-header">
+	<h4>{{addOrEditTitle}}</h4>
+</div>
+	<div class="col-md-12">
+		<div class="form-group">
+			<input type="text" class="form-control" ng-model="groupData.title" name="title" placeholder="Title" required />
+		</div>
+		<div class="form-group">
+			<input type="text" class="form-control" ng-model="groupData.description" name="description" placeholder="Description" required /></div>
+		</div>
+	</div>
+<div class="ngdialog-buttons">
+	<button type="button" ng-click="closeThisDialog()" class="btn btn-default">Cancel</button>
+		
+	<button type="button" ng-if="modalMode == 0" ng-click="addDepartmentItem()" class="btn btn-primary">Create new</button>
+	<button type="button" ng-if="modalMode == 'edit'" ng-click="editDepartmentItem(groupData.id, groupData.title, groupData.description)" class="btn btn-primary">Edit</button>
+</div>
+</div>

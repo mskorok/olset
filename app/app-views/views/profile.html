@@ -1,0 +1,103 @@
+<div id="content">
+
+
+<div class="row">
+   
+    <div smart-include="app/layout/partials/sub-header.tpl.html"></div>
+</div>
+<!-- end row -->
+<!-- row -->
+<div class="row">
+<div class="col-sm-12">
+<div class="well well-sm">
+<div class="row">
+<div class="col-sm-12 col-md-12 col-lg-12">
+<div class="well well-light well-sm no-margin no-padding">
+<div class="row">
+    <!--<div class="col-sm-12">-->
+        <!--<div id="myCarousel" class="carousel fade profile-carousel">-->
+            <!--<div class="air air-top-left padding-10">-->
+                <!--<h4 class="txt-color-white font-md">{{ today | date }}</h4>-->
+            <!--</div>-->
+            <!--<ol class="carousel-indicators">-->
+                <!--<li data-target="#myCarousel" data-slide-to="0" class="active"></li>-->
+                <!--<li data-target="#myCarousel" data-slide-to="1" class></li>-->
+                <!--<li data-target="#myCarousel" data-slide-to="2" class></li>-->
+            <!--</ol>-->
+            <!--<div class="carousel-inner">-->
+                <!--&lt;!&ndash; Slide 1 &ndash;&gt;-->
+                <!--<div class="item active">-->
+                    <!--<img src="styles/img/demo/s1.jpg" alt="demo user">-->
+                <!--</div>-->
+                <!--&lt;!&ndash; Slide 2 &ndash;&gt;-->
+                <!--<div class="item">-->
+                    <!--<img src="styles/img/demo/s2.jpg" alt="demo user">-->
+                <!--</div>-->
+                <!--&lt;!&ndash; Slide 3 &ndash;&gt;-->
+                <!--<div class="item">-->
+                    <!--<img src="styles/img/demo/m3.jpg" alt="demo user">-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <div class="col-sm-12">
+        <div class="row">
+            <div class="col-sm-12" style="padding: 40px;">
+                <h1>{{userData.firstName}} <small> | {{userData.role}}</small>
+                </h1>
+
+                <form id="smart-form-register" class="smart-form" data-smart-registration-form>
+
+                    <fieldset>
+                        <section>
+                            <label class="input"> <i class="icon-append fa fa-user"></i>
+                                <input type="text" ng-model="userData.username" name="username" placeholder="Username">
+                                <b class="tooltip tooltip-bottom-right">Needed to enter the website</b> </label>
+                        </section>
+
+                        <section>
+                            <label class="input"> <i class="icon-append fa fa-envelope-o"></i>
+                                <input type="email" ng-model="userData.email" name="email" placeholder="Email address">
+                                <b class="tooltip tooltip-bottom-right">Needed to verify your account</b> </label>
+                        </section>
+
+                        <section>
+                            <label class="input"> <i class="icon-append fa fa-lock"></i>
+                                <input type="text" ng-model="userData.firstName" name="firstName" placeholder="Last Name" id="firstName">
+                                <b class="tooltip tooltip-bottom-right">Your First name here</b> </label>
+                        </section>
+
+                        <section>
+                            <label class="input"> <i class="icon-append fa fa-lock"></i>
+                                <input type="text" ng-model="userData.lastName" name="lastName" placeholder="Last Name" id="lastName">
+                                <b class="tooltip tooltip-bottom-right">Your Last name here</b> </label>
+                        </section>
+
+
+                        <section>
+                            <label class="input"> <i class="icon-append fa fa-lock"></i>
+                                <input type="text" name="location" ng-model="userData.location" placeholder="Your location">
+                                <b class="tooltip tooltip-bottom-right">Where is you location</b> </label>
+                        </section>
+                    </fieldset>
+
+                    <footer>
+                        <button type="submit" class="btn btn-primary">
+                            Update your info
+                        </button>
+                    </footer>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- end row -->
+</div>

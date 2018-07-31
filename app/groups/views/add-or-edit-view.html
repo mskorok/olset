@@ -1,0 +1,20 @@
+<div class="dialog-contents">
+<div class="dialog-header">
+	<h4>{{addOrEditTitle}}</h4>
+</div>
+	<div class="col-md-12">
+		<div class="form-group">
+			<input type="text" class="form-control" ng-model="groupData.title" name="title" placeholder="Group Title" required />
+		</div>
+		<div class="form-group">
+			<label style="color: #888;font-size: 12px;">Color</label>
+			<input type="color" class="form-control" ng-model="groupData.color" name="color" required /></div>
+		</div>
+	</div>
+<div class="ngdialog-buttons">
+	<button type="button" ng-click="closeThisDialog()" class="btn btn-default">Cancel</button>
+		
+	<button type="button" ng-if="modalMode == 0" ng-click="addGroupItem()" class="btn btn-primary">Create new</button>
+	<button type="button" ng-if="modalMode == 'edit'" ng-click="editGroupItem(groupData.id, groupData.title, groupData.color)" class="btn btn-primary">Edit Group</button>
+</div>
+</div>

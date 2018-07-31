@@ -1,0 +1,84 @@
+<div id="content">
+    <div class="row">
+        <div smart-include="app/layout/partials/sub-header.tpl.html"></div>
+    </div>
+    <div style="margin-bottom:15px;">
+        <!--<button type="button" ng-click="openModaltoAddOrEdit('','','',0,'Add a new Question')" class="btn btn-labeled btn-primary">-->
+        <!--<span class="btn-label">-->
+        <!--<i class="glyphicon glyphicon-plus-sign"></i>-->
+        <!--</span>Create new Question-->
+        <!--</button>-->
+    </div>
+    <!-- widget grid -->
+    <section id="widget-grid" data-widget-grid>
+        <!-- row -->
+        <div class="row">
+
+            <!-- NEW WIDGET START -->
+            <article class="col-sm-12 col-md-12 col-lg-12" style="padding: 20px; background-color: #fff;">
+                    <header>
+                        <h2>OLSET Steps for {{olsetProcessData.title}}</h2>
+                        <div class="col-md-12">
+                            <h3>Current Reality</h3>
+                            <p>
+                                <ng-bind-html
+                                        ng-bind-html="olsetProcessData.CurrentReality">
+                                </ng-bind-html>
+                            </p>
+                        </div>
+
+                        <div class="col-md-12">
+                            <h3>Initial Intentions</h3>
+                            <p>
+                                <ng-bind-html
+                                        ng-bind-html="olsetProcessData.InitialIntentions">
+                                </ng-bind-html>
+                            </p>
+                        </div>
+                    </header>
+                    <div>
+                        <div class="widget-body no-padding">
+                            <div class="table-responsive" style="padding:13px;">
+
+                            <div class="col-md-12">
+                                <h2>Step 0: Reflect</h2>
+                                <a ui-sref="app.olset.evaluation({evaluationId : olsetProcessData.step0})" class="btn btn-primary btn-lg btn-block">
+                                    Evaluation Survey >>
+                                </a>
+                            </div>
+
+                                <div class="col-md-12">
+                                    <h2>Step 1: Understand</h2>
+                                    <a ui-sref="app.systemicStructureMap.manager({processId : processId})" class="btn btn-primary btn-lg btn-block">
+                                        Systemic Structure Map >>
+                                    </a>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <h2>Step 2: Design and Implement</h2>
+                                    <a ui-sref="app.sysmap.manager.process({processId : processId})" class="btn btn-primary btn-lg btn-block">
+                                        Systemic Action Map >>
+                                    </a>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <h2>Step 3: Self-Evaluate</h2>
+                                    <a ui-sref="app.olset.evaluation({evaluationId : olsetProcessData.step3_0})" class="btn btn-primary btn-lg btn-block">
+                                        Evaluation Survey >>
+                                    </a>
+                                    <a ui-sref="app.olset.evaluation({evaluationId : olsetProcessData.step3_1})" class="btn btn-primary btn-lg btn-block">
+                                        After Action Review >>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+        <div class="row">
+        </div>
+        <!-- end row -->
+    </section>
+    <!-- end widget grid -->
+</div>

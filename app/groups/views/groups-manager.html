@@ -1,0 +1,74 @@
+<div id="content">
+<div class="row">
+    <div smart-include="app/layout/partials/sub-header.tpl.html"></div>
+</div>
+<div style="margin-bottom:15px;">
+	
+		<button type="button" ng-click="openModaltoAddOrEdit('','','',0,'Create a new Group')" class="btn btn-labeled btn-primary">
+			 <span class="btn-label">
+			  <i class="glyphicon glyphicon-plus-sign"></i>
+			 </span>Create new
+		</button>
+		
+		
+		
+</div>
+<group-item-add add-func="addGroupItem(title,color)"></group-item-add>
+<!-- widget grid -->
+<section id="widget-grid" data-widget-grid>
+<!-- row -->
+<div class="row">
+
+<!-- NEW WIDGET START -->
+<article class="col-sm-12 col-md-12 col-lg-12">
+    <div jarvis-widget id="table-hover-states-widget" data-widget-color="nightSky" data-widget-editbutton="false">
+        <header>
+            <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+
+            <h2>Manage Systemic Maps</h2>
+        </header>
+        <div>
+            <div class="widget-body no-padding">
+                <div class="table-responsive">
+
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th><i class="fa fa-building"></i>  Name</th>
+                            <th><i class="fa fa-building"></i>  Color</th>
+                            <th><i class="fa fa-calendar"></i>  Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr ng-repeat="group in groupsData">
+                            <td>{{group.id}}</td>
+                            <td>{{group.title}}</td>
+                            <td><span style="background-color:{{group.color}}; padding: 10px 20px; width:10px; margin-left:10px;"></span></td>
+                            <td>
+	                            <a class="fa fa-lg fa-trash-o" ng-click="deleteGroup(group.id)"></a>
+								<a style="margin-left:5px; margin-top:3px;" class="fa fa-lg fa-pencil-square-o" ng-click="openModaltoAddOrEdit(group.id,group.title,group.color,'edit','edit group - '+group.title )"></a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</article>
+<!-- WIDGET END -->
+
+
+</div>
+<!-- end row -->
+<!-- row -->
+<div class="row">
+</div>
+<!-- end row -->
+</section>
+<!-- end widget grid -->
+</div>
