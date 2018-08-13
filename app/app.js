@@ -100,7 +100,8 @@ angular.module('app', [
 	return{
 		
 		servicesUrl : function() {
-			surl = 'http://144.76.5.203/olsetapp/';
+            // surl = 'http://144.76.5.203/olsetapp/';//dev
+            surl = 'http://olback.gr/';//local
 			return surl;
 		},
 
@@ -109,7 +110,8 @@ angular.module('app', [
 		    if ($location.host() == "localhost") {
                 spath = "/app";
             } else {
-                spath = "/backoffice/app";
+                // spath = "/backoffice/app";//dev
+                spath = "/app";//local
             }
 
             if (spath == null) {

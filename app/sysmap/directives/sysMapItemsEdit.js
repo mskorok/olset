@@ -45,7 +45,7 @@ angular.module('app.sysmap').directive('sysMapItemsEdit', function () {
 				$http({
 				
 					method: 'GET',
-					url: 'http://144.76.5.203/olsetapp/group',
+                    url: MainConf.servicesUrl() + 'group',
 					headers: {  
 					    'Authorization': 'Bearer '+authToken,
 					    'Content-Type': 'application/json'					    

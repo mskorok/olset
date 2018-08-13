@@ -390,7 +390,8 @@ angular.module('app', [
 	return{
 		
 		servicesUrl : function() {
-			surl = 'http://144.76.5.203/olsetapp/';
+			// surl = 'http://144.76.5.203/olsetapp/';//dev
+            surl = 'http://olback.gr/';//local
 			return surl;
 		},
 
@@ -399,7 +400,8 @@ angular.module('app', [
 		    if ($location.host() == "localhost") {
                 spath = "/app";
             } else {
-                spath = "/backoffice/app";
+                // spath = "/backoffice/app";//dev
+                spath = "/app";//local
             }
 
             if (spath == null) {
@@ -8094,8 +8096,11 @@ angular.module('app.sysmap').controller('sysMapViewCtrl', function ($scope, $htt
 		}).then(function successCallback(response) {
 
 			$scope.dataToRender = response.data.data.htmlCode;
-			var urlSmall = "http://144.76.5.203/olsetapp/public/sam_view.php?token="+authToken+"&id="+$scope.sysMapId+"&t="+Date.now()+"&v=0";
-			var urlBig = "http://144.76.5.203/olsetapp/public/sam_view.php?token="+authToken+"&id="+$scope.sysMapId+"&t="+Date.now()+"&v=1";
+
+			var urlSmall = MainConf.servicesUrl() + "/public/sam_view.php?token="
+                + authToken + "&id=" + $scope.sysMapId + "&t=" + Date.now() + "&v=0";
+			var urlBig = MainConf.servicesUrl() + "/public/sam_view.php?token="
+                + authToken+"&id=" + $scope.sysMapId + "&t=" + Date.now() + "&v=1";
 
             $scope.frameUrl = $sce.trustAsResourceUrl(urlSmall);
             $scope.frameUrl0 = $sce.trustAsResourceUrl(urlBig);
@@ -8334,7 +8339,7 @@ angular.module('app.sysmap').directive('sysMapItemsAdd', function () {
 				$http({
 				
 					method: 'GET',
-					url: 'http://144.76.5.203/olsetapp/group',
+                    url: MainConf.servicesUrl() + 'group',//local
 					headers: {  
 					    'Authorization': 'Bearer '+authToken,
 					    'Content-Type': 'application/json'					    
@@ -8407,7 +8412,7 @@ angular.module('app.sysmap').directive('sysMapItemsEdit', function () {
 				$http({
 				
 					method: 'GET',
-					url: 'http://144.76.5.203/olsetapp/group',
+                    url: MainConf.servicesUrl() + 'group',
 					headers: {  
 					    'Authorization': 'Bearer '+authToken,
 					    'Content-Type': 'application/json'					    
@@ -9189,8 +9194,8 @@ angular.module('app.systemicStructureMap').controller('systemicStructureMapViewC
     getGroups();
 
 
-    var urlSmall = "http://144.76.5.203/olsetapp/public/ssm_view.php";
-    var urlBig = "http://144.76.5.203/olsetapp/public/ssm_view.php";
+    var urlSmall = MainConf.servicesUrl() + "public/ssm_view.php";
+    var urlBig = MainConf.servicesUrl() + "public/ssm_view.php";
 
     $scope.frameUrl = $sce.trustAsResourceUrl(urlSmall);
     $scope.frameUrl0 = $sce.trustAsResourceUrl(urlBig);

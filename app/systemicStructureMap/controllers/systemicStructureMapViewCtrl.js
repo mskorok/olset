@@ -423,8 +423,8 @@ angular.module('app.systemicStructureMap').controller('systemicStructureMapViewC
     getGroups();
 
 
-    var urlSmall = "http://144.76.5.203/olsetapp/public/ssm_view.php";
-    var urlBig = "http://144.76.5.203/olsetapp/public/ssm_view.php";
+    var urlSmall = MainConf.servicesUrl() + "public/ssm_view.php";
+    var urlBig = MainConf.servicesUrl() + "public/ssm_view.php";
 
     $scope.frameUrl = $sce.trustAsResourceUrl(urlSmall);
     $scope.frameUrl0 = $sce.trustAsResourceUrl(urlBig);

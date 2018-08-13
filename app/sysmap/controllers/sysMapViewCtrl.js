@@ -45,8 +45,10 @@ angular.module('app.sysmap').controller('sysMapViewCtrl', function ($scope, $htt
 		}).then(function successCallback(response) {
 
 			$scope.dataToRender = response.data.data.htmlCode;
-			var urlSmall = "http://144.76.5.203/olsetapp/public/sam_view.php?token="+authToken+"&id="+$scope.sysMapId+"&t="+Date.now()+"&v=0";
-			var urlBig = "http://144.76.5.203/olsetapp/public/sam_view.php?token="+authToken+"&id="+$scope.sysMapId+"&t="+Date.now()+"&v=1";
+			var urlSmall = MainConf.servicesUrl()+ "public/sam_view.php?token="
+                + authToken + "&id=" + $scope.sysMapId + "&t=" + Date.now() + "&v=0";
+			var urlBig = MainConf.servicesUrl() + "public/sam_view.php?token=" + authToken + "&id=" + $scope.sysMapId
+                + "&t=" + Date.now() + "&v=1";
 
             $scope.frameUrl = $sce.trustAsResourceUrl(urlSmall);
             $scope.frameUrl0 = $sce.trustAsResourceUrl(urlBig);
