@@ -44,7 +44,7 @@ angular.module('app.surveys').config(function ($stateProvider) {
            	title: 'Single Survey',
         },
         resolve: {
-            srcipts: function(lazyScript){
+            scripts: function(lazyScript){
                 return lazyScript.register([
                     'build/vendor.ui.js'
                 ])

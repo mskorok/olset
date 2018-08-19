@@ -38,7 +38,7 @@ angular.module('app.systemicStructureMap').config(function ($stateProvider) {
            	title: 'Single Systemic Structure Map',
         },
         resolve: {
-            srcipts: function(lazyScript){
+            scripts: function(lazyScript){
                 return lazyScript.register([
                     'build/vendor.ui.js'
                 ])

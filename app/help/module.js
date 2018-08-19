@@ -172,7 +172,7 @@ angular.module('app.help').config(function ($stateProvider) {
             title: 'Systemic Map Simple Map View',
         },
         resolve: {
-            srcipts: function(lazyScript){
+            scripts: function(lazyScript){
                 return lazyScript.register([
                     'build/vendor.ui.js'
                 ])

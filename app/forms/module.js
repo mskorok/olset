@@ -74,7 +74,7 @@ angular.module('app.forms').config(function ($stateProvider) {
                 }
             },
             resolve: {
-                srcipts: function(lazyScript){
+                scripts: function(lazyScript){
                     return lazyScript.register([
                         'build/vendor.ui.js'
                     ])
@@ -95,7 +95,7 @@ angular.module('app.forms').config(function ($stateProvider) {
                 }
             },
             resolve: {
-                srcipts: function(lazyScript){
+                scripts: function(lazyScript){
                     return lazyScript.register([
                         "build/vendor.ui.js"
                     ])
@@ -115,7 +115,7 @@ angular.module('app.forms').config(function ($stateProvider) {
                 }
             },
             resolve: {
-                srcipts: function(lazyScript){
+                scripts: function(lazyScript){
                     return lazyScript.register([
                         "build/vendor.ui.js"
                     ])

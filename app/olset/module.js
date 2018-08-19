@@ -72,7 +72,7 @@ angular.module('app.olset').config(function ($stateProvider) {
                 title: 'Process steps',
             },
             resolve: {
-                srcipts: function (lazyScript) {
+                scripts: function (lazyScript) {
                     return lazyScript.register([
                         'build/vendor.ui.js'
                     ])

@@ -44,7 +44,7 @@ angular.module('app.auth', [
             htmlId: 'extr-page'
         },
         resolve: {
-            srcipts: function(lazyScript){
+            scripts: function(lazyScript){
                 return lazyScript.register([
                     'build/vendor.ui.js'
                 ])
