@@ -56,7 +56,6 @@ angular.module('app.olset').controller('olsetEvaluationCtrl', function ($scope, 
             }
         });
 
-        console.log('Youhou: ', $scope.userAnswersTosend);
         if ($scope.userAnswersTosend.length > 0) {
             console.log('User Answers:',$scope.userAnswersTosend);
             $http({
@@ -111,6 +110,8 @@ angular.module('app.olset').controller('olsetEvaluationCtrl', function ($scope, 
             }
         }).then(function successCallback(response) {
             $scope.olsetEvaluationData = response.data.data.data;
+
+            $scope.olsetEvaluationGroupsData = response.data.data.groups;
             console.log($scope.olsetEvaluationData);
         }, function errorCallback(response) {
             $scope.olsetEvaluationData = response.data.process;

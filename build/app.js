@@ -6165,6 +6165,7 @@ angular.module('app.olset').controller('olsetEvaluationCtrl', function ($scope, 
             }
         }).then(function successCallback(response) {
             $scope.olsetEvaluationData = response.data.data.data;
+            $scope.olsetEvaluationGroupsData = response.data.data.groups;
             console.log($scope.olsetEvaluationData);
         }, function errorCallback(response) {
             $scope.olsetEvaluationData = response.data.process;
@@ -6172,14 +6173,6 @@ angular.module('app.olset').controller('olsetEvaluationCtrl', function ($scope, 
     }
 
     datas2();
-
-    // setInterval( function () {
-    //
-    //     for (var i = 0 ; $scope.olsetEvaluationData.length > 0 ; i++) {
-    //         var theElementId = $scope.olsetEvaluationData[i].id;
-    //         $scope.olsetData[theElementId] = "";
-    //     }
-    // } , 10000);
 
     $scope.saveQuestions = function (questionsId) {
 
@@ -6483,6 +6476,7 @@ angular.module('app.surveys').controller('surveysViewCtrl', function ($scope, $h
 
         }).then(function successCallback(response) {
             $scope.surveyQuestionData = response.data.data.data;
+            $scope.olsetEvaluationGroupsData = response.data.data.groups;
         }, function errorCallback(response) {
 
             //console.log('YOYO');
@@ -7462,6 +7456,7 @@ angular.module('app.surveys').controller('surveysViewCtrl', function ($scope, $h
 
         }).then(function successCallback(response) {
             $scope.surveyQuestionData = response.data.data.data;
+            $scope.olsetEvaluationGroupsData = response.data.data.groups
         }, function errorCallback(response) {
 
             //console.log('YOYO');

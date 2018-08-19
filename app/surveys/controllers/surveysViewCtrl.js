@@ -35,9 +35,10 @@ angular.module('app.surveys').controller('surveysViewCtrl', function ($scope, $h
 
         }).then(function successCallback(response) {
             $scope.surveyQuestionData = response.data.data.data;
+            $scope.olsetEvaluationGroupsData = response.data.data.groups
         }, function errorCallback(response) {
 
-            //console.log('YOYO');
+            console.log('error', 'survey/getQuestions/');
 
         });
 
@@ -110,7 +111,7 @@ angular.module('app.surveys').controller('surveysViewCtrl', function ($scope, $h
             //$state.go('app.sysmap.manager.view.'+$scope.sysMapId);
         }, function errorCallback(response) {
 
-            console.log('YOYO');
+            console.log('error', 'survey/addQuestion/');
 
         });
 

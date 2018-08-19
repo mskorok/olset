@@ -20,6 +20,7 @@
                         <div class="table-responsive olsetQuestions">
                             <form>
                                 <div ng-repeat="item in olsetEvaluationData">
+                                    <h2><b>{{olsetEvaluationGroupsData[item.id]['name']}}</b></h2>
                                     <h4>{{item.question}}</h4>
                                     <div ng-if="item.answered_type == 2" class="radioQuestions">
 

@@ -35,6 +35,7 @@ angular.module('app.surveys').controller('surveysViewCtrl', function ($scope, $h
 
         }).then(function successCallback(response) {
             $scope.surveyQuestionData = response.data.data.data;
+            $scope.olsetEvaluationGroupsData = response.data.data.groups;
         }, function errorCallback(response) {
 
             //console.log('YOYO');
