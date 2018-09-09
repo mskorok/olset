@@ -1,6 +1,3 @@
-    "use strict";
-
-
 angular.module('app.chat', ['ngSanitize'])
 .run(function ($templateCache) {
 

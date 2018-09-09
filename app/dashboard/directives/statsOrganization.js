@@ -1,5 +1,3 @@
-'use strict';
-
 angular.module('app.dashboard').directive('statsOrganization', function () {
     return {
         restrict: 'EA',
@@ -9,37 +7,41 @@ angular.module('app.dashboard').directive('statsOrganization', function () {
         },
         transclude: true,
         link: function (scope, element, attrs) {
-            attrs.$observe('countorgrun', function(value) {
+            attrs.$observe('countorgrun', function (value) {
+                console.log('cnt__', scope.countorgrun);
                 if (value) {
                     var finalJson = JSON.parse(scope.countorgrun);
-                    console.log(finalJson);
+                    console.log('dashboard final json', finalJson);
                     var doughnutOptions = {
                         //Boolean - Whether we should show a stroke on each segment
-                        segmentShowStroke : true,
+                        segmentShowStroke: true,
                         //String - The colour of each segment stroke
-                        segmentStrokeColor : "#fff",
+                        segmentStrokeColor: "#fff",
                         //Number - The width of each segment stroke
-                        segmentStrokeWidth : 2,
+                        segmentStrokeWidth: 2,
                         //Number - The percentage of the chart that we cut out of the middle
-                        percentageInnerCutout : 50, // This is 0 for Pie charts
+                        percentageInnerCutout: 50, // This is 0 for Pie charts
                         //Number - Amount of animation steps
-                        animationSteps : 100,
+                        animationSteps: 100,
                         //String - Animation easing effect
-                        animationEasing : "easeOutBounce",
+                        animationEasing: "easeOutBounce",
                         //Boolean - Whether we animate the rotation of the Doughnut
-                        animateRotate : true,
+                        animateRotate: true,
                         //Boolean - Whether we animate scaling the Doughnut from the centre
-                        animateScale : false,
+                        animateScale: false,
                         //Boolean - Re-draw chart on page resize
                         responsive: true,
                         //String - A legend template
-                        legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
+                        legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\">" +
+                        "<% for (var i=0; i<segments.length; i++){%><li>" +
+                        "<span style=\"background-color:<%=segments[i].fillColor%>\"></span>" +
+                        "<%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
                     };
 
                     var doughnutData = [
                         {
                             value: finalJson.count_users[0].count,
-                            color:"rgba(220,220,220,0.8)",
+                            color: "rgba(220,220,220,0.8)",
                             highlight: "rgba(220,220,220,0.7)",
                             label: "Manager"
                         },
@@ -57,8 +59,8 @@ angular.module('app.dashboard').directive('statsOrganization', function () {
                     new Chart(ctx).Doughnut(doughnutData, doughnutOptions);
                 }
             });
-            //console.log(scope.countorgrun);
-           // attributes.$observe('countorgrun', function(actual_value) {
+
+            // attr.$observe('countorgrun', function(actual_value) {
 
             //})
             // var theRealDeal = null;
@@ -69,5 +71,6 @@ angular.module('app.dashboard').directive('statsOrganization', function () {
             // // });
             //
             //
-        }}
+        }
+    }
 });

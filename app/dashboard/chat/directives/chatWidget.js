@@ -1,5 +1,3 @@
-"use strict";
-
 angular.module('app.chat').directive('chatWidget', function (ChatApi) {
     return {
         replace: true,
@@ -15,7 +13,7 @@ angular.module('app.chat').directive('chatWidget', function (ChatApi) {
             };
 
             scope.messageTo = function(user){
-                scope.newMessage += (user.username + ', ');
+                scope.newMessage += user.username + ', ';
             };
 
             ChatApi.initialized.then(function () {

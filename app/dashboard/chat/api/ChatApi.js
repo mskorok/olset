@@ -1,5 +1,3 @@
-'use strict';
-
 angular.module('app.chat').factory('ChatApi', function ($q, $rootScope, User, $http, APP_CONFIG) {
     var dfd = $q.defer();
     var _user;
@@ -10,8 +8,9 @@ angular.module('app.chat').factory('ChatApi', function ($q, $rootScope, User, $h
         statuses: ['Online', 'Busy', 'Away', 'Log Off'],
         status: 'Online',
         setUser: function (user) {
-            if (ChatSrv.users.indexOf(_user) != -1)
+            if (ChatSrv.users.indexOf(_user) != -1) {
                 ChatSrv.users.splice(ChatSrv.users.indexOf(_user), 1);
+            }
             _user = user;
             ChatSrv.users.push(_user);
         },

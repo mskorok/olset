@@ -1,5 +1,3 @@
-"use strict";	
-
 angular.module('app').controller("ActivitiesCtrl", function ActivitiesCtrl($scope, $log, activityService){
 
 	$scope.activeTab = 'default';

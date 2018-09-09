@@ -1,215 +1,218 @@
-"use strict";
-angular.module('app.olset').controller('olsetEditCtrl', function ($scope, $http, $window, $stateParams, $state, $timeout, MainConf, ngDialog) {
+angular.module('app.olset').controller(
+    'olsetEditCtrl',
+    function ($scope, $http, $window, $stateParams, $state, $timeout, MainConf, ngDialog) {
 
-    var authToken = $window.localStorage.getItem('authToken');
-    $scope.token = authToken;
-    $scope.processId = $stateParams.processId;
+        var authToken = $window.localStorage.getItem('authToken');
+        $scope.token = authToken;
+        $scope.processId = $stateParams.processId;
 
-    $scope.createWizardData = {
-        "title": "",
-        "CurrentReality": "",
-        "InitialIntentions": "",
-    }
+        $scope.createWizardData = {
+            "title": "",
+            "CurrentReality": "",
+            "InitialIntentions": ""
+        };
 
-    $scope.permissionsData = {
-        "process": "",
-        "organization": false,
-        "department": [],
-        "persons": []
-    }
+        $scope.permissionsData = {
+            "process": "",
+            "organization": false,
+            "department": [],
+            "persons": []
+        };
 
-    var generalProcessInfos = function () {
-        $http({
-            method: 'GET',
-            url: MainConf.servicesUrl() + 'process/' + $scope.processId,
-            headers: {
-                'Authorization': 'Bearer ' + authToken,
-                'Content-Type': 'application/json'
+        var generalProcessInfos = function () {
+            $http({
+                method: 'GET',
+                url: MainConf.servicesUrl() + 'process/' + $scope.processId,
+                headers: {
+                    'Authorization': 'Bearer ' + authToken,
+                    'Content-Type': 'application/json'
+                }
+
+            }).then(function successCallback(response) {
+                $scope.olsetProcessData = response.data.process;
+                console.log($scope.olsetProcessData);
+
+            }, function errorCallback(response) {
+                $scope.olsetProcessData = response.data.process;
+                console.log('Olset generalProcessInfos data error', response);
+                alert('Olset generalProcessInfos data error');
+            });
+
+            $http({
+                method: 'GET',
+                url: MainConf.servicesUrl() + 'users/getProcessPermissions/' + $scope.processId,
+                headers: {
+                    'Authorization': 'Bearer ' + authToken,
+                    'Content-Type': 'application/json'
+                }
+
+            }).then(function successCallback(response) {
+                $scope.permissionsData.persons = response.data.data.data.users;
+                $scope.permissionsData.department = response.data.data.data.departments;
+                console.log('Olset generalProcessInfos data  success', $scope.permissionsData.department);
+
+            }, function errorCallback(response) {
+                console.log('Olset generalProcessInfos data error', response);
+                alert('Olset generalProcessInfos data error');
+            });
+        };
+
+        setTimeout(generalProcessInfos, 1000);
+
+        $scope.toggleDepSelection = function toggleSelection(depsId) {
+            var idx = $scope.permissionsData.department.indexOf(depsId);
+            // Is currently selected
+            if (idx > -1) {
+                $scope.permissionsData.department.splice(idx, 1);
             }
-
-        }).then(function successCallback(response) {
-            $scope.olsetProcessData = response.data.process;
-            console.log($scope.olsetProcessData);
-
-        }, function errorCallback(response) {
-            $scope.olsetProcessData = response.data.process;
-            //console.log('YOYO');
-            //console.log($scope.surveyQuestionData);
-        });
-
-        $http({
-            method: 'GET',
-            url: MainConf.servicesUrl() + 'users/getProcessPermissions/' + $scope.processId,
-            headers: {
-                'Authorization': 'Bearer ' + authToken,
-                'Content-Type': 'application/json'
+            // Is newly selected
+            else {
+                $scope.permissionsData.department.push(depsId);
             }
+        };
 
-        }).then(function successCallback(response) {
-            $scope.permissionsData.persons = response.data.data.data.users;
-            $scope.permissionsData.department = response.data.data.data.departments;
-            console.log('nnnbbn',$scope.permissionsData.department);
-
-        }, function errorCallback(response) {
-            //$scope.olsetProcessData = response.data.process;
-            //console.log('YOYO');
-            //console.log($scope.surveyQuestionData);
-        });
-    }
-
-    setTimeout(generalProcessInfos, 1000);
-
-    $scope.toggleDepSelection = function toggleSelection(depsId) {
-        var idx = $scope.permissionsData.department.indexOf(depsId);
-        // Is currently selected
-        if (idx > -1) {
-            $scope.permissionsData.department.splice(idx, 1);
-        }
-        // Is newly selected
-        else {
-            $scope.permissionsData.department.push(depsId);
-        }
-    };
-
-    $scope.toggleUserSelection = function toggleSelection(userId) {
-        var idx = $scope.permissionsData.persons.indexOf(userId);
-        // Is currently selected
-        if (idx > -1) {
-            $scope.permissionsData.persons.splice(idx, 1);
-        }
-        // Is newly selected
-        else {
-            $scope.permissionsData.persons.push(userId);
-        }
-        console.log("YoloTso:" + $scope.permissionsData.persons);
-    };
+        $scope.toggleUserSelection = function toggleSelection(userId) {
+            var idx = $scope.permissionsData.persons.indexOf(userId);
+            // Is currently selected
+            if (idx > -1) {
+                $scope.permissionsData.persons.splice(idx, 1);
+            }
+            // Is newly selected
+            else {
+                $scope.permissionsData.persons.push(userId);
+            }
+            console.log("permissionsData.persons:" + $scope.permissionsData.persons);
+        };
 
 
-    $scope.showOverallSelection = function () {
+        $scope.showOverallSelection = function () {
 
-        if ($scope.permissionsData.organization == true) {
+            if ($scope.permissionsData.organization == true) {
+                $scope.showUsers = true;
+                $scope.showDeps = true;
+            } else {
+                $scope.permissionsData.organization = true;
+            }
+        };
+
+        $scope.showUserSelection = function () {
             $scope.showUsers = true;
+        };
+
+        $scope.showDepsSelection = function () {
             $scope.showDeps = true;
-        } else {
-            $scope.permissionsData.organization == true;
-        }
-    }
+        };
 
-    $scope.showUserSelection = function () {
-        $scope.showUsers = true;
-    }
+        $scope.fullOrganization = true;
 
-    $scope.showDepsSelection = function () {
-        $scope.showDeps = true;
-    }
+        var departmentsData1 = function () {
+            $http({
 
-    $scope.fullOrganization = true;
+                method: 'GET',
+                url: MainConf.servicesUrl() + 'department',
+                headers: {
+                    'Authorization': 'Bearer ' + authToken,
+                    'Content-Type': 'application/json'
+                }
 
-    var departmentsData1 = function () {
-        $http({
+            }).then(function successCallback(response) {
+                $scope.departmentsData = response.data.data.data;
+                console.log("departments data: ", $scope.departmentsData);
+            }, function errorCallback(response) {
+                console.log('Olset departmentsData1 data error', response);
+                alert('Olset departmentsData1 data error');
+                return false;
+            });
+        };
+        departmentsData1();
 
-            method: 'GET',
-            url: MainConf.servicesUrl() + 'department',
-            headers: {
-                'Authorization': 'Bearer ' + authToken,
-                'Content-Type': 'application/json'
-            }
+        var usersData1 = function () {
+            $http({
 
-        }).then(function successCallback(response) {
-            $scope.departmentsData = response.data.data.data;
-            console.log("departments data: ", $scope.departmentsData);
-        }, function errorCallback(response) {
-            return false;
-        });
-    }
-    departmentsData1();
+                method: 'GET',
+                url: MainConf.servicesUrl() + 'users',
+                headers: {
+                    'Authorization': 'Bearer ' + authToken,
+                    'Content-Type': 'application/json'
+                }
 
-    var usersData1 = function () {
-        $http({
+            }).then(function successCallback(response) {
+                $scope.usersData = response.data.users;
+                console.log("user data: ", $scope.usersData);
+            }, function errorCallback(response) {
+                console.log('Olset usersData1 data error', response);
+                alert('Olset usersData1 data error');
+                return false;
+            });
+        };
+        usersData1();
 
-            method: 'GET',
-            url: MainConf.servicesUrl() + 'users',
-            headers: {
-                'Authorization': 'Bearer ' + authToken,
-                'Content-Type': 'application/json'
-            }
+        $scope.departmentsUserData = function (departmentsId) {
 
-        }).then(function successCallback(response) {
-            $scope.usersData = response.data.users;
-            console.log("user data: ", $scope.usersData);
-        }, function errorCallback(response) {
+            $http({
+                method: 'GET',
+                url: MainConf.servicesUrl() + 'department/' + departmentsId,
+                headers: {
+                    'Authorization': 'Bearer ' + authToken,
+                    'Content-Type': 'application/json'
+                }
 
-            return false;
-        });
-    }
-    usersData1();
+            }).then(function successCallback(response) {
+                return response.data.data.data;
+            }, function errorCallback(response) {
+                console.log('Olset departmentsUserData data error', response);
+                alert('Olset departmentsUserData data error');
+                return false;
+            });
+        };
 
-    $scope.departmentsUserData = function (departmentsId) {
-
-        $http({
-
-            method: 'GET',
-            url: MainConf.servicesUrl() + 'department',
-            headers: {
-                'Authorization': 'Bearer ' + authToken,
-                'Content-Type': 'application/json'
-            }
-
-        }).then(function successCallback(response) {
-            return response.data.data.data;
-        }, function errorCallback(response) {
-
-            return false;
-        });
-    }
-
-    //Validation scopes
-    $scope.prepareStep = function () {
-        $scope.activateErrors = false;
-        return true;
-    }
-
-    $scope.validateBasicInfo = function () {
-
-        var title = $scope.createWizardData.title;
-        var currentReality = $scope.createWizardData.CurrentReality;
-
-        if (title.length == 0) {
-            $scope.messageContent = "Please add a title";
-            $scope.activateErrors = true;
-            return false;
-        } else if (currentReality.length == 0) {
-            $scope.messageContent = "Please add currentReality";
-            $scope.activateErrors = true;
-            return false;
-        } else {
+        //Validation scopes
+        $scope.prepareStep = function () {
             $scope.activateErrors = false;
             return true;
-        }
-    }
+        };
 
-    $scope.validateInitialIntention = function () {
+        $scope.validateBasicInfo = function () {
 
-        var initialIntentions = $scope.createWizardData.InitialIntentions;
+            var title = $scope.createWizardData.title;
+            var currentReality = $scope.createWizardData.CurrentReality;
 
-        if (initialIntentions.length == 0) {
-            $scope.messageContent = "Please add initial intentions";
-            $scope.activateErrors = true;
-            return false;
-        } else {
-            $scope.activateErrors = false;
+            if (title.length == 0) {
+                $scope.messageContent = "Please add a title";
+                $scope.activateErrors = true;
+                return false;
+            } else if (currentReality.length == 0) {
+                $scope.messageContent = "Please add currentReality";
+                $scope.activateErrors = true;
+                return false;
+            } else {
+                $scope.activateErrors = false;
+                return true;
+            }
+        };
+
+        $scope.validateInitialIntention = function () {
+
+            var initialIntentions = $scope.createWizardData.InitialIntentions;
+
+            if (initialIntentions.length == 0) {
+                $scope.messageContent = "Please add initial intentions";
+                $scope.activateErrors = true;
+                return false;
+            } else {
+                $scope.activateErrors = false;
+                return true;
+            }
+        };
+
+        $scope.validatePermissions = function () {
+
             return true;
-        }
-    }
+        };
 
-    $scope.validatePermissions = function () {
+        $scope.wizard1CompleteCallback = function () {
 
-        return true;
-    }
-
-    $scope.wizard1CompleteCallback = function () {
-
-        //if ($scope.activateErrors == false) {
+            //if ($scope.activateErrors == false) {
 
             $http({
                 method: 'PUT',
@@ -239,7 +242,7 @@ angular.module('app.olset').controller('olsetEditCtrl', function ($scope, $http,
                         "persons": $scope.permissionsData.persons
                     }
                 }).then(function successCallback(response) {
-
+                    console.log('Olset wizard1CompleteCallback data success', response);
                     $.bigBox({
                         title: "Congratulations! OLSET " + $scope.createWizardData.title + " created!",
                         color: "#739E73",
@@ -253,12 +256,15 @@ angular.module('app.olset').controller('olsetEditCtrl', function ($scope, $http,
                     ngDialog.close();
 
                 }, function errorCallback(response) {
-
+                    console.log('Olset wizard1CompleteCallback data error', response);
+                    alert('Olset wizard1CompleteCallback data error');
                 });
 
             }, function errorCallback(response) {
-
+                console.log('Olset wizard1CompleteCallback data error', response);
+                alert('Olset wizard1CompleteCallback data error');
             });
-        //}
-    };
-})
+            //}
+        };
+    }
+);

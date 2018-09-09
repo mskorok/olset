@@ -1,5 +1,3 @@
-"use strict";
-
 angular.module('app').factory('Todo', function (Restangular, APP_CONFIG, $httpBackend) {
 
     var normalize = function(todo) {

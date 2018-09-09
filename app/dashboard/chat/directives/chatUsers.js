@@ -1,5 +1,3 @@
-"use strict";
-
 angular.module('app.chat').directive('chatUsers', function(ChatApi){
     return {
         restrict: 'E',

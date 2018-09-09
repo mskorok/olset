@@ -1,5 +1,3 @@
-'use strict';
-
 angular.module('app.users').directive('usertablesTableTools', function () {
     return {
         restrict: 'A',
@@ -30,13 +28,14 @@ angular.module('app.users').directive('usertablesTableTools', function () {
                 // Tabletools options:
                 //   https://datatables.net/extensions/tabletools/button_options
                 "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 hidden-xs'T>r>" +
-                    "t" +
-                    "<'dt-toolbar-footer'<'col-sm-6 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
-                oLanguage:{
-                    "sSearch": "<span class='input-group-addon input-sm'><i class='glyphicon glyphicon-search'></i></span> "
+                "t" +
+                "<'dt-toolbar-footer'<'col-sm-6 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+                oLanguage: {
+                    "sSearch": "<span class='input-group-addon input-sm'><i class='glyphicon glyphicon-search'>" +
+                    "</i></span> "
                 },
 
-                sFilterInput:  "form-control",
+                sFilterInput: "form-control",
                 "oTableTools": {
                     "aButtons": [
                         "copy",

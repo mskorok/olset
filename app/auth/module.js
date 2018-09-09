@@ -1,14 +1,12 @@
-"use strict";
-
 angular.module('app.auth', [
     'ui.router'
 //        ,
 //        'ezfb',
 //        'googleplus'
 ]).config(function ($stateProvider
-//        , ezfbProvider
-//        , GooglePlusProvider
-    ) {
+                    //        , ezfbProvider
+                    //        , GooglePlusProvider
+) {
 //        GooglePlusProvider.init({
 //            clientId: authKeys.googleClientId
 //        });
@@ -29,31 +27,17 @@ angular.module('app.auth', [
             title: 'Login',
             rootId: 'extra-page'
         }
+        // ,
+        // resolve: {
+        //     scripts: function(lazyScript){
+        //         return lazyScript.register([
+        //             'build/vendor.ui.js'
+        //         ])
+        //
+        //     }
+        // }
 
-    })
-
-    /*.state('login', {
-        url: '/login',
-        views: {
-            root: {
-                templateUrl: 'app/auth/views/login.html'
-            }
-        },
-        data: {
-            title: 'Login',
-            htmlId: 'extr-page'
-        },
-        resolve: {
-            scripts: function(lazyScript){
-                return lazyScript.register([
-                    'build/vendor.ui.js'
-                ])
-
-            }
-        }
-    })*/
-
-    .state('register', {
+    }).state('register', {
         url: '/register',
         views: {
             root: {
@@ -65,9 +49,7 @@ angular.module('app.auth', [
             title: 'Register',
             htmlId: 'extr-page'
         }
-    })
-
-    .state('forgotPassword', {
+    }).state('forgotPassword', {
         url: '/forgot-password',
         views: {
             root: {
@@ -95,6 +77,6 @@ angular.module('app.auth', [
 
 
 }).constant('authKeys', {
-    /*googleClientId: '',
-    facebookAppId: ''*/
+    // googleClientId: '',
+    // facebookAppId: ''
 });

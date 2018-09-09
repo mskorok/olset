@@ -1,5 +1,3 @@
-"use strict";
-
 angular.module('app.olset', ['ui.router']);
 
 angular.module('app.olset').config(function ($stateProvider) {
@@ -69,12 +67,39 @@ angular.module('app.olset').config(function ($stateProvider) {
                 }
             },
             data: {
-                title: 'Process steps',
+                title: 'Process steps'
             },
             resolve: {
                 scripts: function (lazyScript) {
                     return lazyScript.register([
                         'build/vendor.ui.js'
+                    ])
+
+                }
+            }
+
+        })
+        .state('app.olset.flow', {
+
+            url: '/olset/flow/{processId:int}',
+
+            params: {
+                processId: {value: null, squash: true}
+            },
+            views: {
+                "content@app": {
+                    controller: 'olsetFlowCtrl',
+                    templateUrl: "app/olset/views/olset-flow.html"
+                }
+            },
+            data: {
+                title: 'Process flow'
+            },
+            resolve: {
+                scripts: function (lazyScript) {
+                    return lazyScript.register([
+                        'build/vendor.ui.js',
+                        'node_modules/@ckeditor/ckeditor5-build-classic/build/ckeditor.js'
                     ])
 
                 }

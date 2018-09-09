@@ -1,0 +1,184 @@
+<div id="content">
+    <div class="row">
+        <div smart-include="app/layout/partials/sub-header.tpl.html"></div>
+    </div>
+    <div style="margin-bottom:15px;">
+        <!--<button type="button" ng-click="openModaltoAddOrEdit('','','',0,'Add a new Question')" class="btn btn-labeled btn-primary">-->
+        <!--<span class="btn-label">-->
+        <!--<i class="glyphicon glyphicon-plus-sign"></i>-->
+        <!--</span>Create new Question-->
+        <!--</button>-->
+    </div>
+    <!-- widget grid -->
+    <section id="widget-grid" data-widget-grid>
+        <!-- row -->
+        <div class="row">
+
+            <!-- NEW WIDGET START -->
+            <article class="col-sm-12 col-md-12 col-lg-12" style="padding: 20px; background-color: #fff;">
+                <header>
+                    <h1>OLSET {{processYear}}</h1>
+                    <br>
+                    <h2> Steps for {{olsetProcessData.title}}</h2>
+                    <div class="col-md-12">
+                        <h3>Current Reality</h3>
+                        <!--<div id="current_reality" class="app-pointer"-->
+                             <!--data-ng-bind-html="olsetProcessData.CurrentReality"></div>-->
+                        <div id="current_reality_input">
+                            <form id="current_reality_form">
+                                <textarea class="w-100" rows="7" id="current_reality_editor">
+                                    {{olsetProcessData.CurrentReality}}
+                                </textarea>
+                                <br>
+                                <button type="submit" class="btn btn-success">Save</button>
+                            </form>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-12">
+                        <h3>Initial Intentions</h3>
+                        <!--<div id="initial_intentions" class="app-pointer"-->
+                             <!--data-ng-bind-html="olsetProcessData.InitialIntentions"></div>-->
+                        <div id="initial_intentions_input">
+                            <form id="initial_intentions_form">
+                                <textarea class="w-100" rows="7" id="initial_intentions_editor">
+                                    {{olsetProcessData.InitialIntentions}}
+                                </textarea>
+                                <br>
+                                <button type="submit" class="btn btn-success">Save</button>
+                            </form>
+                        </div>
+                    </div>
+                </header>
+                <div>
+                    <div class="widget-body no-padding">
+                        <div class="table-responsive" style="padding:13px;">
+                            <div class="col-md-12">
+                                <h2>Initial Survey</h2>
+                                <a ui-sref="app.olset.evaluation({evaluationId : olsetProcessData.step0})"
+                                   class="btn btn-primary btn-lg btn-block">
+                                    Evaluation Survey >>
+                                </a>
+                            </div>
+                            <div class="col-md-12">
+                                <h2>Step 0</h2>
+                                <div class="col-md-12">
+                                    <a ui-sref="app.olset.evaluation({evaluationId : olsetProcessData.reality})"
+                                       class="btn btn-primary btn-lg btn-block">
+                                        Current Situation Survey >>
+                                    </a>
+                                </div>
+                                <div class="col-md-12 m-t-5">
+                                    <a ui-sref="app.olset.evaluation({evaluationId : olsetProcessData.vision})"
+                                       class="btn btn-primary btn-lg btn-block">
+                                        Vision Survey >>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <h2>Step 1: Understand</h2>
+                                <a ui-sref="app.systemicStructureMap.manager({processId : processId})"
+                                   class="btn btn-primary btn-lg btn-block">
+                                    Systemic Structure Map >>
+                                </a>
+                            </div>
+
+                            <div class="col-md-12">
+                                <h2>Step 2: Design and Implement</h2>
+                                <a ui-sref="app.sysmap.manager.process({processId : processId})"
+                                   class="btn btn-primary btn-lg btn-block">
+                                    Systemic Action Map >>
+                                </a>
+                            </div>
+                            <div class="col-md-12">
+                                <h2>Step 3: Self-Evaluate</h2>
+                                <a ui-sref="app.olset.evaluation({evaluationId : olsetProcessData.step3_0})"
+                                   class="btn btn-primary btn-lg btn-block">
+                                    Evaluation Survey >>
+                                </a>
+                            </div>
+                            <div class="col-md-12 m-t-5 m-b-5">
+                                <div data-ng-repeat="(key, yearData) in processYears">
+                                    <h1>OLSET {{yearData.date | limitTo : 4 : 0}}</h1>
+                                    <div class="col-md-12"  data-ng-if="key == 0">
+                                        <h2>Initial survey => OLSET {{processYear}} Step3</h2>
+                                        <a ui-sref="app.olset.evaluation({evaluationId : olsetProcessData.step3_0})"
+                                           class="btn btn-primary btn-lg btn-block">
+                                            Evaluation Survey >>
+                                        </a>
+                                    </div>
+                                    <div class="col-md-12" data-ng-if="key != 0">
+                                        <h2>Previous survey => OLSET {{lastYear(yearData.date)}} Step3</h2>
+                                        <a ui-sref="app.olset.evaluation({evaluationId : lastYearSurvey(key)})"
+                                           class="btn btn-primary btn-lg btn-block">
+                                            Evaluation Survey >>
+                                        </a>
+                                    </div>
+
+
+                                    <div class="col-md-12">
+                                        <h2>Step 0</h2>
+                                        <div class="col-md-12">
+                                            <a ui-sref="app.olset.evaluation({evaluationId : yearData.reality})"
+                                               class="btn btn-primary btn-lg btn-block">
+                                                Current Situation Survey >>
+                                            </a>
+                                        </div>
+                                        <div class="col-md-12 m-t-5">
+                                            <a ui-sref="app.olset.evaluation({evaluationId : yearData.vision})"
+                                               class="btn btn-primary btn-lg btn-block">
+                                                Vision Survey >>
+                                            </a>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-12">
+                                        <h2>Step 1: Understand</h2>
+                                        <a ui-sref="app.systemicStructureMap.manager({processId : processId})"
+                                           class="btn btn-primary btn-lg btn-block">
+                                            Systemic Structure Map >>
+                                        </a>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <h2>Step 2: Design and Implement</h2>
+                                        <a ui-sref="app.sysmap.manager.process({processId : processId})"
+                                           class="btn btn-primary btn-lg btn-block">
+                                            Systemic Action Map >>
+                                        </a>
+                                    </div>
+
+
+
+                                    <div class="col-md-12">
+                                        <h2>Step 3: Self-Evaluate</h2>
+                                        <a ui-sref="app.olset.evaluation({evaluationId : yearData.survey_id})"
+                                           class="btn btn-primary btn-lg btn-block">
+                                            Evaluation Survey >>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr style="border: 2px !important;">
+                            <h1>OLSET {{nextYear()}}</h1>
+                            <div class="col-md-12">
+                                <h2>After Action Review</h2>
+                                <a ui-sref="app.olset.evaluation({evaluationId : olsetProcessData.step3_1})"
+                                   class="btn btn-primary btn-lg btn-block">
+                                    After Action Review >>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <div class="row">
+            </div>
+            <!-- end row -->
+        </div>
+    </section>
+    <!-- end widget grid -->
+</div>

@@ -1,5 +1,3 @@
-"use strict";
-
 angular.module('app.sysmap', ['ui.router']);
 
 angular.module('app.sysmap').config(function ($stateProvider) {
@@ -8,7 +6,7 @@ angular.module('app.sysmap').config(function ($stateProvider) {
         .state('app.sysmap', {
             abstract: true,
             data: {
-                title: 'Systemic Map Manager'
+                title: 'Systemic Map'
             }
         })
         .state('app.sysmap.manager', {
@@ -22,7 +20,7 @@ angular.module('app.sysmap').config(function ($stateProvider) {
             },
 
             data: {
-                //title: 'Systemic Map Manager',
+                title: 'Systemic Map Manager'
                 //rootId: 'extra-page'
             }
 
@@ -43,7 +41,7 @@ angular.module('app.sysmap').config(function ($stateProvider) {
             },
 
             data: {
-                title: 'Single Map View',
+                title: 'Single Map View'
             },
             resolve: {
                 scripts: function (lazyScript) {
@@ -71,7 +69,7 @@ angular.module('app.sysmap').config(function ($stateProvider) {
             },
 
             data: {
-                title: 'Single Map View',
+                title: 'Single Map View'
             },
             resolve: {
                 scripts: function (lazyScript) {
@@ -98,7 +96,7 @@ angular.module('app.sysmap').config(function ($stateProvider) {
             },
 
             data: {
-                title: 'Create Systemic Map',
+                title: 'Create Systemic Map'
                 //rootId: 'extra-page'
             }
 

@@ -4,14 +4,14 @@ angular.module('app.users').controller('usrAddNewCtrl', function (MainConf, $sco
     $scope.token = authToken;
     $scope.theUserId = null;
     $scope.userRegistrationData = {
-        'firstName' : '',
-        'lastName' : '',
-        'username' : '',
-        'email' : '',
-        'department' : [],
-        'role' : '',
-        'password' : '',
-    }
+        'firstName': '',
+        'lastName': '',
+        'username': '',
+        'email': '',
+        'department': [],
+        'role': '',
+        'password': ''
+    };
 
     $scope.getDepartment = function (depID) {
         var idx = $scope.userRegistrationData.department.indexOf(depID);
@@ -21,55 +21,59 @@ angular.module('app.users').controller('usrAddNewCtrl', function (MainConf, $sco
         else {
             $scope.userRegistrationData.department.push(depID);
         }
-        console.log('registrationData: ',$scope.userRegistrationData.department);
-    }
+        console.log('registrationData: ', $scope.userRegistrationData.department);
+    };
 
-    $scope.UserRegistration = function() {
+    $scope.UserRegistration = function () {
 
-        var dataall = {
-            "firstName":$scope.userRegistrationData.firstName,
-            "username":$scope.userRegistrationData.username,
-            "email":$scope.userRegistrationData.email,
+        var data_all = {
+            "firstName": $scope.userRegistrationData.firstName,
+            "username": $scope.userRegistrationData.username,
+            "email": $scope.userRegistrationData.email,
             "LastName": $scope.userRegistrationData.lastName,
-            "password":$scope.userRegistrationData.password
-        }
+            "password": $scope.userRegistrationData.password
+        };
 
-        var ordata = JSON.stringify(dataall);
+        var org_data = JSON.stringify(data_all);
 
         var authToken = $window.localStorage.getItem('authToken');
         console.log(authToken);
-        if ($scope.userRegistrationData.role == 'manager') {
+        if ($scope.userRegistrationData.role === 'manager') {
 
-            console.log("reqd", $scope.userRegistrationData);
+            console.log('user role: ', $scope.userRegistrationData);
             $http({
                 method: 'POST',
                 url: MainConf.servicesUrl() + 'users/createManager',
                 headers: {
-                    'Authorization': 'Bearer '+authToken,
+                    'Authorization': 'Bearer ' + authToken,
                     'Content-Type': 'application/json'
                 },
-                data: ordata
+                data: org_data
             }).then(function successCallback(response) {
+                console.log('Users createManager data success', response);
                 $scope.theUserId = response.data.data.data.userid;
                 console.log("resp", $scope.theUserId);
             }, function errorCallback(response) {
-                console.log(response);
+                console.warn('Users createManager data error', response);
+                alert('Users createManager data error');
             });
 
-        } else if($scope.userRegistrationData.role == 'user') {
+        } else if ($scope.userRegistrationData.role === 'user') {
 
             $http({
                 method: 'POST',
                 url: MainConf.servicesUrl() + 'users/createUser',
                 headers: {
-                    'Authorization': 'Bearer '+authToken,
+                    'Authorization': 'Bearer ' + authToken,
                     'Content-Type': 'application/json'
                 },
-                data: ordata
+                data: org_data
             }).then(function successCallback(response) {
+                console.log('Users createUser data success', response);
                 $scope.theUserId = response.data.data.data.userid;
             }, function errorCallback(response) {
-                console.log(response);
+                console.warn('Users createUser data error', response);
+                alert('Users createUser data error');
             });
 
         } else {
@@ -83,25 +87,25 @@ angular.module('app.users').controller('usrAddNewCtrl', function (MainConf, $sco
                     url: MainConf.servicesUrl() + 'department/assignUserDepartment/' + $scope.theUserId,
                     //data: "message=" + message,
                     headers: {
-                        'Authorization': 'Bearer '+authToken,
+                        'Authorization': 'Bearer ' + authToken,
                         'Content-Type': 'application/json'
                     },
                     data: $scope.userRegistrationData.department
                 }).then(function successCallback(response) {
-                    console.log('depSet:', response);
-                    $state.go('app.users.manager');
+                    console.log('Users assignUserDepartment data success', response);
                 }, function errorCallback(response) {
-                    console.warn(response);
+                    console.warn('Users assignUserDepartment data error', response);
+                    alert('Users assignUserDepartment data error');
                 });
             }
-        }
+        };
 
-        setTimeout(addToDepartment,1000);
-    }
-
+        setTimeout(addToDepartment, 1000);
+    };
 
     var departmentsData1 = function () {
         $http({
+
             method: 'GET',
             url: MainConf.servicesUrl() + 'department',
             headers: {
@@ -110,13 +114,13 @@ angular.module('app.users').controller('usrAddNewCtrl', function (MainConf, $sco
             }
 
         }).then(function successCallback(response) {
+            console.log('Users department data success', response);
             $scope.departmentData = response.data.data.data;
-            console.log("dep", $scope.departmentData);
         }, function errorCallback(response) {
+            console.warn('Users department data error', response);
+            alert('Users department data error');
             return false;
         });
-    }
+    };
     departmentsData1();
-
-
-})
+});

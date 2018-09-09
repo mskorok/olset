@@ -1,5 +1,3 @@
-"use strict";
-
 angular.module('app.auth').directive('loginInfo', function(User){
 
     return {
@@ -11,4 +9,4 @@ angular.module('app.auth').directive('loginInfo', function(User){
             });
         }
     }
-})
+});

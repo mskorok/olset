@@ -1,5 +1,3 @@
-'use strict';
-
 angular.module('app.users').directive('usertablesBasic', function ($compile) {
     return {
         restrict: 'A',
@@ -25,10 +23,11 @@ angular.module('app.users').directive('usertablesBasic', function ($compile) {
 
             var options = {
                 "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 col-xs-12 hidden-xs'l>r>" +
-                    "t" +
-                    "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
-                oLanguage:{
-                    "sSearch": "<span class='input-group-addon input-sm'><i class='glyphicon glyphicon-search'></i></span> ",
+                "t" +
+                "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
+                oLanguage: {
+                    "sSearch": "<span class='input-group-addon input-sm'><i class='glyphicon glyphicon-search'>" +
+                    "</i></span> ",
                     "sLengthMenu": "_MENU_"
                 },
                 "autoWidth": false,
@@ -50,20 +49,20 @@ angular.module('app.users').directive('usertablesBasic', function ($compile) {
                 }
             };
 
-            if(attributes.tableOptions){
+            if (attributes.tableOptions) {
                 options = angular.extend(options, scope.tableOptions)
             }
 
             var _dataTable;
 
             var childFormat = element.find('.smart-datatable-child-format');
-            if(childFormat.length){
+            if (childFormat.length) {
                 var childFormatTemplate = childFormat.remove().html();
                 element.on('click', childFormat.data('childControl'), function () {
                     var tr = $(this).closest('tr');
 
-                    var row = _dataTable.row( tr );
-                    if ( row.child.isShown() ) {
+                    var row = _dataTable.row(tr);
+                    if (row.child.isShown()) {
                         // This row is already open - close it
                         row.child.hide();
                         tr.removeClass('shown');
@@ -73,27 +72,29 @@ angular.module('app.users').directive('usertablesBasic', function ($compile) {
                         var childScope = scope.$new();
                         childScope.d = row.data();
                         var html = $compile(childFormatTemplate)(childScope);
-                        row.child( html ).show();
+                        row.child(html).show();
                         tr.addClass('shown');
                     }
                 })
             }
 
 
+            _dataTable = element.DataTable(options);
 
-            _dataTable =  element.DataTable(options);
+            if (attributes.bindFilters) {
+                element.parent().find("div.toolbar").html(
+                    '<div class="text-right"><img src="styles/img/logo.png"' +
+                    ' alt="SmartAdmin" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>'
+                );
 
-            if(attributes.bindFilters){
-                element.parent().find("div.toolbar").html('<div class="text-right"><img src="styles/img/logo.png" alt="SmartAdmin" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
-
-                element.on( 'keyup change', 'thead th input[type=text]', function () {
+                element.on('keyup change', 'thead th input[type=text]', function () {
 
                     _dataTable
-                        .column( $(this).parent().index()+':visible' )
-                        .search( this.value )
+                        .column($(this).parent().index() + ':visible')
+                        .search(this.value)
                         .draw();
 
-                } );
+                });
             }
         }
     }

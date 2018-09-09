@@ -1,5 +1,3 @@
-"use strict";
-
 angular.module('app').controller('TodoCtrl', function ($scope, $timeout, Todo) {
     $scope.newTodo = undefined;
 
@@ -21,7 +19,7 @@ angular.module('app').controller('TodoCtrl', function ($scope, $timeout, Todo) {
 
     $scope.createTodo = function () {
         $scope.todos.push(
-           Todo.normalize($scope.newTodo)
+            Todo.normalize($scope.newTodo)
         );
         $scope.newTodo = undefined;
 

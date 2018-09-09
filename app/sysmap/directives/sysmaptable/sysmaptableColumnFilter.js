@@ -1,5 +1,3 @@
-'use strict';
-
 angular.module('app.sysmap').directive('sysmaptableColumnFilter', function () {
     return {
         restrict: 'A',
@@ -34,40 +32,44 @@ angular.module('app.sysmap').directive('sysmaptableColumnFilter', function () {
                 //"bAutoWidth": false,
                 //"bPaginate": false,
                 //"bStateSave": true // saves sort state using localStorage
-                "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6 hidden-xs'f><'col-sm-6 col-xs-12 hidden-xs'<'toolbar'>>r>"+
-                    "t"+
-                    "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
-                oLanguage:{
-                    "sSearch": "<span class='input-group-addon input-sm'><i class='glyphicon glyphicon-search'></i></span> "
+                "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6 hidden-xs'f><'col-sm-6 col-xs-12 hidden-xs'<'toolbar'>>r>" +
+                "t" +
+                "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
+                oLanguage: {
+                    "sSearch": "<span class='input-group-addon input-sm'><i class='glyphicon glyphicon-search'>" +
+                    "</i></span> "
                 },
-                "autoWidth" : false,
-                "preDrawCallback" : function() {
+                "autoWidth": false,
+                "preDrawCallback": function () {
                     // Initialize the responsive datatables helper once.
                     if (!responsiveHelper) {
                         responsiveHelper = new ResponsiveDatatablesHelper(element, breakpointDefinition);
                     }
                 },
-                "rowCallback" : function(nRow) {
+                "rowCallback": function (nRow) {
                     responsiveHelper.createExpandIcon(nRow);
                 },
-                "drawCallback" : function(oSettings) {
+                "drawCallback": function (oSettings) {
                     responsiveHelper.respond();
                 }
 
             });
 
             // custom toolbar
-            element.parent().find("div.toolbar").html('<div class="text-right"><img src="styles/img/logo.png" alt="SmartAdmin" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>');
+            element.parent().find("div.toolbar").html(
+                '<div class="text-right"><img src="styles/img/logo.png"' +
+                ' alt="SmartAdmin" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>'
+            );
 
             // Apply the filter
-            element.on( 'keyup change', 'thead th input[type=text]', function () {
+            element.on('keyup change', 'thead th input[type=text]', function () {
 
                 otable
-                    .column( $(this).parent().index()+':visible' )
-                    .search( this.value )
+                    .column($(this).parent().index() + ':visible')
+                    .search(this.value)
                     .draw();
 
-            } );
+            });
         }
     }
 });

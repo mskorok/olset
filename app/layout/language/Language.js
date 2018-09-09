@@ -1,5 +1,3 @@
-"use strict";
-
 angular.module('app').factory('Language', function($http, APP_CONFIG){
 
 	function getLanguage(key, callback) {

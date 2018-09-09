@@ -1,53 +1,56 @@
-'use strict';
+angular.module('app.dashboard').controller(
+    'DashboardCtrl',
+    function ($scope, $http, $window, $stateParams, $document, $state, $timeout, MainConf, Auth) {
+        $scope.token = $window.localStorage.getItem('authToken');
 
-angular.module('app.dashboard').controller('DashboardCtrl', function ($scope, $http, $window, $stateParams, $document, $state, $timeout, MainConf, Auth) {
+        var datas2 = function () {
 
-    var authToken = $window.localStorage.getItem('authToken');
-    $scope.token = authToken;
+            if (Auth.userHaveRole() == "Manager") {
+                $http({
+                    method: 'GET',
+                    url: MainConf.servicesUrl() + 'statistics/dashboard',
+                    headers: {
+                        'Authorization': 'Bearer ' + $scope.token,
+                        'Content-Type': 'application/json'
+                    }
 
-    var datas2 = function () {
+                }).then(function successCallback(response) {
+                    console.log('Dashboard data success', response);
+                    $scope.olsetStatsInfo = response.data.data.data;
+                    console.log('dashboard resp', $scope.olsetStatsInfo.count_organizations[0]);
 
-        if (Auth.userHaveRole() == "Manager") {
+                }, function errorCallback(response) {
+                    console.warn('Dashboard data error', response);
+                    alert('Dashboard data error');
+                    $scope.olsetStatsInfo = response.data.data.data;
+                    console.log('data error', $scope.olsetStatsInfo);
+                });
+            }
+
             $http({
                 method: 'GET',
-                url: MainConf.servicesUrl() + 'statistics/dashboard',
+                url: MainConf.servicesUrl() + 'survey/getAvailableSurveys',
                 headers: {
-                    'Authorization': 'Bearer ' + authToken,
+                    'Authorization': 'Bearer ' + $scope.token,
                     'Content-Type': 'application/json'
                 }
 
             }).then(function successCallback(response) {
-                $scope.olsetStatsInfo = response.data.data.data;
-                console.log('dashboard resp',$scope.olsetStatsInfo.count_organizations[0]);
+                console.log('Dashboard getAvailableSurveys data success', response);
+                $scope.olsetSurvey = response.data.data.data;
+                console.log('user surveys:: ', $scope.olsetSurvey);
 
             }, function errorCallback(response) {
-                $scope.olsetStatsInfo = response.data.data.data;
-                //console.log('YOYO');
-                //console.log($scope.surveyQuestionData);
+                console.warn('Dashboard getAvailableSurveys data error', response);
+                alert('Dashboard getAvailableSurveys data error');
+                $scope.olsetProcessData = response.data.process;
+                console.log('error process data ', $scope.olsetProcessData);
             });
-        }
 
-        $http({
-            method: 'GET',
-            url: MainConf.servicesUrl() + 'survey/getAvailableSurveys',
-            headers: {
-                'Authorization': 'Bearer ' + authToken,
-                'Content-Type': 'application/json'
-            }
+            //$scope.$apply();
+        };
 
-        }).then(function successCallback(response) {
-            $scope.olsetSurvey = response.data.data.data;
-            console.log('user surveys:: ',$scope.olsetSurvey);
+        datas2();
 
-        }, function errorCallback(response) {
-            $scope.olsetProcessData = response.data.process;
-            //console.log('YOYO');
-            //console.log($scope.surveyQuestionData);
-        });
-
-        //$scope.$apply();
     }
-
-    datas2();
-
-});
+);

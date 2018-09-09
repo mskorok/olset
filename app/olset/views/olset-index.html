@@ -1,7 +1,7 @@
 <div id="content">
-<div class="row">
-    <div smart-include="app/layout/partials/sub-header.tpl.html"></div>
-</div>
+    <div class="row">
+        <div smart-include="app/layout/partials/sub-header.tpl.html"></div>
+    </div>
 
     <div style="margin-bottom:15px;">
         <a data-ui-sref="app.olset.create">
@@ -12,65 +12,79 @@
             </button>
         </a>
     </div>
-<!-- widget grid -->
-<section id="widget-grid" data-widget-grid>
-<!-- row -->
-<div class="row">
+    <!-- widget grid -->
+    <section id="widget-grid" data-widget-grid>
+        <!-- row -->
+        <div class="row">
 
-<!-- NEW WIDGET START -->
-<article class="col-sm-12 col-md-12 col-lg-12">
-    <div jarvis-widget id="table-hover-states-widget" data-widget-color="nightSky" data-widget-editbutton="false">
-        <header>
-            <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+            <!-- NEW WIDGET START -->
+            <article class="col-sm-12 col-md-12 col-lg-12">
+                <div jarvis-widget id="table-hover-states-widget" data-widget-color="nightSky"
+                     data-widget-editbutton="false">
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-table"></i> </span>
 
-	            <h2>OLSET Index: </h2>
-        </header>
-        <div>
-            <div class="widget-body no-padding">
-                <div class="table-responsive">
+                        <h2>OLSET Index: </h2>
+                    </header>
+                    <div>
+                        <div class="widget-body no-padding">
+                            <div class="table-responsive">
 
-                    <table class="table table-hover">
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th><i class="fa fa-building"></i>  Name</th>
-                            <th><i class="fa fa-calendar"></i>  Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr ng-repeat="index in olsetIndexData">
-                            <td>{{index.id}}</td>
-                            <td><a ui-sref="app.olset.steps({processId : index.id})">{{index.title}}</a></td>
-                            <td><a class="fa fa-lg fa-trash-o" ng-click="deleteOlsetIndexItem(index.id)"></a>
-                                <a style="margin-left:5px; margin-top:3px;" class="fa fa-lg fa-pencil-square-o" ui-sref="app.olset.edit({processId : index.id})"></a>
-                                <label class="checkbox-inline processSatusCheck" ng-style="index.status == 0 && {'color':'red'} || {'color':'green'}">
-                                    <input
-                                            type="checkbox"
-                                            value="{{index.status}}"
-                                            class="checkbox style-1"
-                                            ng-checked="index.status == 1"
-                                            ng-click="changeProcessStatus(index.id, $index)"
-                                    >
-                                    <span>{{index.status == 0 ? 'Stopped' : 'Active'}}</span>
-                                </label>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                                <table class="table table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th><i class="fa fa-building"></i> Name</th>
+                                        <th><i class="fa fa-calendar"></i> Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="index in olsetIndexData">
+                                        <td>{{index.id}}</td>
+                                        <!--<td>-->
+                                            <!--<a ui-sref="app.olset.steps({processId : index.id})" class="app-pointer">-->
+                                                <!--{{index.title}}-->
+                                            <!--</a>-->
+                                        <!--</td>-->
+                                        <td>
+                                            <a ui-sref="app.olset.flow({processId : index.id})" class="app-pointer">
+                                                {{index.title}}
+                                            </a>
+                                        </td>
+                                        <td><a class="fa fa-lg fa-trash-o"
+                                               ng-click="deleteOlsetIndexItem(index.id)"></a>
+                                            <a style="margin-left:5px; margin-top:3px;"
+                                               class="fa fa-lg fa-pencil-square-o"
+                                               ui-sref="app.olset.edit({processId : index.id})"></a>
+                                            <label class="checkbox-inline processStatusCheck"
+                                                   ng-style="index.status == 0 && {'color':'red'} || {'color':'green'}">
+                                                <input
+                                                        type="checkbox"
+                                                        value="{{index.status}}"
+                                                        class="checkbox style-1"
+                                                        ng-checked="index.status == 1"
+                                                        ng-click="changeProcessStatus(index.id, $index)"
+                                                >
+                                                <span>{{index.status == 0 ? 'Stopped' : 'Active'}}</span>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </article>
+            <!-- WIDGET END -->
+
+
         </div>
-    </div>
-</article>
-<!-- WIDGET END -->
-
-
-</div>
-<!-- end row -->
-<!-- row -->
-<div class="row">
-</div>
-<!-- end row -->
-</section>
-<!-- end widget grid -->
+        <!-- end row -->
+        <!-- row -->
+        <div class="row">
+        </div>
+        <!-- end row -->
+    </section>
+    <!-- end widget grid -->
 </div>
