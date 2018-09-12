@@ -8,7 +8,7 @@ angular.module('app.dashboard').directive('statsOrganization', function () {
         transclude: true,
         link: function (scope, element, attrs) {
             attrs.$observe('countorgrun', function (value) {
-                console.log('cnt__', scope.countorgrun);
+                // console.log('cnt__', scope.countorgrun);
                 if (value) {
                     var finalJson = JSON.parse(scope.countorgrun);
                     console.log('dashboard final json', finalJson);

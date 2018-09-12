@@ -15,7 +15,7 @@
 
             } else {
 
-                $body.hasClass('mobile-view-activated')
+                $body.hasClass('mobile-view-activated');
 
                 // toggle open
                 $this.toggleClass('open');

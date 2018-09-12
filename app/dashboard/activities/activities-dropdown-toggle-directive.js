@@ -31,7 +31,7 @@ angular.module('app').directive('activitiesDropdownToggle', function($log) {
 
 			}
 
-		})
+		});
 
 		$(document).mouseup(function(e) {
 			if (ajax_dropdown && !ajax_dropdown.is(e.target) && ajax_dropdown.has(e.target).length === 0) {
@@ -39,7 +39,7 @@ angular.module('app').directive('activitiesDropdownToggle', function($log) {
 				$element.removeClass('active');
 			}
 		});
-	}
+	};
 	
 	return{
 		restrict:'EA',

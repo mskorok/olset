@@ -8,7 +8,7 @@
             
 
             function createItem(item, parent, level){
-                var li = $('<li />' ,{'ui-sref-active': "active"})
+                var li = $('<li />' ,{'ui-sref-active': "active"});
                 var a = $('<a />');
                 var i = $('<i />');
 

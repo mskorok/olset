@@ -26,7 +26,7 @@ angular.module('app.graphs').directive('chartjsBarChart', function () {
                 responsive: true,
                 //String - A legend template
                 legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].lineColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
-            }
+            };
 
             var barData = {
                 labels: ["January", "February", "March", "April", "May", "June", "July"],

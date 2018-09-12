@@ -1,10 +1,58 @@
 angular.module('app.layout').controller(
     'HeaderCtrl',
-    function ($scope, $window, $state, User, Auth, $location, $rootScope, $http, MainConf, $element) {
+    function ($scope, $window, $state, User, Auth, $location, $rootScope, $http, MainConf, $element, $sce) {
 
         $scope.slug = {
             "slug": null
         };
+        var getInfo = function () {
+            $scope.slug.slug = $location.path().replace("/", "");
+            $scope.slug.slug = $scope.slug.slug.replace(new RegExp('/', 'g'), "_");
+            $scope.slug.slug = $scope.slug.slug.replace(/[0-9]/g, '');
+            //$scope.slug.slug.split('/')[0]
+
+
+            $http({
+                method: 'POST',
+                url: MainConf.servicesUrl() + 'survey/addWpHelp',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: $scope.slug
+
+            }).then(function successCallback(response) {
+                console.log('success addWpHelper: ', response);
+                $scope.helpForPage = '.';
+                if (response.data.data.code === 1) {
+                    var info_button = document.getElementById('info_popover');
+                    if (info_button) {
+                        var cont = info_button.closest('span').querySelector('div.popover-content');
+                        if (cont) {
+                            setTimeout(function () {
+                                cont.innerHTML = $sce.trustAsHtml(response.data.data.data);
+                            }, 50)
+
+                        }
+                        info_button.addEventListener('click', function (ev) {
+                            var container = info_button.closest('span').querySelector('div.popover-content');
+                            if (container) {
+                                setTimeout(function () {
+                                    container.innerHTML = $sce.trustAsHtml(response.data.data.data);
+                                }, 50)
+                            }
+                        })
+                    }
+                } else {
+                    $scope.helpForPage = "Could not find help for this page.";
+                }
+
+            }, function errorCallback(response) {
+                console.log('error addWpHelp', response);
+                alert('error addWpHelp');
+            });
+        };
+        
+
         //
         // $rootScope.$on('$routeChangeSuccess', function(e, current, pre) {
         //     console.log('Current route name: ' + $location.path());
@@ -12,41 +60,9 @@ angular.module('app.layout').controller(
         //     //console.log($routeParams);
         // });
         //console.log($window.localStorage.getItem('userData'));
+        getInfo();
         $rootScope.$on('$locationChangeStart', function (event) {
-
-                $scope.slug.slug = $location.path().replace("/", "");
-                $scope.slug.slug = $scope.slug.slug.replace(new RegExp('/', 'g'), "_");
-                $scope.slug.slug = $scope.slug.slug.replace(/[0-9]/g, '');
-                //$scope.slug.slug.split('/')[0]
-
-
-                $http({
-                    method: 'POST',
-                    url: MainConf.servicesUrl() + 'survey/addWpHelp',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    data: $scope.slug
-
-                }).then(function successCallback(response) {
-                    console.log('Current route name is: ' + $scope.slug.slug);
-                    if (response.data.data.code === 1) {
-
-                        $scope.helpForPage = response.data.data.data;
-
-                        if ($element.data('bs.popover')) {
-                            $element.data('bs.popover').options.content = $scope.helpForPage;
-                        }
-                        //t.data('popover').tip().find('.popover-content').html(r);
-                    } else {
-                        $scope.helpForPage = "Could not find help for this page.";
-                    }
-
-                }, function errorCallback(response) {
-                    console.log('error addWpHelp', response);
-                    alert('error addWpHelp');
-                });
-
+                getInfo();
             }
         );
 

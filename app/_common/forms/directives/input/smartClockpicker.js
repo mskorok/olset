@@ -9,7 +9,7 @@ angular.module('SmartAdmin.Forms').directive('smartClockpicker', function () {
             var options = {
                 placement: 'top',
                 donetext: 'Done'
-            }
+            };
 
             tElement.clockpicker(options);
         }

@@ -1,9 +1,6 @@
 angular.module('app.olset').controller(
     'olsetFlowCtrl',
     function ($scope, $http, $window, $stateParams, $document, $state, $timeout, MainConf, ngDialog) {
-
-        var flow = {};
-
         var authToken = $window.localStorage.getItem('authToken');
         $scope.token = authToken;
         $scope.processId = $stateParams.processId;
