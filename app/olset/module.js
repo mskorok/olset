@@ -106,6 +106,33 @@ angular.module('app.olset').config(function ($stateProvider) {
             }
 
         })
+        .state('app.olset.process', {
+
+            url: '/olset/process/{processId:int}',
+
+            params: {
+                processId: {value: null, squash: true}
+            },
+            views: {
+                "content@app": {
+                    controller: 'olsetProcessCtrl',
+                    templateUrl: "app/olset/views/olset-process.html"
+                }
+            },
+            data: {
+                title: 'Process flow'
+            },
+            resolve: {
+                scripts: function (lazyScript) {
+                    return lazyScript.register([
+                        'build/vendor.ui.js',
+                        'node_modules/@ckeditor/ckeditor5-build-classic/build/ckeditor.js'
+                    ])
+
+                }
+            }
+
+        })
         .state('app.olset.evaluation', {
 
             url: '/olset/evaluation/{evaluationId:int}',

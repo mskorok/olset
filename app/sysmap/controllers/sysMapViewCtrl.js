@@ -43,9 +43,16 @@ angular.module('app.sysmap').controller(
             }).then(function successCallback(response) {
                 console.log('SysMap getItemTree data success', response);
                 $scope.dataToRender = response.data.data.htmlCode;
-                var urlSmall = MainConf.servicesUrl() + "public/sam_view.php?token="
+                // var urlSmall = MainConf.servicesUrl() + "public/sam_view.php?token="
+                //     + authToken + "&id=" + $scope.sysMapId + "&t=" + Date.now() + "&v=0";
+                // var urlBig = MainConf.servicesUrl() + "public/sam_view.php?token="
+                //     + authToken + "&id=" + $scope.sysMapId
+                //     + "&t=" + Date.now() + "&v=1";
+
+
+                var urlSmall = MainConf.servicesUrl() + "sam_view1.php?token="
                     + authToken + "&id=" + $scope.sysMapId + "&t=" + Date.now() + "&v=0";
-                var urlBig = MainConf.servicesUrl() + "public/sam_view.php?token="
+                var urlBig = MainConf.servicesUrl() + "sam_view1.php?token="
                     + authToken + "&id=" + $scope.sysMapId
                     + "&t=" + Date.now() + "&v=1";
 

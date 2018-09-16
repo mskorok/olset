@@ -1,0 +1,28 @@
+<div class="dialog-contents">
+    <div class="dialog-header">
+        <h4>Create and Search AAR for Actions</h4>
+    </div>
+    <div class="col-md-12">
+        <input type="hidden" name="process_id" id="process_id" value="{{processId}}">
+        <div class="form-group" >
+            <select class="form-control" data-ng-model="actions"
+                    id="actions_select"
+                    name="actions_select"
+                    data-ng-options="item.id as item.question for item in items">
+            </select>
+            <small id="actions_select_help" class="form-text text-muted">
+                Actions without AAR
+            </small>
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" name="aar" id="aar" placeholder="AAR"  data-id="{{modalAARid}}" required/></div>
+    </div>
+
+    <div class="ngdialog-buttons">
+        <button type="button" data-ng-click="closeThisDialog()" class="btn btn-default f-right">Cancel</button>
+
+        <button type="button" data-ng-click="addAAR()" class="btn btn-primary">Create AAR</button>
+        <button type="button" data-ng-click="searchAAR()" class="btn btn-primary">Others
+        </button>
+    </div>
+</div>

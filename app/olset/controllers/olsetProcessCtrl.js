@@ -1,6 +1,6 @@
 angular.module('app.olset').controller(
-    'olsetFlowCtrl',
-    function ($scope, $http, $window, $stateParams, $document, $state, $timeout, MainConf, ngDialog) {
+    'olsetProcessCtrl',
+    function ($rootScope, $scope, $http, $window, $stateParams, $document, $state, $timeout, MainConf, ngDialog) {
         var authToken = $window.localStorage.getItem('authToken');
         $scope.token = authToken;
         $scope.processId = $stateParams.processId;
@@ -18,11 +18,66 @@ angular.module('app.olset').controller(
             };
             $scope.addOrEditTitle = modalName;
         };
+        $scope.openModalAAR = function (id) {
+            ngDialog.open({
+                template: MainConf.mainAppPath() + '/olset/views/modal-aar.html',
+                scope: $scope
+            });
+            $scope.modalAARid = id;
+            console.log('tpl_0');
+            $rootScope.$on('ngDialog.opened', function (e, $dialog) {
+                flow.awesomplete('action', flow.awe_url, [{field: "extraInfo", selector: "#aar"}]);
+            });
+        };
+
+        $scope.addAAR = function () {
+            return true;
+        };
+
+        $scope.searchAAR = function () {
+            return false;
+        };
+        var flow = {
+            awe_url: MainConf.servicesUrl() + 'process/awe/' + $scope.processId,
+            awesomplete: function (field, url, selectors) {
+                $http({
+                    method: 'GET',
+                    url: url,
+                    headers: {
+                        'Authorization': 'Bearer ' + authToken,
+                        'Content-Type': 'application/json'
+                    }
+
+                }).then(function successCallback(response) {
+
+                    $scope.items = response.data.data.data;
+                    $scope.aar = response.data.data.aar;
+                    var obj = $scope.aar;
+                    console.log('obj', obj);
+                    //selectors = [{field: "field", selector: "selector"},{field: "field", selector: "selector"}]
+                    selectors.forEach(function (item) {
+                        var list = obj.map(function (i) {
+                            return i[item.field];
+                        });
+
+                        list = list.filter(function (x, i, a) {
+                            return a.indexOf(x) === i;
+                        });
+                        console.log('Awe', list, item.selector, document.querySelectorAll(item.selector));
+                        new Awesomplete(document.querySelector(item.selector), {list: list});
+                    });
+
+                }, function errorCallback(response) {
+                    console.log('Shared Vision data error', response);
+                });
+            }
+        };
+
 
         var getData = function () {
             $http({
                 method: 'GET',
-                url: MainConf.servicesUrl() + 'process/' + $scope.processId + '?include=ProcessYearSurvey',
+                url: MainConf.servicesUrl() + 'process/' + $scope.processId,
                 headers: {
                     'Authorization': 'Bearer ' + authToken,
                     'Content-Type': 'application/json'
@@ -31,21 +86,28 @@ angular.module('app.olset').controller(
             }).then(function successCallback(response) {
                 console.log('Olset process data success', response);
                 $scope.olsetProcessData = response.data.process;
+                $scope.olsetProcessData.SharedVision = $scope.olsetProcessData.SharedVision === null
+                || $scope.olsetProcessData.SharedVision === 'null' ? '' : $scope.olsetProcessData.SharedVision;
                 angular.element(document).ready(function () {
                     ClassicEditor.create(document.querySelector('#current_reality_editor'))
                         .then(function (editor) {
                             editor.setData($scope.olsetProcessData.CurrentReality);
-                            console.log('Current reality editor created');
                         }).catch(function (error) {
                         console.error(error);
                     });
                     ClassicEditor.create(document.querySelector('#initial_intentions_editor'))
                         .then(function (editor) {
                             editor.setData($scope.olsetProcessData.InitialIntentions);
-                            console.log('Initial intentions editor created');
                         }).catch(function (error) {
                         console.error(error);
                     });
+                    ClassicEditor.create(document.querySelector('#shared_vision_editor'))
+                        .then(function (editor) {
+                            editor.setData($scope.olsetProcessData.SharedVision);
+                        }).catch(function (error) {
+                        console.error(error);
+                    });
+
                     var current_reality_form = document.getElementById('current_reality_form');
                     if (current_reality_form) {
                         current_reality_form.addEventListener('submit', function (ev) {
@@ -77,6 +139,42 @@ angular.module('app.olset').controller(
                             }, function errorCallback(response) {
                                 console.log('Current Reality data error', response);
                             });
+
+                            return false;
+                        })
+                    }
+                    var shared_vision_form = document.getElementById('shared_vision_form');
+                    if (shared_vision_form) {
+                        shared_vision_form.addEventListener('submit', function (ev) {
+                            ev.preventDefault();
+                            ev.stopPropagation();
+                            var input = this.querySelector('#shared_vision_editor');
+                            var uri = 'process/shared/' + $scope.processId;
+                            $http({
+                                method: 'POST',
+                                url: MainConf.servicesUrl() + uri,
+                                headers: {
+                                    'Authorization': 'Bearer ' + authToken,
+                                    'Content-Type': 'application/json'
+                                },
+                                data: {
+                                    "text": input.value
+                                }
+
+                            }).then(function successCallback(response) {
+                                console.log('Shared Vision data success', response);
+                                $.bigBox({
+                                    title: "New shared vision description added!",
+                                    color: "#739E73",
+                                    timeout: 5000,
+                                    icon: "fa fa-check",
+                                    number: "1"
+                                });
+                                ngDialog.close();
+                            }, function errorCallback(response) {
+                                console.log('Shared Vision data error', response);
+                            });
+
                             return false;
                         })
                     }
@@ -120,52 +218,6 @@ angular.module('app.olset').controller(
                 $scope.olsetProcessData = response.data.process;
                 console.log('Olset process data error', response);
                 alert('Olset process data error');
-            });
-
-            $http({
-                method: 'GET',
-                url: MainConf.servicesUrl() + 'year-survey/full/' + $scope.processId,
-                headers: {
-                    'Authorization': 'Bearer ' + authToken,
-                    'Content-Type': 'application/json'
-                }
-
-            }).then(function successCallback(response) {
-                console.log('Olset year data success', response.data.data);
-                $scope.processFullData = response.data.data;
-                $scope.emtyYearData = $scope.processFullData[0]['ProcessYearSurvey'].id === null
-                    || $scope.processFullData[0]['ProcessYearSurvey'].id === 'null';
-                console.log('p', $scope.processFullData[0]['Process']);
-                $scope.process = $scope.processFullData[0]['Process'];
-                var processYearSurveys = [];
-                [].forEach.call($scope.processFullData, function (item) {
-                    processYearSurveys.push(item['ProcessYearSurvey']);
-                });
-
-                $scope.processYears = processYearSurveys;
-                $scope.processYear = $scope.processFullData[0]['Process'].createdAt.substring(0, 4);
-                $scope.lastYear = function (year) {
-                    var date = new Date(year);
-                    return date.getFullYear() - 1;
-
-                };
-                $scope.nextYear = function () {
-                    var date = new Date();
-                    return date.getFullYear() + 1;
-
-                };
-                $scope.lastYearSurvey = function (key) {
-                    if (key - 1 > -1) {
-                        return $scope.processYears[key - 1]['survey_id'];
-                    } else {
-                        return 0;
-                    }
-
-                }
-
-            }, function errorCallback(response) {
-                console.log('Olset year data error', response);
-                alert('Olset year data error');
             });
         };
 

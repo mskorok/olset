@@ -141,6 +141,27 @@ form.wizardForm {
   margin-bottom: 5rem;
 }
 
+.m-t-15 {
+  margin-top: 15rem;
+}
+
+.m-b-15 {
+  margin-bottom: 15rem;
+}
+
+.hr-visible {
+  border-top: 1px solid #666;
+  width: 100%;
+}
+
+.f-right {
+  float: right;
+}
+
+.f-left {
+  float: left;
+}
+
 @media screen and (min-width: 400px) {
   .container {
     overflow: hidden;

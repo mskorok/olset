@@ -50,7 +50,7 @@ angular.module('app.sysmap').controller(
                         'question': $scope.sysMapData.question,
                         'proposal': $scope.sysMapData.proposal,
                         'from_item': '',
-                        'groupId': 100000
+                        'groupId': 10000
                     }
 
                 }).then(function successCallback(response) {

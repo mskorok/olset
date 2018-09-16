@@ -1,4 +1,4 @@
-angular.module('app.sysmap').directive('sysMapItemsEdit', function () {
+angular.module('app.sysmap').directive('sysMapItemsEdit', function (MainConf) {
     return {
 
         restrict: 'EA',
@@ -23,7 +23,7 @@ angular.module('app.sysmap').directive('sysMapItemsEdit', function () {
         'font-size: 14px;">Action</label><input type="text" class="form-control" data-ng-model="sysMapData.proposal"' +
         ' name="proposal" required /></div><div class="form-group"><label class="labelfi">Group</label>' +
         '<select class="selectpicker" data-ng-model="sysMapData.group"><option data-ng-repeat="group in groupsData"' +
-        ' value={{group.id}}>{{group.title}}</option></select></div></div></div></div>' +
+        ' value={{group.id}} style="color: grey !important;">{{group.title}}</option></select></div></div></div></div>' +
         '<div class="modal-footer"><button type="button" class="btn btn-default"' +
         ' data-dismiss="modal">Cancel</button><button type="button" data-ng-click="editItem()" data-dismiss="modal"' +
         ' class="btn btn-primary">Edit Item</button></div></div></div></div>',
@@ -39,7 +39,7 @@ angular.module('app.sysmap').directive('sysMapItemsEdit', function () {
             };
 
 
-            scope.editItem = function ($modalInstance) {//todo strange function
+            scope.editItem = function () {//todo strange function
 
                 scope.editFunc({
                     sysmid: scope.datasp,

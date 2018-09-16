@@ -86,7 +86,11 @@ angular.module('app.olset').controller(
                         icon: "fa fa-check",
                         number: "1"
                     });
-                    //$state.go('app.sysmap.manager.view.'+$scope.sysMapId);
+                    if (!(typeof $scope.olsetEvaluationProcess.id === 'undefined')) {
+                        $state.go('app.olset.process', {processId: $scope.olsetEvaluationProcess.id});
+                    } else {
+                        $state.go('app.dashboard');
+                    }
                 }, function errorCallback(response) {
                     console.log('Olset makeUpdate data error', response);
                     alert('Olset makeUpdate data error');
@@ -109,7 +113,15 @@ angular.module('app.olset').controller(
                 $scope.olsetEvaluationData = response.data.data.data;
 
                 $scope.olsetEvaluationGroupsData = response.data.data.groups;
-                console.log($scope.olsetEvaluationData);
+                $scope.olsetEvaluationProcess = response.data.data.process;
+                $scope.isActionAAR = response.data.data.isActionAAR;
+                console.log(
+                    'Olset survey/getQuestions data success',
+                    $scope.olsetEvaluationData,
+                    $scope.olsetEvaluationGroupsData,
+                    $scope.olsetEvaluationProcess,
+                    $scope.isActionAAR
+                );
             }, function errorCallback(response) {
                 console.log('Olset survey/getQuestions data error', response);
                 alert('Olset survey/getQuestions data error');
@@ -118,17 +130,5 @@ angular.module('app.olset').controller(
         };
 
         datas2();
-
-        // setInterval( function () {
-        //
-        //     for (var i = 0 ; $scope.olsetEvaluationData.length > 0 ; i++) {
-        //         var theElementId = $scope.olsetEvaluationData[i].id;
-        //         $scope.olsetData[theElementId] = "";
-        //     }
-        // } , 10000);
-
-        $scope.saveQuestions = function (questionsId) {
-
-        }
     }
 );
