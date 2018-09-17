@@ -24,51 +24,77 @@ angular.module('app.olset').controller(
                 scope: $scope
             });
             $scope.modalAARid = id;
-            console.log('tpl_0');
             $rootScope.$on('ngDialog.opened', function (e, $dialog) {
-                flow.awesomplete('action', flow.awe_url, [{field: "extraInfo", selector: "#aar"}]);
+                flow.awesomplete('action', [{field: "extra_info", selector: "#aar"}]);
+                $scope.addAAR = function () {
+                    var value = actions_select.value;
+                    value = value.replace('string:', '');
+                    value = value.replace('number:', '');
+                    flow.createActionAAR(value);
+                };
+                $scope.searchAAR = function () {
+                    var value = aar.value;
+                    return false;
+                };
             });
-        };
-
-        $scope.addAAR = function () {
-            return true;
-        };
-
-        $scope.searchAAR = function () {
-            return false;
         };
         var flow = {
             awe_url: MainConf.servicesUrl() + 'process/awe/' + $scope.processId,
-            awesomplete: function (field, url, selectors) {
+            action_survey_url: MainConf.servicesUrl() + 'survey/action/aar/create/',
+            getItems: function() {
                 $http({
                     method: 'GET',
-                    url: url,
+                    url: this.awe_url,
                     headers: {
                         'Authorization': 'Bearer ' + authToken,
                         'Content-Type': 'application/json'
                     }
 
                 }).then(function successCallback(response) {
-
-                    $scope.items = response.data.data.data;
-                    $scope.aar = response.data.data.aar;
-                    var obj = $scope.aar;
-                    console.log('obj', obj);
-                    //selectors = [{field: "field", selector: "selector"},{field: "field", selector: "selector"}]
-                    selectors.forEach(function (item) {
-                        var list = obj.map(function (i) {
-                            return i[item.field];
-                        });
-
-                        list = list.filter(function (x, i, a) {
-                            return a.indexOf(x) === i;
-                        });
-                        console.log('Awe', list, item.selector, document.querySelectorAll(item.selector));
-                        new Awesomplete(document.querySelector(item.selector), {list: list});
+                    var items = response.data.data.data;
+                    [].forEach.call(items, function (item) {
+                        item.proposal = item.proposal.substr(0, 40);
                     });
-
+                    console.log('items', items);
+                    $scope.items = items;
+                    $scope.aar = response.data.data.aar;
                 }, function errorCallback(response) {
                     console.log('Shared Vision data error', response);
+                });
+            },
+            awesomplete: function (field, selectors) {
+                var obj = $scope.aar;
+                //selectors = [{field: "field", selector: "selector"},{field: "field", selector: "selector"}]
+                selectors.forEach(function (item) {
+                    var list = obj.map(function (i) {
+                        return i[item.field];
+                    });
+
+                    list = list.filter(function (x, i, a) {
+                        return a.indexOf(x) === i;
+                    });
+                    new Awesomplete(document.querySelector(item.selector), {list: list});
+                });
+            },
+            createActionAAR: function (itemId) {
+                // itemId = parseInt(itemId);
+                var self = this;
+                $http({
+                    method: 'GET',
+                    url: self.action_survey_url + itemId,
+                    headers: {
+                        'Authorization': 'Bearer ' + authToken,
+                        'Content-Type': 'application/json'
+                    }
+
+                }).then(function successCallback(response) {
+                    var survey_id = response.data.data.data;
+                    console.log('New Action AAR success', response);
+                    ngDialog.closeAll();
+                    $state.go('app.olset.evaluation', {evaluationId: survey_id});
+
+                }, function errorCallback(response) {
+                    console.log('New Action AAR error', response);
                 });
             }
         };
@@ -222,6 +248,7 @@ angular.module('app.olset').controller(
         };
 
         getData();
+        flow.getItems();
 
 
     }

@@ -162,6 +162,10 @@ form.wizardForm {
   float: left;
 }
 
+option {
+  overflow: hidden !important;
+}
+
 @media screen and (min-width: 400px) {
   .container {
     overflow: hidden;

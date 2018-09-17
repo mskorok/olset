@@ -4,18 +4,23 @@
     </div>
     <div class="col-md-12">
         <input type="hidden" name="process_id" id="process_id" value="{{processId}}">
-        <div class="form-group" >
-            <select class="form-control" data-ng-model="actions"
+        <div class="form-group">
+            <select class="form-control"
+                    data-ng-model="actions"
                     id="actions_select"
                     name="actions_select"
-                    data-ng-options="item.id as item.question for item in items">
+                    data-ng-options="value.id as value.proposal for (key, value) in items" style="overflow: hidden;">
             </select>
             <small id="actions_select_help" class="form-text text-muted">
                 Actions without AAR
             </small>
         </div>
         <div class="form-group">
-            <input type="text" class="form-control" name="aar" id="aar" placeholder="AAR"  data-id="{{modalAARid}}" required/></div>
+            <input type="text" class="form-control" name="aar" id="aar" placeholder="AAR" data-id="{{modalAARid}}"
+                   required/></div>
+        <small id="aar_help" class="form-text text-muted">
+            Search filled AAR for action by extra info field
+        </small>
     </div>
 
     <div class="ngdialog-buttons">
