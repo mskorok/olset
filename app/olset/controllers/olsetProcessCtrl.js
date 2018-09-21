@@ -34,6 +34,7 @@ angular.module('app.olset').controller(
                 };
                 $scope.searchAAR = function () {
                     var value = aar.value;
+                    flow.listActionAAR(value);
                     return false;
                 };
             });
@@ -41,6 +42,152 @@ angular.module('app.olset').controller(
         var flow = {
             awe_url: MainConf.servicesUrl() + 'process/awe/' + $scope.processId,
             action_survey_url: MainConf.servicesUrl() + 'survey/action/aar/create/',
+            init: function () {
+                $http({
+                    method: 'GET',
+                    url: MainConf.servicesUrl() + 'process/' + $scope.processId,
+                    headers: {
+                        'Authorization': 'Bearer ' + authToken,
+                        'Content-Type': 'application/json'
+                    }
+
+                }).then(function successCallback(response) {
+                    console.log('Olset process data success', response);
+                    $scope.olsetProcessData = response.data.process;
+                    $scope.olsetProcessData.SharedVision = $scope.olsetProcessData.SharedVision === null
+                    || $scope.olsetProcessData.SharedVision === 'null' ? '' : $scope.olsetProcessData.SharedVision;
+                    angular.element(document).ready(function () {
+                        ClassicEditor.create(document.querySelector('#current_reality_editor'))
+                            .then(function (editor) {
+                                editor.setData($scope.olsetProcessData.CurrentReality);
+                            }).catch(function (error) {
+                            console.error(error);
+                        });
+                        ClassicEditor.create(document.querySelector('#initial_intentions_editor'))
+                            .then(function (editor) {
+                                editor.setData($scope.olsetProcessData.InitialIntentions);
+                            }).catch(function (error) {
+                            console.error(error);
+                        });
+                        ClassicEditor.create(document.querySelector('#shared_vision_editor'))
+                            .then(function (editor) {
+                                editor.setData($scope.olsetProcessData.SharedVision);
+                            }).catch(function (error) {
+                            console.error(error);
+                        });
+
+                        var current_reality_form = document.getElementById('current_reality_form');
+                        if (current_reality_form) {
+                            current_reality_form.addEventListener('submit', function (ev) {
+                                ev.preventDefault();
+                                ev.stopPropagation();
+                                var input = this.querySelector('#current_reality_editor');
+                                var uri = 'process/current/' + $scope.processId;
+                                $http({
+                                    method: 'POST',
+                                    url: MainConf.servicesUrl() + uri,
+                                    headers: {
+                                        'Authorization': 'Bearer ' + authToken,
+                                        'Content-Type': 'application/json'
+                                    },
+                                    data: {
+                                        "text": input.value
+                                    }
+
+                                }).then(function successCallback(response) {
+                                    console.log('Current Reality data success', response);
+                                    $.bigBox({
+                                        title: "New current reality description added!",
+                                        color: "#739E73",
+                                        timeout: 5000,
+                                        icon: "fa fa-check",
+                                        number: "1"
+                                    });
+                                    ngDialog.close();
+                                }, function errorCallback(response) {
+                                    console.log('Current Reality data error', response);
+                                });
+
+                                return false;
+                            })
+                        }
+                        var shared_vision_form = document.getElementById('shared_vision_form');
+                        if (shared_vision_form) {
+                            shared_vision_form.addEventListener('submit', function (ev) {
+                                ev.preventDefault();
+                                ev.stopPropagation();
+                                var input = this.querySelector('#shared_vision_editor');
+                                var uri = 'process/shared/' + $scope.processId;
+                                $http({
+                                    method: 'POST',
+                                    url: MainConf.servicesUrl() + uri,
+                                    headers: {
+                                        'Authorization': 'Bearer ' + authToken,
+                                        'Content-Type': 'application/json'
+                                    },
+                                    data: {
+                                        "text": input.value
+                                    }
+
+                                }).then(function successCallback(response) {
+                                    console.log('Shared Vision data success', response);
+                                    $.bigBox({
+                                        title: "New shared vision description added!",
+                                        color: "#739E73",
+                                        timeout: 5000,
+                                        icon: "fa fa-check",
+                                        number: "1"
+                                    });
+                                    ngDialog.close();
+                                }, function errorCallback(response) {
+                                    console.log('Shared Vision data error', response);
+                                });
+
+                                return false;
+                            })
+                        }
+                        var initial_intentions_form = document.getElementById('initial_intentions_form');
+                        if (initial_intentions_form) {
+                            initial_intentions_form.addEventListener('submit', function (ev) {
+                                ev.preventDefault();
+                                ev.stopPropagation();
+                                var input = this.querySelector('#initial_intentions_editor');
+                                var uri = 'process/initial/' + $scope.processId;
+                                $http({
+                                    method: 'POST',
+                                    url: MainConf.servicesUrl() + uri,
+                                    headers: {
+                                        'Authorization': 'Bearer ' + authToken,
+                                        'Content-Type': 'application/json'
+                                    },
+                                    data: {
+                                        "text": input.value
+                                    }
+
+                                }).then(function successCallback(response) {
+                                    console.log('Initial Intentions data success', response);
+                                    $.bigBox({
+                                        title: "New initial intentions description added!",
+                                        color: "#739E73",
+                                        timeout: 5000,
+                                        icon: "fa fa-check",
+                                        number: "1"
+                                    });
+                                    ngDialog.close();
+                                }, function errorCallback(response) {
+                                    console.log('Initial Intentions data error', response);
+                                });
+
+                                return false;
+                            })
+                        }
+                    });
+                }, function errorCallback(response) {
+                    $scope.olsetProcessData = response.data.process;
+                    console.log('Olset process data error', response);
+                    alert('Olset process data error');
+                });
+            },
             getItems: function() {
                 $http({
                     method: 'GET',
@@ -96,158 +243,25 @@ angular.module('app.olset').controller(
                 }, function errorCallback(response) {
                     console.log('New Action AAR error', response);
                 });
+            },
+            listActionAAR: function (value) {
+                var survey_id = null;
+                [].forEach.call($scope.aar, function (survey) {
+                    if (survey.hasOwnProperty('extra_info') && survey.extra_info.substr(0, 20) === value.substr(0,20)) {
+                        survey_id = survey.id;
+                    }
+
+                });
+                if (null !== survey_id) {
+                    ngDialog.closeAll();
+                    $state.go('app.olset.evaluation.list', {evaluationId: survey_id});
+                }
+                alert('Survey with extra info: ' + value + ' not found')
             }
         };
 
 
-        var getData = function () {
-            $http({
-                method: 'GET',
-                url: MainConf.servicesUrl() + 'process/' + $scope.processId,
-                headers: {
-                    'Authorization': 'Bearer ' + authToken,
-                    'Content-Type': 'application/json'
-                }
-
-            }).then(function successCallback(response) {
-                console.log('Olset process data success', response);
-                $scope.olsetProcessData = response.data.process;
-                $scope.olsetProcessData.SharedVision = $scope.olsetProcessData.SharedVision === null
-                || $scope.olsetProcessData.SharedVision === 'null' ? '' : $scope.olsetProcessData.SharedVision;
-                angular.element(document).ready(function () {
-                    ClassicEditor.create(document.querySelector('#current_reality_editor'))
-                        .then(function (editor) {
-                            editor.setData($scope.olsetProcessData.CurrentReality);
-                        }).catch(function (error) {
-                        console.error(error);
-                    });
-                    ClassicEditor.create(document.querySelector('#initial_intentions_editor'))
-                        .then(function (editor) {
-                            editor.setData($scope.olsetProcessData.InitialIntentions);
-                        }).catch(function (error) {
-                        console.error(error);
-                    });
-                    ClassicEditor.create(document.querySelector('#shared_vision_editor'))
-                        .then(function (editor) {
-                            editor.setData($scope.olsetProcessData.SharedVision);
-                        }).catch(function (error) {
-                        console.error(error);
-                    });
-
-                    var current_reality_form = document.getElementById('current_reality_form');
-                    if (current_reality_form) {
-                        current_reality_form.addEventListener('submit', function (ev) {
-                            ev.preventDefault();
-                            ev.stopPropagation();
-                            var input = this.querySelector('#current_reality_editor');
-                            var uri = 'process/current/' + $scope.processId;
-                            $http({
-                                method: 'POST',
-                                url: MainConf.servicesUrl() + uri,
-                                headers: {
-                                    'Authorization': 'Bearer ' + authToken,
-                                    'Content-Type': 'application/json'
-                                },
-                                data: {
-                                    "text": input.value
-                                }
-
-                            }).then(function successCallback(response) {
-                                console.log('Current Reality data success', response);
-                                $.bigBox({
-                                    title: "New current reality description added!",
-                                    color: "#739E73",
-                                    timeout: 5000,
-                                    icon: "fa fa-check",
-                                    number: "1"
-                                });
-                                ngDialog.close();
-                            }, function errorCallback(response) {
-                                console.log('Current Reality data error', response);
-                            });
-
-                            return false;
-                        })
-                    }
-                    var shared_vision_form = document.getElementById('shared_vision_form');
-                    if (shared_vision_form) {
-                        shared_vision_form.addEventListener('submit', function (ev) {
-                            ev.preventDefault();
-                            ev.stopPropagation();
-                            var input = this.querySelector('#shared_vision_editor');
-                            var uri = 'process/shared/' + $scope.processId;
-                            $http({
-                                method: 'POST',
-                                url: MainConf.servicesUrl() + uri,
-                                headers: {
-                                    'Authorization': 'Bearer ' + authToken,
-                                    'Content-Type': 'application/json'
-                                },
-                                data: {
-                                    "text": input.value
-                                }
-
-                            }).then(function successCallback(response) {
-                                console.log('Shared Vision data success', response);
-                                $.bigBox({
-                                    title: "New shared vision description added!",
-                                    color: "#739E73",
-                                    timeout: 5000,
-                                    icon: "fa fa-check",
-                                    number: "1"
-                                });
-                                ngDialog.close();
-                            }, function errorCallback(response) {
-                                console.log('Shared Vision data error', response);
-                            });
-
-                            return false;
-                        })
-                    }
-                    var initial_intentions_form = document.getElementById('initial_intentions_form');
-                    if (initial_intentions_form) {
-                        initial_intentions_form.addEventListener('submit', function (ev) {
-                            ev.preventDefault();
-                            ev.stopPropagation();
-                            var input = this.querySelector('#initial_intentions_editor');
-                            var uri = 'process/initial/' + $scope.processId;
-                            $http({
-                                method: 'POST',
-                                url: MainConf.servicesUrl() + uri,
-                                headers: {
-                                    'Authorization': 'Bearer ' + authToken,
-                                    'Content-Type': 'application/json'
-                                },
-                                data: {
-                                    "text": input.value
-                                }
-
-                            }).then(function successCallback(response) {
-                                console.log('Initial Intentions data success', response);
-                                $.bigBox({
-                                    title: "New initial intentions description added!",
-                                    color: "#739E73",
-                                    timeout: 5000,
-                                    icon: "fa fa-check",
-                                    number: "1"
-                                });
-                                ngDialog.close();
-                            }, function errorCallback(response) {
-                                console.log('Initial Intentions data error', response);
-                            });
-
-                            return false;
-                        })
-                    }
-                });
-            }, function errorCallback(response) {
-                $scope.olsetProcessData = response.data.process;
-                console.log('Olset process data error', response);
-                alert('Olset process data error');
-            });
-        };
-
-        getData();
+        flow.init();
         flow.getItems();
 
 

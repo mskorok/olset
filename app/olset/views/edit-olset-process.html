@@ -1,98 +1,102 @@
 <div class="dialog-contents">
-<div class="dialog-header">
-	<h4>{{addOrEditTitle}}</h4>
-</div>
-	<div class="col-md-12">
-		<form class="smart-form">
-			<div style="clear: both;">
-				<wizard on-finish="wizard1CompleteCallback()" on-cancel="cancelledWizard()">
-					<wz-step wz-title="Current Reality">
-						<h1>Basic Informations</h1>
-						<form>
-							<div class="row">
-								<div class="col-sm-12">
-									<h4>Title</h4>
-									<div class="form-group">
-										<div class="input-group">
+    <div class="dialog-header">
+        <h4>{{addOrEditTitle}}</h4>
+    </div>
+    <div class="col-md-12">
+        <form class="smart-form">
+            <div style="clear: both;">
+                <wizard on-finish="wizard1CompleteCallback()" on-cancel="cancelledWizard()">
+                    <wz-step wz-title="Current Reality">
+                        <h1>Basic Informations</h1>
+                        <form>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h4>Title</h4>
+                                    <div class="form-group">
+                                        <div class="input-group">
                                                 <span class="input-group-addon"><i
-														class="fa fa-user fa-lg fa-fw"></i></span>
-											<input class="form-control input-lg"
-												   placeholder="" type="text" name="title"
-												   data-smart-validate-input
-												   data-required
-												   data-message="Please add the OLSET title"
-												   ng-model="olsetProcessData.title">
-										</div>
-									</div>
-								</div>
-							</div>
+                                                        class="fa fa-user fa-lg fa-fw"></i></span>
+                                            <input class="form-control input-lg"
+                                                   placeholder="" type="text" name="title"
+                                                   data-smart-validate-input
+                                                   data-required
+                                                   data-message="Please add the OLSET title"
+                                                   ng-model="olsetProcessData.title">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-							<div class="row">
-								<div class="col-sm-12">
-									<h4>Current Reality</h4>
-									<div class="form-group">
-										<text-angular ng-model="olsetProcessData.CurrentReality"></text-angular>
-									</div>
-								</div>
-							</div>
-						</form>
-						<input type="submit" wz-next canexit="validateBasicInfo" value="Next >>" />
-					</wz-step>
-					<wz-step wz-title="Initial Intentions">
-						<h1>Initial Intentions</h1>
-						<form>
-							<div class="row">
-								<div class="col-sm-12">
-									<div class="form-group">
-										<text-angular ng-model="olsetProcessData.InitialIntentions"></text-angular>
-									</div>
-								</div>
-							</div>
-						</form>
-						<input type="submit" wz-next canexit="validateInitialIntention" value="Next >>" />
-					</wz-step>
-					<wz-step wz-title="Permissions">
-						<h1>Permissions</h1>
-						<form>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h4>Current Reality</h4>
+                                    <div class="form-group">
+                                        <text-angular ng-model="olsetProcessData.CurrentReality"></text-angular>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <input type="submit" wz-next canexit="validateBasicInfo" value="Next >>"/>
+                    </wz-step>
+                    <wz-step wz-title="Initial Intentions">
+                        <h1>Initial Intentions</h1>
+                        <form>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <text-angular ng-model="olsetProcessData.InitialIntentions"></text-angular>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <input type="submit" wz-next canexit="validateInitialIntention" value="Next >>"/>
+                    </wz-step>
+                    <wz-step wz-title="Permissions">
+                        <h1>Permissions</h1>
+                        <form>
 
-						</form>
-						<input type="submit" wz-next value="Next >>" />
-					</wz-step>
-					<wz-step wz-title="Finish OLSET">
-						<h1>Congrats!</h1>
-						<p>Please review your OLSET and finish the wizard</p>
+                        </form>
+                        <input type="submit" wz-next value="Next >>"/>
+                    </wz-step>
+                    <wz-step wz-title="Finish OLSET">
+                        <h1>Congrats!</h1>
+                        <p>Please review your OLSET and finish the wizard</p>
 
-						<div>
-							<ul>
-								<li>Title</li>
-								<li>{{olsetData.title}}</li>
-							</ul>
+                        <div>
+                            <ul>
+                                <li>Title</li>
+                                <li>{{olsetData.title}}</li>
+                            </ul>
 
-							<ul>
-								<li>Current Reality</li>
-								<li>{{olsetData.CurrentReality}}</li>
-							</ul>
+                            <ul>
+                                <li>Current Reality</li>
+                                <li>{{olsetData.CurrentReality}}</li>
+                            </ul>
 
-							<ul>
-								<li>Initial Intentions</li>
-								<li>{{olsetData.InitialIntentions}}</li>
-							</ul>
+                            <ul>
+                                <li>Initial Intentions</li>
+                                <li>{{olsetData.InitialIntentions}}</li>
+                            </ul>
 
-							<ul>
-								<li>Permission</li>
-								<li>When is ready tha mpei</li>
-							</ul>
-						</div>
-						<input type="submit" wz-next value="Create OLSET" />
-					</wz-step>
-				</wizard>
+                            <ul>
+                                <li>Permission</li>
+                                <li>When is ready tha mpei</li>
+                            </ul>
+                        </div>
+                        <input type="submit" wz-next value="Create OLSET"/>
+                    </wz-step>
+                </wizard>
 
-			</div>
-		</form>
-	</div>
-<div class="ngdialog-buttons">
-	<button type="button" ng-click="closeThisDialog()" class="btn btn-default">Cancel</button>
-	<button type="button" ng-if="modalMode == 0" ng-click="addSurveyQuestion()" class="btn btn-primary">New Question</button>
-	<button type="button" ng-if="modalMode == 'edit'" ng-click="editSurveyQuestion()" class="btn btn-primary">Edit Question</button>
-</div>
+            </div>
+        </form>
+    </div>
+    <div class="ngdialog-buttons">
+        <button type="button" ng-click="closeThisDialog()" class="btn btn-default">Cancel</button>
+        <button type="button" ng-if="modalMode == 0" ng-click="addSurveyQuestion()" class="btn btn-primary">New
+            Question
+        </button>
+        <button type="button" ng-if="modalMode == 'edit'" ng-click="editSurveyQuestion()" class="btn btn-primary">Edit
+            Question
+        </button>
+    </div>
 </div>

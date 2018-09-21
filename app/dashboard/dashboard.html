@@ -1,6 +1,5 @@
 <!-- MAIN CONTENT -->
 <div id="content"  ng-controller="DashboardCtrl">
-
 	<div class="row">
 		<!--<big-breadcrumbs items="['Dashboard', 'My Dashboard']" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></big-breadcrumbs>-->
 		<div smart-include="app/layout/partials/sub-header.tpl.html"></div>
@@ -22,6 +21,8 @@
 		<article class="col-sm-12 col-md-12" style="text-align: center">
 
 			<h1 style="font-size: 3em;">Welcome to OLSET</h1>
+            <h3>Your corporate brain</h3>
+            <center><img src="/styles/img/banners/b1.png" width="250"></center>
 
 
 		</article>
@@ -30,6 +31,16 @@
 
 
 			<div ng-if="isManager" class="col-sm-12 col-md-12">
+                <div ng-if="isProcess" class="col-sm-12 col-md-12 m-b-5 m-t-5">
+                    <h3 class="m-b-5 m-l-5">
+                        Current Reality:&nbsp;&nbsp;<div class="m-l-5" id="crs_text"></div>
+                    </h3>
+                    <h3 class="m-l-5">
+                        Vision:&nbsp;&nbsp;<div class="m-l-5" id="vs_text"></div>
+                    </h3>
+
+                </div>
+
 				<!--<div class="col-md-6" jarvis-widget id="chartjs-doughnut-chart" data-widget-editbutton="false">-->
 					<!--<h2>Process by Status</h2>-->
 					<!--<div>-->

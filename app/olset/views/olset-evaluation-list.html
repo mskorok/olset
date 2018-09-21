@@ -25,29 +25,34 @@
                                     <div ng-if="item.answered_type == 2" class="radioQuestions">
 
                                         <div><input type="radio" name="low{{item.id}}"
-                                                    ng-model="userAnswers[item.id].answer" value="1"> 1
+                                                    ng-model="userAnswers[item.id].answer" value="1"
+                                                    disabled="disabled"> 1
                                         </div>
                                         <div><input type="radio" name="soso{{item.id}}"
-                                                    ng-model="userAnswers[item.id].answer" value="2"> 2
+                                                    ng-model="userAnswers[item.id].answer" value="2"
+                                                    disabled="disabled"> 2
                                         </div>
                                         <div><input type="radio" name="seemsok{{item.id}}"
-                                                    ng-model="userAnswers[item.id].answer" value="3"> 3
+                                                    ng-model="userAnswers[item.id].answer" value="3"
+                                                    disabled="disabled"> 3
                                         </div>
                                         <div><input type="radio" name="nicetry{{item.id}}"
-                                                    ng-model="userAnswers[item.id].answer" value="4"> 4
+                                                    ng-model="userAnswers[item.id].answer" value="4"
+                                                    disabled="disabled"> 4
                                         </div>
                                         <div><input type="radio" name="excellent{{item.id}}"
-                                                    ng-model="userAnswers[item.id].answer" value="5"> 5
+                                                    ng-model="userAnswers[item.id].answer" value="5"
+                                                    disabled="disabled"> 5
                                         </div>
                                     </div>
                                     <div ng-if="item.answered_type == 1" class="textQuestions">
                                         <textarea ng-model="userAnswers[item.id].answer" rows="12"
-                                                  cols="100"></textarea>
+                                                  cols="100" disabled="disabled"></textarea>
                                     </div>
 
                                     <input type="text" hidden name="hidden{{item.id}}"
                                            ng-init="userAnswers[item.id].questionId = item.id"
-                                           ng-model="userAnswers[item.id].questionId">
+                                           ng-model="userAnswers[item.id].questionId" disabled="disabled">
 
                                 </div>
                                 <button ng-click="makeUpdate()">Save Questions</button>
@@ -55,6 +60,7 @@
                         </div>
                     </div>
                 </div>
+
             </article>
         </div>
         <div class="row">

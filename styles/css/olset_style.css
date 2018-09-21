@@ -141,6 +141,10 @@ form.wizardForm {
   margin-bottom: 5rem;
 }
 
+.m-l-5 {
+  margin-left: 5rem;
+}
+
 .m-t-15 {
   margin-top: 15rem;
 }
@@ -170,4 +174,81 @@ option {
   .container {
     overflow: hidden;
   }
+}
+
+@media print {
+  .app-print-hide {
+    display: none;
+  }
+}
+
+.app-pdf-iframe {
+  width: 100%;
+  height: 700px;
+  border: none;
+}
+
+.app-pdf-img {
+  width: 100%;
+  border: none;
+}
+
+.app-button {
+  cursor: pointer;
+  text-transform: uppercase;
+  color: #3276b1 !important;
+}
+
+.card-body {
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  padding: 1.25rem;
+}
+
+/* Tooltip */
+.app-tooltip + .tooltip > .tooltip-inner {
+  background-color: #3276b1;
+  color: #fff;
+  border: 1px solid #3276ff;
+  padding: 15px;
+  font-size: 20px;
+}
+
+/* Tooltip on top */
+.app-tooltip + .tooltip.top > .tooltip-arrow {
+  border-top: 5px solid blue;
+}
+
+/* Tooltip on bottom */
+.app-tooltip + .tooltip.bottom > .tooltip-arrow {
+  border-bottom: 5px solid blue;
+}
+
+/* Tooltip on left */
+.app-tooltip + .tooltip.left > .tooltip-arrow {
+  border-left: 5px solid blue;
+}
+
+/* Tooltip on right */
+.app-tooltip + .tooltip.right > .tooltip-arrow {
+  border-right: 5px solid blue;
+}
+
+.app-your-brain {
+  display: inline-block;
+  height: 49px;
+  float: left;
+}
+
+.app-your-brain-r {
+  display: inline-block;
+  height: 49px;
+  float: right;
+  margin-top: -30px;
+  margin-right: -44px;
+}
+
+.app-logo {
+  float: none !important;
+  display: inline !important;
 }

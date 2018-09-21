@@ -23,7 +23,7 @@
                     <div class="col-md-12">
                         <h3>Current Reality</h3>
                         <!--<div id="current_reality" class="app-pointer"-->
-                             <!--data-ng-bind-html="olsetProcessData.CurrentReality"></div>-->
+                        <!--data-ng-bind-html="olsetProcessData.CurrentReality"></div>-->
                         <div id="current_reality_input">
                             <form id="current_reality_form">
                                 <textarea class="w-100" rows="7" id="current_reality_editor" name="current">
@@ -39,7 +39,7 @@
                     <div class="col-md-12">
                         <h3>Initial Intentions</h3>
                         <!--<div id="initial_intentions" class="app-pointer"-->
-                             <!--data-ng-bind-html="olsetProcessData.InitialIntentions"></div>-->
+                        <!--data-ng-bind-html="olsetProcessData.InitialIntentions"></div>-->
                         <div id="initial_intentions_input">
                             <form id="initial_intentions_form">
                                 <textarea class="w-100" rows="7" id="initial_intentions_editor" name="initial">
@@ -101,7 +101,7 @@
                             <div class="col-md-12 m-t-5 m-b-5">
                                 <div data-ng-repeat="(key, yearData) in processYears">
                                     <h1>OLSET {{yearData.date | limitTo : 4 : 0}}</h1>
-                                    <div class="col-md-12"  data-ng-if="key == 0">
+                                    <div class="col-md-12" data-ng-if="key == 0">
                                         <h2>Initial survey => OLSET {{processYear}} Step3</h2>
                                         <a ui-sref="app.olset.evaluation({evaluationId : olsetProcessData.step3_0})"
                                            class="btn btn-primary btn-lg btn-block">
@@ -149,7 +149,6 @@
                                             Systemic Action Map >>
                                         </a>
                                     </div>
-
 
 
                                     <div class="col-md-12">

@@ -1,52 +1,57 @@
 <div class="dialog-contents">
-<div class="dialog-header">
-	<h4>{{addOrEditTitle}}</h4>
+    <div class="dialog-header">
+        <h4>{{addOrEditTitle}}</h4>
+    </div>
+    <div class="col-md-12">
+        <form class="smart-form">
+            <div class="form-group">
+                <input type="text" class="form-control" ng-model="surveyData.question" name="title"
+                       placeholder="Question" required />
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" ng-model="surveyData.description" name="description"
+                       placeholder="Description" required /></div>
+    </div>
+    <div style="clear: both;">
+        <fieldset class="question-types">
+            <label class="label titleTypes">Select Type</label>
+            <label class="toggle">
+                <input type="radio" ng-model="surveyData.answered_type" name="radio-toggle" value="1" checked="checked">
+                <i></i>Text</label>
+            <label class="toggle">
+                <input type="radio" ng-model="surveyData.answered_type" name="radio-toggle" value="2">
+                <i></i>Radio</label>
+            <label class="toggle">
+                <input type="radio" ng-model="surveyData.answered_type" name="radio-toggle" value="3">
+                <i></i>Checkbox</label>
+            <label class="toggle">
+                <input type="radio" ng-model="surveyData.answered_type" name="radio-toggle" value="4">
+                <i></i>Rating</label>
+
+            <div ng-if="surveyData.answered_type == 2">
+                Eimai to dyo
+            </div>
+
+            <div ng-if="surveyData.answered_type == 3">
+                Eimai to tria
+            </div>
+
+            <div ng-if="surveyData.answered_type == 4">
+                Eimai to tessera
+            </div>
+        </fieldset>
+        <div ng-if="surveyData.answered_type == 1" class="question-types">
+            User will have to complete a text area
+        </div>
+    </div>
+    </form>
 </div>
-	<div class="col-md-12">
-		<form class="smart-form">
-			<div class="form-group">
-				<input type="text" class="form-control" ng-model="surveyData.question" name="title" placeholder="Question" required />
-			</div>
-			<div class="form-group">
-				<input type="text" class="form-control" ng-model="surveyData.description" name="description" placeholder="Description" required /></div>
-			</div>
-			<div style="clear: both;">
-				<fieldset class="question-types">
-				        <label class="label titleTypes">Select Type</label>
-				        <label class="toggle">
-				            <input type="radio" ng-model="surveyData.answered_type" name="radio-toggle" value="1" checked="checked">
-				            <i></i>Text</label>
-				        <label class="toggle">
-				            <input type="radio" ng-model="surveyData.answered_type" name="radio-toggle" value="2">
-				            <i></i>Radio</label>
-				        <label class="toggle">
-				            <input type="radio" ng-model="surveyData.answered_type" name="radio-toggle" value="3">
-				            <i></i>Checkbox</label>
-				        <label class="toggle">
-				            <input type="radio" ng-model="surveyData.answered_type" name="radio-toggle" value="4">
-				            <i></i>Rating</label>
-					      
-				        <div ng-if="surveyData.answered_type == 2">
-					        Eimai to dyo
-					    </div>
-					    
-				        <div ng-if="surveyData.answered_type == 3">
-					        Eimai to tria
-					    </div>
-					    
-				        <div ng-if="surveyData.answered_type == 4">
-					        Eimai to tessera
-					    </div>
-				</fieldset>
-				<div ng-if="surveyData.answered_type == 1" class="question-types">
-					User will have to complete a text area
-				</div>
-			</div>
-		</form>
-	</div>
 <div class="ngdialog-buttons">
-	<button type="button" ng-click="closeThisDialog()" class="btn btn-default">Cancel</button>
-	<button type="button" ng-if="modalMode == 0" ng-click="addSurveyQuestion()" class="btn btn-primary">New Question</button>
-	<button type="button" ng-if="modalMode == 'edit'" ng-click="editSurveyQuestion()" class="btn btn-primary">Edit Question</button>
+    <button type="button" ng-click="closeThisDialog()" class="btn btn-default">Cancel</button>
+    <button type="button" ng-if="modalMode == 0" ng-click="addSurveyQuestion()" class="btn btn-primary">New Question
+    </button>
+    <button type="button" ng-if="modalMode == 'edit'" ng-click="editSurveyQuestion()" class="btn btn-primary">Edit
+        Question
+    </button>
 </div>
 </div>

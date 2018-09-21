@@ -5,6 +5,9 @@ angular.module('app.layout').controller(
         $scope.slug = {
             "slug": null
         };
+        $(document).ready(function () {
+            $('.app-tooltip').tooltip({placement : 'top'});
+        });
         var getInfo = function () {
             $scope.slug.slug = $location.path().replace("/", "");
             $scope.slug.slug = $scope.slug.slug.replace(new RegExp('/', 'g'), "_");
@@ -51,15 +54,7 @@ angular.module('app.layout').controller(
                 alert('error addWpHelp');
             });
         };
-        
 
-        //
-        // $rootScope.$on('$routeChangeSuccess', function(e, current, pre) {
-        //     console.log('Current route name: ' + $location.path());
-        //     // Get all URL parameter
-        //     //console.log($routeParams);
-        // });
-        //console.log($window.localStorage.getItem('userData'));
         getInfo();
         $rootScope.$on('$locationChangeStart', function (event) {
                 getInfo();

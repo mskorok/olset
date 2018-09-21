@@ -3,6 +3,18 @@ angular.module('app.dashboard').controller(
     function ($scope, $http, $window, $stateParams, $document, $state, $timeout, MainConf, Auth) {
         $scope.token = $window.localStorage.getItem('authToken');
 
+        function addTexts(firstProcess) {
+            var crs = document.getElementById('crs_text');
+            if (crs) {
+                crs.innerHTML = firstProcess.CurrentReality;
+            }
+
+            var vs = document.getElementById('vs_text');
+            if (vs) {
+                vs.innerHTML = firstProcess.InitialIntentions;
+            }
+        }
+
         var datas2 = function () {
 
             if (Auth.userHaveRole() == "Manager") {
@@ -17,6 +29,9 @@ angular.module('app.dashboard').controller(
                 }).then(function successCallback(response) {
                     console.log('Dashboard data success', response);
                     $scope.olsetStatsInfo = response.data.data.data;
+                    $scope.firstProcess = response.data.data.data.process;
+                    $scope.isProcess = $scope.firstProcess !== null;
+                    addTexts($scope.firstProcess);
                     console.log('dashboard resp', $scope.olsetStatsInfo.count_organizations[0]);
 
                 }, function errorCallback(response) {

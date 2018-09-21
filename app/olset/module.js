@@ -144,4 +144,37 @@ angular.module('app.olset').config(function ($stateProvider) {
                 }
             }
         })
+        .state('app.olset.evaluation.list', {
+
+            url: '/olset/evaluation/list/{evaluationId:int}',
+
+            views: {
+                "content@app": {
+                    controller: 'olsetEvaluationCtrl',
+                    templateUrl: "app/olset/views/olset-evaluation-list.html"
+                }
+            }
+        })
+        .state('app.olset.oms', {
+
+            url: '/olset/oms',
+
+            views: {
+                "content@app": {
+                    controller: 'olsetOmsCtrl',
+                    templateUrl: "app/olset/views/olset-oms.html"
+                }
+            }
+        })
+        .state('app.olset.csa', {
+
+            url: '/olset/csa',
+
+            views: {
+                "content@app": {
+                    controller: 'olsetCsaCtrl',
+                    templateUrl: "app/olset/views/olset-csa.html"
+                }
+            }
+        })
 });

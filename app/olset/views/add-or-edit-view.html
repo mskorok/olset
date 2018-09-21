@@ -1,18 +1,22 @@
 <div class="dialog-contents">
-<div class="dialog-header">
-	<h4>{{addOrEditTitle}}</h4>
+    <div class="dialog-header">
+        <h4>{{addOrEditTitle}}</h4>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group">
+            <input type="text" class="form-control" ng-model="surveyData.title" name="title" placeholder="Survey Title"
+                   required/>
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" ng-model="surveyData.description" name="description"
+                   placeholder="Description" required/></div>
+    </div>
 </div>
-	<div class="col-md-12">
-		<div class="form-group">
-			<input type="text" class="form-control" ng-model="surveyData.title" name="title" placeholder="Survey Title" required />
-		</div>
-		<div class="form-group">
-			<input type="text" class="form-control" ng-model="surveyData.description" name="description" placeholder="Description" required /></div>
-		</div>
-	</div>
 <div class="ngdialog-buttons">
-	<button type="button" ng-click="closeThisDialog()" class="btn btn-default">Cancel</button>
-	<button type="button" ng-if="modalMode == 0" ng-click="addSurveyItem()" class="btn btn-primary">Create new</button>
-	<button type="button" ng-if="modalMode == 'edit'" ng-click="editSurveyItem(surveyData.id)" class="btn btn-primary">Edit Survey</button>
+    <button type="button" ng-click="closeThisDialog()" class="btn btn-default">Cancel</button>
+    <button type="button" ng-if="modalMode == 0" ng-click="addSurveyItem()" class="btn btn-primary">Create new</button>
+    <button type="button" ng-if="modalMode == 'edit'" ng-click="editSurveyItem(surveyData.id)" class="btn btn-primary">
+        Edit Survey
+    </button>
 </div>
 </div>
