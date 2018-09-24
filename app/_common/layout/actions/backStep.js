@@ -5,7 +5,6 @@ angular.module('SmartAdmin.Layout').directive('backStep', function($rootScope, $
         restrict: 'EA',
         link: function (scope, element) {
             element.on('click', function () {
-                console.log('rc', $rootScope.previousState.name);
                 if ($rootScope.previousState.name === '') {
                     $state.go('app.dashboard', {});
                 } else {

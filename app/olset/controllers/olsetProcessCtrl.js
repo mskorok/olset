@@ -5,6 +5,9 @@ angular.module('app.olset').controller(
         $scope.token = authToken;
         $scope.processId = $stateParams.processId;
         $scope.surveyName = "Survey Items";
+        if ('app.olset.evaluation' === $rootScope.previousState.name) {
+            window.location.reload();
+        }
         $scope.openModaltoAddOrEdit = function (id, title, currentReality, initialIntentions, modalName) {
             ngDialog.open({
                 template: MainConf.mainAppPath() + '/olset/views/edit-olset-process.html',
@@ -45,7 +48,7 @@ angular.module('app.olset').controller(
             init: function () {
                 $http({
                     method: 'GET',
-                    url: MainConf.servicesUrl() + 'process/' + $scope.processId,
+                    url: MainConf.servicesUrl() + 'process/data/' + $scope.processId,
                     headers: {
                         'Authorization': 'Bearer ' + authToken,
                         'Content-Type': 'application/json'
@@ -53,7 +56,7 @@ angular.module('app.olset').controller(
 
                 }).then(function successCallback(response) {
                     console.log('Olset process data success', response);
-                    $scope.olsetProcessData = response.data.process;
+                    $scope.olsetProcessData = response.data.data.process;
                     $scope.olsetProcessData.SharedVision = $scope.olsetProcessData.SharedVision === null
                     || $scope.olsetProcessData.SharedVision === 'null' ? '' : $scope.olsetProcessData.SharedVision;
                     angular.element(document).ready(function () {
