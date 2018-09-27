@@ -20,9 +20,22 @@
                         <div class="table-responsive olsetQuestions">
                             <form>
                                 <div ng-repeat="item in olsetEvaluationData">
-                                    <h2><b>{{olsetEvaluationGroupsData[item.id]['name']}}</b></h2>
-                                    <h4>{{item.question}}</h4>
+
+                                    <div ng-if="item.answered_type == 3" class="m-b-5 w-50 m-l-15">
+                                        <h4>{{item.question}}</h4>
+                                        <select class="form-control answer_select"
+                                                data-ng-model="userAnswers[item.id].answer"
+                                                id="demographics_select"
+                                                name="demographics_select"
+                                                data-ng-options="value.id as value.answer for (key, value) in questionGroups[item.id].options  track by value.id"
+                                                style="overflow: hidden;">
+                                            <option value="">-- Select an answer--</option>
+                                        </select>
+                                    </div>
                                     <div ng-if="item.answered_type == 2" class="radioQuestions">
+
+                                        <h2><b>{{olsetEvaluationGroupsData[item.id]['name']}}</b></h2>
+                                        <h4>{{item.question}}</h4>
 
                                         <div><input type="radio" name="low{{item.id}}"
                                                     ng-model="userAnswers[item.id].answer" value="1"> 1
@@ -41,6 +54,8 @@
                                         </div>
                                     </div>
                                     <div ng-if="item.answered_type == 1" class="textQuestions">
+                                        <h2><b>{{olsetEvaluationGroupsData[item.id]['name']}}</b></h2>
+                                        <h4>{{item.question}}</h4>
                                         <textarea ng-model="userAnswers[item.id].answer" rows="12"
                                                   cols="100"></textarea>
                                     </div>

@@ -105,6 +105,14 @@ angular.module('app', [
                 }
 
                 return spath;
+            },
+
+            answer: {
+                demographicsCount: 7,
+                evaluationCount: 28,
+                aarCount: 4,
+                CRSCount: 3,
+                VSCount: 3
             }
         }
     })

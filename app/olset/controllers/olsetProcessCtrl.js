@@ -42,6 +42,7 @@ angular.module('app.olset').controller(
                 };
             });
         };
+
         var flow = {
             awe_url: MainConf.servicesUrl() + 'process/awe/' + $scope.processId,
             action_survey_url: MainConf.servicesUrl() + 'survey/action/aar/create/',
@@ -201,13 +202,16 @@ angular.module('app.olset').controller(
                     }
 
                 }).then(function successCallback(response) {
-                    var items = response.data.data.data;
+                    var items = response.data.data.code == 1 ? response.data.data.data : [];
                     [].forEach.call(items, function (item) {
-                        item.proposal = item.proposal.substr(0, 40);
+                        if(item.proposal) {
+                            item.proposal = item.proposal.substr(0, 40);
+                        }
+                        console.log('item', item);
                     });
                     console.log('items', items);
                     $scope.items = items;
-                    $scope.aar = response.data.data.aar;
+                    $scope.aar = response.data.data.code == 1 ? response.data.data.aar : [];
                 }, function errorCallback(response) {
                     console.log('Shared Vision data error', response);
                 });
@@ -260,13 +264,29 @@ angular.module('app.olset').controller(
                     $state.go('app.olset.evaluation.list', {evaluationId: survey_id});
                 }
                 alert('Survey with extra info: ' + value + ' not found')
+            },
+            openModalPIS: function () {
+                ngDialog.open({
+                    template: MainConf.mainAppPath() + '/olset/views/modal-pis.html',
+                    scope: $scope
+                });
+
+                $rootScope.$on('ngDialog.opened', function (e, $dialog) {
+                    $timeout(function() {
+                        $('.app-pis').animate({ scrollTop: 0 }, 'slow');
+                    }, 1000);
+                    $scope.addPIS = function () {
+                        return false;
+                    };
+                });
             }
         };
 
 
         flow.init();
         flow.getItems();
-
-
+        angular.element(document).ready(function () {
+            flow.openModalPIS();
+        });
     }
 );

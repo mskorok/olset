@@ -9,7 +9,7 @@ angular.module('app.olset').controller(
 
         $scope.userAnswers = [];
 
-        $scope.userAnswersTosend = [];
+        $scope.userAnswersToSend = [];
 
 
         var theUserAnswers = function () {
@@ -32,11 +32,9 @@ angular.module('app.olset').controller(
                     answer.questionId = $scope.olsetUserEditInfos[i].questionId;
                     answer.answer = $scope.olsetUserEditInfos[i].answer;
 
-                    //$scope.userAnswers.push(answer);
-
                     $scope.userAnswers[$scope.olsetUserEditInfos[i].questionId] = answer;
                 }
-                console.log("the user answers: ", $scope.userAnswers);
+                console.log("the user answers: ", $scope.userAnswers, new Date().getTime());
 
             }, function errorCallback(response) {
                 console.log('Olset theUserAnswers data error', response);
@@ -44,18 +42,52 @@ angular.module('app.olset').controller(
                 $scope.olsetUserEditInfos = response.data.data.data;
             });
         };
-        setTimeout(theUserAnswers, 1000);
 
         $scope.makeUpdate = function () {
 
             $scope.userAnswers.forEach(function (item) {
                 if (item.answer) {
-                    $scope.userAnswersTosend.push(item);
+                    $scope.userAnswersToSend.push(item);
                 }
             });
+            var count;
+            switch (parseInt($scope.olsetEvaluationData[0].answered_type)) {
+                case 1:
+                    count = MainConf.answer.aarCount;
+                    break;
+                case 2:
+                    count = MainConf.answer.evaluationCount;
+                    break;
+                case 3:
+                    count = MainConf.answer.demographicsCount;
+                    break;
+                case 4:
+                    count = MainConf.answer.CRSCount;
+                    break;
+                case 5:
+                    count = MainConf.answer.VSCount;
+                    break;
+                default:
+                    console.log('ÆÆ', typeof $scope.olsetEvaluationData[0].answered_type);
+                    throw 'Answer type not found'
+            }
+            console.log('ll', count);
+            if ($scope.userAnswersToSend.length !== count) {
+                $.bigBox({
+                    title: 'Answer all questions!',
+                    //content: question + ", just created also
+                    // a new systemic map Item is here for you just to begin.",
+                    color: "#C46A69",
+                    timeout: 5000,
+                    icon: "fa fa-check",
+                    number: "1"
+                });
+                $scope.userAnswersToSend = [];
+                return false;
+            }
 
-            if ($scope.userAnswersTosend.length > 0) {
-                console.log('User Answers:', $scope.userAnswersTosend);
+            if ($scope.userAnswersToSend.length > 0) {
+                console.log('User Answers:', $scope.userAnswersToSend);
                 $http({
 
                     method: 'POST',
@@ -64,12 +96,12 @@ angular.module('app.olset').controller(
                         'Authorization': 'Bearer ' + authToken,
                         'Content-Type': 'application/json'
                     },
-                    data: $scope.userAnswersTosend
+                    data: $scope.userAnswersToSend
 
                 }).then(function successCallback(response) {
                     ngDialog.close();
-                    var bmessage = "";
-                    var bcolor = "";
+                    var bmessage;
+                    var bcolor;
                     if (response.data.data.status == "Error") {
                         bmessage = "Could not save answers";
                         bcolor = "#d81e1e";
@@ -101,7 +133,7 @@ angular.module('app.olset').controller(
         };
 
 
-        var datas2 = function () {
+        var getData = function () {
             $http({
                 method: 'GET',
                 url: MainConf.servicesUrl() + 'survey/getQuestions/' + $scope.evaluationId,
@@ -110,17 +142,20 @@ angular.module('app.olset').controller(
                     'Content-Type': 'application/json'
                 }
             }).then(function successCallback(response) {
+                theUserAnswers();
                 $scope.olsetEvaluationData = response.data.data.data;
 
                 $scope.olsetEvaluationGroupsData = response.data.data.groups;
                 $scope.olsetEvaluationProcess = response.data.data.process;
                 $scope.isActionAAR = response.data.data.isActionAAR;
+                $scope.questionGroups = response.data.data.groups;
+                $scope.initOption = 'Choose Answer';
+                $scope.isDemographics = response.data.data.isDemographics;
+
+
                 console.log(
                     'Olset survey/getQuestions data success',
-                    $scope.olsetEvaluationData,
-                    $scope.olsetEvaluationGroupsData,
-                    $scope.olsetEvaluationProcess,
-                    $scope.isActionAAR
+                    response.data.data.data
                 );
             }, function errorCallback(response) {
                 console.log('Olset survey/getQuestions data error', response);
@@ -129,6 +164,6 @@ angular.module('app.olset').controller(
             });
         };
 
-        datas2();
+        getData();
     }
 );
