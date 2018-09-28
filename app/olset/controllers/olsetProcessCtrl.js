@@ -5,6 +5,19 @@ angular.module('app.olset').controller(
         $scope.token = authToken;
         $scope.processId = $stateParams.processId;
         $scope.surveyName = "Survey Items";
+        $scope.openDemo = false;
+        $scope.openPIS = false;
+        $scope.openInitial = false;
+        $scope.openCRS = false;
+        $scope.openVS = false;
+        $scope.openEvaluation = false;
+        $scope.openAAR = false;
+        $scope.openItemsAAR = false;
+
+        $scope.openSAM = false;
+        $scope.openSSM = false;
+
+
         if ('app.olset.evaluation' === $rootScope.previousState.name) {
             window.location.reload();
         }
@@ -46,7 +59,9 @@ angular.module('app.olset').controller(
         var flow = {
             awe_url: MainConf.servicesUrl() + 'process/awe/' + $scope.processId,
             action_survey_url: MainConf.servicesUrl() + 'survey/action/aar/create/',
+            pis_url: MainConf.servicesUrl() + 'process/pis/' + $scope.processId,
             init: function () {
+                var self = this;
                 $http({
                     method: 'GET',
                     url: MainConf.servicesUrl() + 'process/data/' + $scope.processId,
@@ -58,6 +73,8 @@ angular.module('app.olset').controller(
                 }).then(function successCallback(response) {
                     console.log('Olset process data success', response);
                     $scope.olsetProcessData = response.data.data.process;
+                    $scope.olsetStepsFlags = response.data.data.steps;
+                    self.setSequence($scope.olsetStepsFlags);
                     $scope.olsetProcessData.SharedVision = $scope.olsetProcessData.SharedVision === null
                     || $scope.olsetProcessData.SharedVision === 'null' ? '' : $scope.olsetProcessData.SharedVision;
                     angular.element(document).ready(function () {
@@ -266,9 +283,14 @@ angular.module('app.olset').controller(
                 alert('Survey with extra info: ' + value + ' not found')
             },
             openModalPIS: function () {
+                var self = this;
                 ngDialog.open({
                     template: MainConf.mainAppPath() + '/olset/views/modal-pis.html',
                     scope: $scope
+                });
+
+                $rootScope.$on('ngDialog.closed', function (e, $dialog) {
+                    window.location.reload();
                 });
 
                 $rootScope.$on('ngDialog.opened', function (e, $dialog) {
@@ -276,9 +298,87 @@ angular.module('app.olset').controller(
                         $('.app-pis').animate({ scrollTop: 0 }, 'slow');
                     }, 1000);
                     $scope.addPIS = function () {
-                        return false;
+                        console.log('PIS submitted');
+                        ngDialog.closeAll();
+                        $http({
+                            method: 'GET',
+                            url: self.pis_url,
+                            headers: {
+                                'Authorization': 'Bearer ' + authToken,
+                                'Content-Type': 'application/json'
+                            }
+                        }).then(function successCallback(response) {
+                            if (parseInt(response.data.data.code) === 1) {
+                                console.log('PIS data success', response);
+                                $timeout(function() {
+                                    window.location.reload();
+                                }, 500);
+                            } else {
+                                console.log('PIS data error', response);
+                                $.bigBox({
+                                    title: 'PIS not created!',
+                                    //content: question + ", just created also
+                                    // a new systemic map Item is here for you just to begin.",
+                                    color: "#C46A69",
+                                    timeout: 5000,
+                                    icon: "fa fa-check",
+                                    number: "1"
+                                });
+                            }
+                        }, function errorCallback(response) {
+                            console.log('PIS data error', response);
+                            $.bigBox({
+                                title: 'PIS not created!',
+                                //content: question + ", just created also
+                                // a new systemic map Item is here for you just to begin.",
+                                color: "#C46A69",
+                                timeout: 5000,
+                                icon: "fa fa-check",
+                                number: "1"
+                            });
+                        });
                     };
                 });
+            },
+            redirectToDemographics: function (id) {
+                $state.go('app.olset.evaluation', {evaluationId: id});
+            },
+            setSequence: function (steps) {
+                if (steps.hasOwnProperty('hasDemographics')
+                    && !steps.hasDemographics
+                ) {
+                    if (steps.hasOwnProperty('demographicsSurvey')
+                        && typeof steps.demographicsSurvey.id !== 'undefined'
+                    ) {
+                        this.redirectToDemographics(parseInt(steps.demographicsSurvey.id));
+                    } else {
+                        throw 'steps.demographicsSurvey.id is undefined';
+                    }
+
+                } else if (steps.hasOwnProperty('hasPIS') && !steps.hasPIS) {
+                    this.openModalPIS();
+                } else if (steps.hasOwnProperty('hasInitial') && !steps.hasInitial) {
+                    $scope.openInitial = true;
+                } else if (steps.hasOwnProperty('hasCRS') && !steps.hasCRS) {
+                    $scope.openCRS = true;
+                    $scope.openSAM = true;
+                    $scope.openSSM = true;
+                } else if (steps.hasOwnProperty('hasVS') && !steps.hasVS) {
+                    $scope.openVS = true;
+                    $scope.openSAM = true;
+                    $scope.openSSM = true;
+                } else if (steps.hasOwnProperty('hasEvaluation') && !steps.hasEvaluation) {
+                    $scope.openEvaluation = true;
+                    $scope.openSAM = true;
+                    $scope.openSSM = true;
+                } else {
+                    $scope.openEvaluation = true;
+                    $scope.openAAR = true;
+                    $scope.openItemsAAR = true;
+                    $scope.openSAM = true;
+                    $scope.openSSM = true;
+                }
+
             }
         };
 
@@ -286,7 +386,7 @@ angular.module('app.olset').controller(
         flow.init();
         flow.getItems();
         angular.element(document).ready(function () {
-            flow.openModalPIS();
+            // flow.openModalPIS();
         });
     }
 );

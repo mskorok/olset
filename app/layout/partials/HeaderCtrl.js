@@ -49,9 +49,9 @@ angular.module('app.layout').controller(
                     $scope.helpForPage = "Could not find help for this page.";
                 }
 
-            }, function errorCallback(response) {
-                console.log('error addWpHelp', response);
-                alert('error addWpHelp');
+            }, function errorCallback(response) {//todo
+                // console.log('error addWpHelp', response);
+                // alert('error addWpHelp');
             });
         };
 

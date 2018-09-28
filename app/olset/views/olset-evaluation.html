@@ -59,6 +59,18 @@
                                         <textarea ng-model="userAnswers[item.id].answer" rows="12"
                                                   cols="100"></textarea>
                                     </div>
+                                    <div ng-if="item.answered_type == 4" class="textQuestions">
+                                        <h2><b>{{olsetEvaluationGroupsData[item.id]['name']}}</b></h2>
+                                        <h4>{{item.question}}</h4>
+                                        <textarea ng-model="userAnswers[item.id].answer" rows="12"
+                                                  cols="100"></textarea>
+                                    </div>
+                                    <div ng-if="item.answered_type == 5" class="textQuestions">
+                                        <h2><b>{{olsetEvaluationGroupsData[item.id]['name']}}</b></h2>
+                                        <h4>{{item.question}}</h4>
+                                        <textarea ng-model="userAnswers[item.id].answer" rows="12"
+                                                  cols="100"></textarea>
+                                    </div>
 
                                     <input type="text" hidden name="hidden{{item.id}}"
                                            ng-init="userAnswers[item.id].questionId = item.id"

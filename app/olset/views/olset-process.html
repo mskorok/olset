@@ -2,13 +2,7 @@
     <div class="row">
         <div smart-include="app/layout/partials/sub-header.tpl.html"></div>
     </div>
-    <div style="margin-bottom:15px;">
-        <!--<button type="button" ng-click="openModaltoAddOrEdit('','','',0,'Add a new Question')" class="btn btn-labeled btn-primary">-->
-        <!--<span class="btn-label">-->
-        <!--<i class="glyphicon glyphicon-plus-sign"></i>-->
-        <!--</span>Create new Question-->
-        <!--</button>-->
-    </div>
+    <div style="margin-bottom:15px;"></div>
     <!-- widget grid -->
     <section id="widget-grid" data-widget-grid>
         <!-- row -->
@@ -28,20 +22,36 @@
                         <div class="table-responsive" style="padding:13px;">
                             <div class="col-md-12 m-t-5">
                                 <center><h2>Initial Survey</h2></center>
-                                <a data-ui-sref="app.olset.evaluation({evaluationId : olsetProcessData.step0})"
-                                   class="btn btn-primary btn-lg btn-block">
-                                    Evaluation Survey >>
-                                </a>
+                                <div data-ng-if="openInitial">
+                                    <a data-ui-sref="app.olset.evaluation({evaluationId : olsetProcessData.step0})"
+                                       class="btn btn-primary btn-lg btn-block">
+                                        Initial  Survey >>
+                                    </a>
+                                </div>
+                                <div ng-if="!openInitial">
+                                    <a href="javascript:void 0"
+                                       class="btn btn-primary btn-lg btn-block">
+                                        Initial  Survey >>
+                                    </a>
+                                </div>
                             </div>
                             <div class="col-md-12 m-t-5">
                                 <center><h2>Step 0</h2></center>
                                 <center><img src="/styles/img/banners/b2.png" width="250"></center>
 
                                 <div class="col-md-12 m-t-5">
-                                    <a data-ui-sref="app.olset.evaluation({evaluationId : olsetProcessData.reality})"
-                                       class="btn btn-primary btn-lg btn-block">
-                                        Current Reality Survey >>
-                                    </a>
+                                    <div data-ng-if="openCRS">
+                                        <a data-ui-sref="app.olset.evaluation({evaluationId : olsetProcessData.reality})"
+                                           class="btn btn-primary btn-lg btn-block">
+                                            Current Reality Survey >>
+                                        </a>
+                                    </div>
+                                    <div data-ng-if="!openCRS">
+                                        <a href="javascript:void 0"
+                                           class="btn btn-primary btn-lg btn-block">
+                                            Current Reality Survey >>
+                                        </a>
+                                    </div>
                                 </div>
                                 <div class="col-md-12">
                                     <h3>Current Reality</h3>
@@ -70,10 +80,18 @@
                                 </div>
 
                                 <div class="col-md-12 m-t-5">
-                                    <a data-ui-sref="app.olset.evaluation({evaluationId : olsetProcessData.vision})"
-                                       class="btn btn-primary btn-lg btn-block">
-                                        Vision Survey >>
-                                    </a>
+                                    <div data-ng-if="openVS">
+                                        <a data-ui-sref="app.olset.evaluation({evaluationId : olsetProcessData.vision})"
+                                           class="btn btn-primary btn-lg btn-block">
+                                            Vision Survey >>
+                                        </a>
+                                    </div>
+                                    <div data-ng-if="!openVS">
+                                        <a href="javascript:void 0"
+                                           class="btn btn-primary btn-lg btn-block">
+                                            Vision Survey >>
+                                        </a>
+                                    </div>
                                 </div>
                                 <div class="col-md-12  m-t-5">
                                     <h3>Initial Intentions</h3>
@@ -92,46 +110,86 @@
                             <div class="col-md-12  m-t-5">
                                 <center><h2>Step 1: Understand</h2></center>
                                 <center><img src="/styles/img/banners/b3.png" class="m-b-5" width="250"></center>
-                                <a data-ui-sref="app.systemicStructureMap.manager({processId : processId})"
-                                   class="btn btn-primary btn-lg btn-block">
-                                    Systemic Structure Map >>
-                                </a>
+                                <div data-ng-if="openSSM">
+                                    <a data-ui-sref="app.systemicStructureMap.manager({processId : processId})"
+                                       class="btn btn-primary btn-lg btn-block">
+                                        Systemic Structure Map >>
+                                    </a>
+                                </div>
+                                <div data-ng-if="!openSSM">
+                                    <a href="javascript:void 0"
+                                       class="btn btn-primary btn-lg btn-block">
+                                        Systemic Structure Map >>
+                                    </a>
+                                </div>
                             </div>
 
                             <div class="col-md-12 m-t-5">
                                 <center><h2>Step 2: Design and Implement</h2></center>
                                 <center><img src="/styles/img/banners/b4.png" class="m-b-5" width="250"></center>
-                                <a data-ui-sref="app.sysmap.manager.process({processId : processId})"
-                                   class="btn btn-primary btn-lg btn-block">
-                                    Systemic Action Map >>
-                                </a>
+                                <div data-ng-if="openSAM">
+                                    <a data-ui-sref="app.sysmap.manager.process({processId : processId})"
+                                       class="btn btn-primary btn-lg btn-block">
+                                        Systemic Action Map >>
+                                    </a>
+                                </div>
+                                <div data-ng-if="!openSAM">
+                                    <a href="javascript:void 0"
+                                       class="btn btn-primary btn-lg btn-block">
+                                        Systemic Action Map >>
+                                    </a>
+                                </div>
                             </div>
                             <div class="col-md-12 m-t-5">
                                 <center><h2>Step 3: Self-Evaluate</h2></center>
                                 <center><img src="/styles/img/banners/b5.png" class="m-b-5" width="250"></center>
                                 <div class="col-md-12">
-                                    <a data-ui-sref="app.olset.evaluation({evaluationId : olsetProcessData.step3_0})"
-                                       class="btn btn-primary btn-lg btn-block">
-                                        Evaluation Survey >>
-                                    </a>
+                                    <div data-ng-if="openEvaluation">
+                                        <a data-ui-sref="app.olset.evaluation({evaluationId : olsetProcessData.step3_0})"
+                                           class="btn btn-primary btn-lg btn-block">
+                                            Evaluation Survey >>
+                                        </a>
+                                    </div>
+                                    <div data-ng-if="!openEvaluation">
+                                        <a href="javascript:void 0"
+                                           class="btn btn-primary btn-lg btn-block">
+                                            Evaluation Survey >>
+                                        </a>
+                                    </div>
                                 </div>
                                 <div class="col-md-12 m-b-5">
                                     <h2>After Action Review for Process</h2>
-                                    <a data-ui-sref="app.olset.evaluation({evaluationId : olsetProcessData.step3_1})"
-                                       class="btn btn-primary btn-lg btn-block">
-                                        After Action Review >>
-                                    </a>
+                                    <div data-ng-if="openAAR">
+                                        <a data-ui-sref="app.olset.evaluation({evaluationId : olsetProcessData.step3_1})"
+                                           class="btn btn-primary btn-lg btn-block">
+                                            After Action Review >>
+                                        </a>
+                                    </div>
+                                    <div data-ng-if="!openAAR">
+                                        <a href="javascript:void 0"
+                                           class="btn btn-primary btn-lg btn-block">
+                                            After Action Review >>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
 
                             <hr class="hr-visible"/>
                             <div class="col-md-12 m-t-5">
                                 <center><h2>After Action Review for Actions</h2></center>
-                                <a href="javascript:void 0"
-                                   data-ng-click="openModalAAR(processId)"
-                                   class="btn btn-primary btn-lg btn-block">
-                                    After Action Review >>
-                                </a>
+                                <div data-ng-if="openItemsAAR">
+                                    <a href="javascript:void 0"
+                                       data-ng-click="openModalAAR(processId)"
+                                       class="btn btn-primary btn-lg btn-block">
+                                        After Action Review >>
+                                    </a>
+                                </div>
+                                <div data-ng-if="!openItemsAAR">
+                                    <a href="javascript:void 0"
+                                       class="btn btn-primary btn-lg btn-block">
+                                        After Action Review >>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>

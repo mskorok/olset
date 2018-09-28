@@ -5,43 +5,11 @@ angular.module('app.olset').controller(
         var authToken = $window.localStorage.getItem('authToken');
         $scope.token = authToken;
         $scope.evaluationId = $stateParams.evaluationId;
-        $scope.surveyName = "Survey Items";
+        $scope.surveyName = 'Survey Items';
 
         $scope.userAnswers = [];
 
         $scope.userAnswersToSend = [];
-
-
-        var theUserAnswers = function () {
-            $http({
-                method: 'GET',
-                url: MainConf.servicesUrl() + 'survey/getSurveyAnswers/' + $scope.evaluationId,
-                headers: {
-                    'Authorization': 'Bearer ' + authToken,
-                    'Content-Type': 'application/json'
-                }
-
-            }).then(function successCallback(response) {
-                $scope.olsetUserEditInfos = response.data.data.data;
-
-                for (var i = 0; $scope.olsetUserEditInfos.length > i; i++) {
-                    var answer = {
-                        "questionId": null,
-                        "answer": null
-                    };
-                    answer.questionId = $scope.olsetUserEditInfos[i].questionId;
-                    answer.answer = $scope.olsetUserEditInfos[i].answer;
-
-                    $scope.userAnswers[$scope.olsetUserEditInfos[i].questionId] = answer;
-                }
-                console.log("the user answers: ", $scope.userAnswers, new Date().getTime());
-
-            }, function errorCallback(response) {
-                console.log('Olset theUserAnswers data error', response);
-                alert('Olset theUserAnswers data error');
-                $scope.olsetUserEditInfos = response.data.data.data;
-            });
-        };
 
         $scope.makeUpdate = function () {
 
@@ -71,7 +39,6 @@ angular.module('app.olset').controller(
                     console.log('ÆÆ', typeof $scope.olsetEvaluationData[0].answered_type);
                     throw 'Answer type not found'
             }
-            console.log('ll', count);
             if ($scope.userAnswersToSend.length !== count) {
                 $.bigBox({
                     title: 'Answer all questions!',
@@ -91,7 +58,7 @@ angular.module('app.olset').controller(
                 $http({
 
                     method: 'POST',
-                    url: MainConf.servicesUrl() + 'survey/answers',
+                    url: MainConf.servicesUrl() + 'survey/answers/' + $scope.survey.id,
                     headers: {
                         'Authorization': 'Bearer ' + authToken,
                         'Content-Type': 'application/json'
@@ -103,11 +70,11 @@ angular.module('app.olset').controller(
                     var bmessage;
                     var bcolor;
                     if (response.data.data.status == "Error") {
-                        bmessage = "Could not save answers";
-                        bcolor = "#d81e1e";
+                        bmessage = 'Could not save answers';
+                        bcolor = '#d81e1e';
                     } else {
-                        bmessage = "Answers updated";
-                        bcolor = "#739E73";
+                        bmessage = 'Answers updated';
+                        bcolor = '#739E73';
                     }
                     $.bigBox({
                         title: bmessage,
@@ -127,43 +94,80 @@ angular.module('app.olset').controller(
                     console.log('Olset makeUpdate data error', response);
                     alert('Olset makeUpdate data error');
                 });
-
             }
 
+            return true;
         };
 
+        var evaluate = {
+            init: function () {
+                var self = this;
+                $http({
+                    method: 'GET',
+                    url: MainConf.servicesUrl() + 'survey/getQuestions/' + $scope.evaluationId,
+                    headers: {
+                        'Authorization': 'Bearer ' + authToken,
+                        'Content-Type': 'application/json'
+                    }
+                }).then(function successCallback(response) {
+                    $scope.survey = response.data.data.survey;
+                    if ($scope.survey.tag !== MainConf.survey.evaluation && $scope.survey.tag !== MainConf.survey.AAR) {
+                        self.theUserAnswers();
+                    }
 
-        var getData = function () {
-            $http({
-                method: 'GET',
-                url: MainConf.servicesUrl() + 'survey/getQuestions/' + $scope.evaluationId,
-                headers: {
-                    'Authorization': 'Bearer ' + authToken,
-                    'Content-Type': 'application/json'
-                }
-            }).then(function successCallback(response) {
-                theUserAnswers();
-                $scope.olsetEvaluationData = response.data.data.data;
+                    $scope.olsetEvaluationData = response.data.data.data;
 
-                $scope.olsetEvaluationGroupsData = response.data.data.groups;
-                $scope.olsetEvaluationProcess = response.data.data.process;
-                $scope.isActionAAR = response.data.data.isActionAAR;
-                $scope.questionGroups = response.data.data.groups;
-                $scope.initOption = 'Choose Answer';
-                $scope.isDemographics = response.data.data.isDemographics;
+                    $scope.olsetEvaluationGroupsData = response.data.data.groups;
+                    $scope.olsetEvaluationProcess = response.data.data.process;
+                    $scope.isActionAAR = response.data.data.isActionAAR;
+                    $scope.questionGroups = response.data.data.groups;
+                    $scope.initOption = 'Choose Answer';
+                    $scope.isDemographics = response.data.data.isDemographics;
 
 
-                console.log(
-                    'Olset survey/getQuestions data success',
-                    response.data.data.data
-                );
-            }, function errorCallback(response) {
-                console.log('Olset survey/getQuestions data error', response);
-                alert('Olset survey/getQuestions data error');
-                $scope.olsetEvaluationData = response.data.process;
-            });
+
+                    console.log(
+                        'Olset survey/getQuestions data success',
+                        response.data.data
+                    );
+                }, function errorCallback(response) {
+                    console.log('Olset survey/getQuestions data error', response);
+                    alert('Olset survey/getQuestions data error');
+                    $scope.olsetEvaluationData = response.data.process;
+                });
+            },
+            theUserAnswers: function () {
+                $http({
+                    method: 'GET',
+                    url: MainConf.servicesUrl() + 'survey/getSurveyAnswers/' + $scope.evaluationId,
+                    headers: {
+                        'Authorization': 'Bearer ' + authToken,
+                        'Content-Type': 'application/json'
+                    }
+
+                }).then(function successCallback(response) {
+                    $scope.olsetUserEditInfos = response.data.data.data;
+
+                    for (var i = 0; $scope.olsetUserEditInfos.length > i; i++) {
+                        var answer = {
+                            "questionId": null,
+                            "answer": null
+                        };
+                        answer.questionId = $scope.olsetUserEditInfos[i].questionId;
+                        answer.answer = $scope.olsetUserEditInfos[i].answer;
+
+                        $scope.userAnswers[$scope.olsetUserEditInfos[i].questionId] = answer;
+                    }
+                    console.log('the user answers: ', $scope.userAnswers, new Date().getTime());
+
+                }, function errorCallback(response) {
+                    console.log('Olset theUserAnswers data error', response);
+                    alert('Olset theUserAnswers data error');
+                    $scope.olsetUserEditInfos = response.data.data.data;
+                });
+            }
         };
 
-        getData();
+        evaluate.init();
     }
 );

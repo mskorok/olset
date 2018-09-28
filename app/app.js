@@ -113,6 +113,15 @@ angular.module('app', [
                 aarCount: 4,
                 CRSCount: 3,
                 VSCount: 3
+            },
+
+            survey: {
+                initial: '_IS_',
+                CRS: '_CS_',
+                VS: '_VS_',
+                evaluation: '_ES_',
+                AAR: '_AAR_',
+                demographics: '_DS_'
             }
         }
     })
