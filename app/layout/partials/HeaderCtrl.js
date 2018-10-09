@@ -24,7 +24,7 @@ angular.module('app.layout').controller(
                 data: $scope.slug
 
             }).then(function successCallback(response) {
-                console.log('success addWpHelper: ', response);
+                // console.log('success addWpHelper: ', response);
                 $scope.helpForPage = '.';
                 if (response.data.data.code === 1) {
                     var info_button = document.getElementById('info_popover');
@@ -62,7 +62,7 @@ angular.module('app.layout').controller(
         );
 
         $scope.$watch(Auth.userHaveRole, function (value, oldValue) {
-            console.log('roleValueW: ', value);
+            // console.log('roleValueW: ', value);
             $scope.userRole = value;
 
             if (value) {
@@ -73,14 +73,14 @@ angular.module('app.layout').controller(
                 } else if (value == 'Administrator') {
                     $scope.isAdmin = true;
                 }
-                console.log('the val: ', value);
+                // console.log('the val: ', value);
             } else {
                 $scope.userRole = false;
             }
 
         }, true);
 
-        console.log('Layout Role: ', Auth.userHaveRole);
+        // console.log('Layout Role: ', Auth.userHaveRole);
 
         $scope.userLogout = function () {
 

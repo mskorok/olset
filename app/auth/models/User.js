@@ -40,11 +40,11 @@ angular.module('app.auth').factory('User', function ($http, $window, $q, Auth, $
             //}
         }
 
-        console.log('theValueO: ', UserModel);
+        // console.log('theValueO: ', UserModel);
 
         if (!value) {
 
-            console.log("Disconnect auth user");
+            // console.log("Disconnect auth user");
 
             //$window.location.href = '#/real-login';
 
@@ -54,7 +54,7 @@ angular.module('app.auth').factory('User', function ($http, $window, $q, Auth, $
 
 
     $http.get(APP_CONFIG.apiRootUrl + '/user.json').then(function (response) {
-        console.log('user.json', response);
+        // console.log('user.json', response);
         UserModel.picture = response.data.picture;
         dfd.resolve(UserModel)
     });

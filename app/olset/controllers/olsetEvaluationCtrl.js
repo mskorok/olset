@@ -158,7 +158,7 @@ angular.module('app.olset').controller(
 
                         $scope.userAnswers[$scope.olsetUserEditInfos[i].questionId] = answer;
                     }
-                    console.log('the user answers: ', $scope.userAnswers, new Date().getTime());
+                    console.log('the user answers: ', $scope.userAnswers, $scope.olsetUserEditInfos);
 
                 }, function errorCallback(response) {
                     console.log('Olset theUserAnswers data error', response);

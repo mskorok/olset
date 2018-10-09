@@ -101,7 +101,7 @@ angular.module('app', [
                 }
 
                 if (spath == null) {
-                    console.log("Error getting path")
+                    // console.log("Error getting path")
                 }
 
                 return spath;
@@ -132,13 +132,13 @@ angular.module('app', [
     // }])
     .config(function ($provide, $httpProvider, RestangularProvider) {
 
-        console.log('Auth config start');
+        // console.log('Auth config start');
         // Intercept http calls.
         $provide.factory('ErrorHttpInterceptor', function ($q) {
             var errorCounter = 0;
 
             function notifyError(rejection) {
-                console.log(rejection);
+                // console.log(rejection);
                 $.bigBox({
                     title: rejection.status + ' ' + rejection.statusText,
                     content: rejection.data,
@@ -201,7 +201,7 @@ angular.module('app', [
 
                 if (!Auth.isLoggedIn()) {
 
-                    console.log('DENY');
+                    // console.log('DENY');
                     if (logPath == addUser) {
 
                     } else if (logPath == registerUser) {
@@ -213,21 +213,21 @@ angular.module('app', [
                 }
                 else {
                     //Routing Allow by Role
-                    console.log('ALLOW');
+                    // console.log('ALLOW');
                     //$location.path('#/dashboard');
                     switch (userRole) {
                         case "Manager":
                             //(logPath != manageUsers) ? $location.path('/login') : '';
-                            console.log('role:', userRole);
+                            // console.log('role:', userRole);
                             break;
                         case "User":
-                            console.log('role:', userRole);
+                            // console.log('role:', userRole);
                             break;
                         case "Administrator":
-                            console.log('role:', userRole);
+                            // console.log('role:', userRole);
                             break;
                         default:
-                            console.log('role:default');
+                            // console.log('role:default');
                     }
 
                 }

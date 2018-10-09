@@ -1,17 +1,16 @@
-angular.module('app.dashboard').directive('statsOrganization', function () {
+angular.module('app.dashboard').directive('indexCompare', function () {
     return {
         restrict: 'EA',
         scope: {
             countorgstop: '=countorgstop',
-            countorgrun: '@countorgrun'
+            index: '@index'
         },
         transclude: true,
         link: function (scope, element, attrs) {
-            attrs.$observe('countorgrun', function (value) {
-                // console.log('cnt__', scope.countorgrun);
+            attrs.$observe('index', function (value) {
                 if (value) {
-                    var finalJson = JSON.parse(scope.countorgrun);
-                    console.log('dashboard final json', finalJson);
+                    var finalJson = JSON.parse(scope.index);
+                    console.log('index', finalJson);
                     var doughnutOptions = {
                         //Boolean - Whether we should show a stroke on each segment
                         segmentShowStroke: true,
@@ -40,37 +39,24 @@ angular.module('app.dashboard').directive('statsOrganization', function () {
 
                     var doughnutData = [
                         {
-                            value: finalJson.count_users[0].count,
+                            value: 100,
                             color: "rgba(220,220,220,0.8)",
                             highlight: "rgba(220,220,220,0.7)",
-                            label: "Manager"
+                            label: "Previous Index"
                         },
                         {
-                            value: finalJson.count_users[1].count,
+                            value: parseInt(finalJson*100),
                             color: "rgba(151,187,205,1)",
                             highlight: "rgba(151,187,205,0.8)",
-                            label: "User"
+                            label: "Last Indexed"
                         }
                     ];
-
 
                     // render chart
                     var ctx = element[0].getContext("2d");
                     new Chart(ctx).Doughnut(doughnutData, doughnutOptions);
                 }
             });
-
-            // attr.$observe('countorgrun', function(actual_value) {
-
-            //})
-            // var theRealDeal = null;
-            // // $attr.$observe('chartdata', function(value) {
-            // //
-            // //     theRealDeal = value;
-            // //     console.log("ku je mor chart ?? ", theRealDeal);
-            // // });
-            //
-            //
         }
     }
 });

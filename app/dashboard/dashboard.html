@@ -1,95 +1,303 @@
 <!-- MAIN CONTENT -->
-<div id="content"  ng-controller="DashboardCtrl">
-	<div class="row">
-		<!--<big-breadcrumbs items="['Dashboard', 'My Dashboard']" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></big-breadcrumbs>-->
-		<div smart-include="app/layout/partials/sub-header.tpl.html"></div>
-	</div>
-	<!-- widget grid -->
-	<section id="widget-grid" widget-grid>
-		<!--
-		<div class="row">
-			<article class="col-sm-12">
+<div id="content" ng-controller="DashboardCtrl">
+    <div class="row">
+        <!--<big-breadcrumbs items="['Dashboard', 'My Dashboard']" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></big-breadcrumbs>-->
+        <div smart-include="app/layout/partials/sub-header.tpl.html"></div>
+    </div>
+    <!-- widget grid -->
+    <section id="widget-grid" widget-grid>
+        <!--
+        <div class="row">
+            <article class="col-sm-12">
 
-				<div smart-include="app/dashboard/live-feeds.tpl.html" class="placeholder-live-feeds"></div>
+                <div smart-include="app/dashboard/live-feeds.tpl.html" class="placeholder-live-feeds"></div>
 
-			</article>
-		</div> -->
+            </article>
+        </div> -->
 
-		<!-- end row -->
+        <!-- end row -->
 
-		<!-- row -->
-		<article class="col-sm-12 col-md-12" style="text-align: center">
+        <!-- row -->
+        <article class="col-sm-12 col-md-12" style="text-align: center">
 
-			<h1 style="font-size: 3em;">Welcome to OLSET</h1>
+            <h1 style="font-size: 3em;">Welcome to OLSET</h1>
             <h3>Your corporate brain</h3>
             <center class="m-b-5"><img src="/styles/img/banners/b1.png" width="250"></center>
 
 
-		</article>
-		<div class="row">
+        </article>
+        <div class="row">
 
 
+            <div ng-if="isManager" class="col-sm-12 col-md-12">
+                <!--<div ng-if="isProcess" class="col-sm-12 col-md-12 m-b-5 m-t-5">-->
+                <!--<h3 class="m-b-5 m-l-5">-->
+                <!--Current Reality:&nbsp;&nbsp;<div class="m-l-5" id="crs_text"></div>-->
+                <!--</h3>-->
+                <!--<h3 class="m-l-5">-->
+                <!--Vision:&nbsp;&nbsp;<div class="m-l-5" id="vs_text"></div>-->
+                <!--</h3>-->
 
-			<div ng-if="isManager" class="col-sm-12 col-md-12">
-                <div ng-if="isProcess" class="col-sm-12 col-md-12 m-b-5 m-t-5">
-                    <h3 class="m-b-5 m-l-5">
-                        Current Reality:&nbsp;&nbsp;<div class="m-l-5" id="crs_text"></div>
-                    </h3>
-                    <h3 class="m-l-5">
-                        Vision:&nbsp;&nbsp;<div class="m-l-5" id="vs_text"></div>
-                    </h3>
+                <!--</div>-->
 
+                <div ng-if="isManager" class="col-md-6" jarvis-widget id="process_status"
+                     data-widget-editbutton="false">
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-bar-chart-o"></i> </span>
+                        <h2>Processes By Status</h2>
+                    </header>
+                    <div>
+                        <div class="widget-body">
+                            <canvas processes-status data-status="{{olsetStatsInfo}}" height="120"></canvas>
+                        </div>
+                    </div>
                 </div>
+                <div ng-if="isManager" class="col-md-6" jarvis-widget id="organization_structure"
+                     data-widget-editbutton="false">
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-bar-chart-o"></i> </span>
+                        <h2>Organization Structure</h2>
+                    </header>
+                    <div>
+                        <div class="widget-body">
+                            <canvas organization-structure data-structure="{{olsetStatsInfo}}" height="120"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <center><h2>Processes</h2></center>
+        <div class="panel-group">
+            <div ng-repeat="process in olsetSurvey">
+                <div class="panel panel-default m-t-5">
+                    <div class="col-sm-12 col-md-12 m-b-5 m-t-5">
+                        <h3 class="m-b-5 m-l-5">
+                            Current Reality:&nbsp;&nbsp;<div class="m-l-5">{{process.process.CurrentReality |
+                            htmlToPlaintext}}
+                        </div>
+                        </h3>
+                        <h3 class="m-l-5">
+                            Vision:&nbsp;&nbsp;<div class="m-l-5">{{process.process.InitialIntentions |
+                            htmlToPlaintext}}
+                        </div>
+                        </h3>
+                    </div>
+                    <div class="col-sm-12 col-md-12">
+                        <div class="col-md-6 process-widget jarviswidget jarviswidget-color-teal jarviswidget-sortable"
+                             jarvis-widget
+                             data-widget-editbutton="false" data-widget-attstyle="jarviswidget-color-teal" style=""
+                             role="widget">
+                            <header role="heading">
+                                <div class="jarviswidget-ctrls" role="menu">
+                                    <a href="javascript:void(0);" class="button-icon jarviswidget-toggle-btn"
+                                       rel="tooltip" title="" data-placement="bottom" data-original-title="Collapse">
+                                        <i class="fa fa-minus "></i></a>
+                                    <a href="javascript:void(0);" class="button-icon jarviswidget-fullscreen-btn"
+                                       rel="tooltip" title="" data-placement="bottom"
+                                       data-original-title="Fullscreen"><i class="fa fa-expand "></i></a> <a
+                                        href="javascript:void(0);" class="button-icon jarviswidget-delete-btn"
+                                        rel="tooltip" title="" data-placement="bottom" data-original-title="Delete"><i
+                                        class="fa fa-times"></i></a></div>
+                                <div class="widget-toolbar ng-scope" role="menu" dropdown=""><a data-toggle="dropdown"
+                                                                                                class="dropdown-toggle color-box selector"></a>
+                                    <ul class="dropdown-menu arrow-box-up-right color-select pull-right">
+                                        <li><span class="bg-color-green" data-widget-setstyle="jarviswidget-color-green"
+                                                  rel="tooltip" data-placement="left"
+                                                  data-original-title="Green Grass"></span></li>
+                                        <li><span class="bg-color-greenDark"
+                                                  data-widget-setstyle="jarviswidget-color-greenDark" rel="tooltip"
+                                                  data-placement="top" data-original-title="Dark Green"></span></li>
+                                        <li><span class="bg-color-greenLight"
+                                                  data-widget-setstyle="jarviswidget-color-greenLight" rel="tooltip"
+                                                  data-placement="top" data-original-title="Light Green"></span></li>
+                                        <li><span class="bg-color-purple"
+                                                  data-widget-setstyle="jarviswidget-color-purple" rel="tooltip"
+                                                  data-placement="top" data-original-title="Purple"></span></li>
+                                        <li><span class="bg-color-magenta"
+                                                  data-widget-setstyle="jarviswidget-color-magenta" rel="tooltip"
+                                                  data-placement="top" data-original-title="Magenta"></span></li>
+                                        <li><span class="bg-color-pink" data-widget-setstyle="jarviswidget-color-pink"
+                                                  rel="tooltip" data-placement="right"
+                                                  data-original-title="Pink"></span></li>
+                                        <li><span class="bg-color-pinkDark"
+                                                  data-widget-setstyle="jarviswidget-color-pinkDark" rel="tooltip"
+                                                  data-placement="left" data-original-title="Fade Pink"></span></li>
+                                        <li><span class="bg-color-blueLight"
+                                                  data-widget-setstyle="jarviswidget-color-blueLight" rel="tooltip"
+                                                  data-placement="top" data-original-title="Light Blue"></span></li>
+                                        <li><span class="bg-color-teal" data-widget-setstyle="jarviswidget-color-teal"
+                                                  rel="tooltip" data-placement="top" data-original-title="Teal"></span>
+                                        </li>
+                                        <li><span class="bg-color-blue" data-widget-setstyle="jarviswidget-color-blue"
+                                                  rel="tooltip" data-placement="top"
+                                                  data-original-title="Ocean Blue"></span></li>
+                                        <li><span class="bg-color-blueDark"
+                                                  data-widget-setstyle="jarviswidget-color-blueDark" rel="tooltip"
+                                                  data-placement="top" data-original-title="Night Sky"></span></li>
+                                        <li><span class="bg-color-darken"
+                                                  data-widget-setstyle="jarviswidget-color-darken" rel="tooltip"
+                                                  data-placement="right" data-original-title="Night"></span></li>
+                                        <li><span class="bg-color-yellow"
+                                                  data-widget-setstyle="jarviswidget-color-yellow" rel="tooltip"
+                                                  data-placement="left" data-original-title="Day Light"></span></li>
+                                        <li><span class="bg-color-orange"
+                                                  data-widget-setstyle="jarviswidget-color-orange" rel="tooltip"
+                                                  data-placement="bottom" data-original-title="Orange"></span></li>
+                                        <li><span class="bg-color-orangeDark"
+                                                  data-widget-setstyle="jarviswidget-color-orangeDark" rel="tooltip"
+                                                  data-placement="bottom" data-original-title="Dark Orange"></span></li>
+                                        <li><span class="bg-color-red" data-widget-setstyle="jarviswidget-color-red"
+                                                  rel="tooltip" data-placement="bottom"
+                                                  data-original-title="Red Rose"></span></li>
+                                        <li><span class="bg-color-redLight"
+                                                  data-widget-setstyle="jarviswidget-color-redLight" rel="tooltip"
+                                                  data-placement="bottom" data-original-title="Light Red"></span></li>
+                                        <li><span class="bg-color-white" data-widget-setstyle="jarviswidget-color-white"
+                                                  rel="tooltip" data-placement="right"
+                                                  data-original-title="Purity"></span></li>
+                                        <li><a href="javascript:void(0);" class="jarviswidget-remove-colors"
+                                               data-widget-setstyle="" rel="tooltip" data-placement="bottom"
+                                               data-original-title="Reset widget color to default">Remove</a></li>
+                                    </ul>
+                                </div>
+                                <span class="widget-icon"> <i class="fa fa-bar-chart-o"></i> </span>
+                                <h2>Olset Index Compare</h2>
+                                <span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span>
+                            </header>
+                            <div role="content">
+                                <div class="widget-body">
+                                    <div class="jarviswidget-editbox"><input class="form-control" type="text"></div>
+                                    <canvas index-compare data-index="{{process.absolute}}" height="120"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 process-widget jarviswidget jarviswidget-color-green
+                         jarviswidget-sortable" jarvis-widget
+                             data-widget-editbutton="false" data-widget-attstyle="jarviswidget-color-green"
+                             role="widget">
+                            <header role="heading">
+                                <div class="jarviswidget-ctrls" role="menu">
+                                    <a href="javascript:void(0);" class="button-icon jarviswidget-toggle-btn"
+                                       rel="tooltip" title="" data-placement="bottom" data-original-title="Collapse">
+                                        <i class="fa fa-minus "></i></a>
+                                    <a href="javascript:void(0);" class="button-icon jarviswidget-fullscreen-btn"
+                                       rel="tooltip" title="" data-placement="bottom" data-original-title="Fullscreen">
+                                        <i class="fa fa-expand "></i>
+                                    </a>
+                                    <a href="javascript:void(0);" class="button-icon jarviswidget-delete-btn"
+                                       rel="tooltip" title="" data-placement="bottom" data-original-title="Delete">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                </div>
+                                <div class="widget-toolbar ng-scope" role="menu" dropdown="">
+                                    <a data-toggle="dropdown" class="dropdown-toggle color-box selector"></a>
+                                    <ul class="dropdown-menu arrow-box-up-right color-select pull-right">
+                                        <li>
+                                            <span class="bg-color-green" data-widget-setstyle="jarviswidget-color-green"
+                                                  rel="tooltip" data-placement="left" data-original-title="Green Grass">
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="bg-color-greenDark"
+                                                  data-widget-setstyle="jarviswidget-color-greenDark"
+                                                  rel="tooltip" data-placement="top" data-original-title="Dark Green">
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="bg-color-greenLight"
+                                                  data-widget-setstyle="jarviswidget-color-greenLight"
+                                                  rel="tooltip"
+                                                  data-placement="top"
+                                                  data-original-title="Light Green">
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="bg-color-purple"
+                                                  data-widget-setstyle="jarviswidget-color-purple"
+                                                  rel="tooltip" data-placement="top" data-original-title="Purple">
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <span class="bg-color-magenta"
+                                                  data-widget-setstyle="jarviswidget-color-magenta" rel="tooltip"
+                                                  data-placement="top" data-original-title="Magenta"></span></li>
+                                        <li><span class="bg-color-pink" data-widget-setstyle="jarviswidget-color-pink"
+                                                  rel="tooltip" data-placement="right"
+                                                  data-original-title="Pink"></span></li>
+                                        <li><span class="bg-color-pinkDark"
+                                                  data-widget-setstyle="jarviswidget-color-pinkDark" rel="tooltip"
+                                                  data-placement="left" data-original-title="Fade Pink"></span></li>
+                                        <li><span class="bg-color-blueLight"
+                                                  data-widget-setstyle="jarviswidget-color-blueLight" rel="tooltip"
+                                                  data-placement="top" data-original-title="Light Blue"></span></li>
+                                        <li><span class="bg-color-teal" data-widget-setstyle="jarviswidget-color-teal"
+                                                  rel="tooltip" data-placement="top" data-original-title="Teal"></span>
+                                        </li>
+                                        <li><span class="bg-color-blue" data-widget-setstyle="jarviswidget-color-blue"
+                                                  rel="tooltip" data-placement="top"
+                                                  data-original-title="Ocean Blue"></span></li>
+                                        <li><span class="bg-color-blueDark"
+                                                  data-widget-setstyle="jarviswidget-color-blueDark" rel="tooltip"
+                                                  data-placement="top" data-original-title="Night Sky"></span></li>
+                                        <li><span class="bg-color-darken"
+                                                  data-widget-setstyle="jarviswidget-color-darken" rel="tooltip"
+                                                  data-placement="right" data-original-title="Night"></span></li>
+                                        <li><span class="bg-color-yellow"
+                                                  data-widget-setstyle="jarviswidget-color-yellow" rel="tooltip"
+                                                  data-placement="left" data-original-title="Day Light"></span></li>
+                                        <li><span class="bg-color-orange"
+                                                  data-widget-setstyle="jarviswidget-color-orange" rel="tooltip"
+                                                  data-placement="bottom" data-original-title="Orange"></span></li>
+                                        <li><span class="bg-color-orangeDark"
+                                                  data-widget-setstyle="jarviswidget-color-orangeDark" rel="tooltip"
+                                                  data-placement="bottom" data-original-title="Dark Orange"></span></li>
+                                        <li><span class="bg-color-red" data-widget-setstyle="jarviswidget-color-red"
+                                                  rel="tooltip" data-placement="bottom"
+                                                  data-original-title="Red Rose"></span></li>
+                                        <li><span class="bg-color-redLight"
+                                                  data-widget-setstyle="jarviswidget-color-redLight" rel="tooltip"
+                                                  data-placement="bottom" data-original-title="Light Red"></span></li>
+                                        <li><span class="bg-color-white" data-widget-setstyle="jarviswidget-color-white"
+                                                  rel="tooltip" data-placement="right"
+                                                  data-original-title="Purity"></span></li>
+                                        <li><a href="javascript:void(0);" class="jarviswidget-remove-colors"
+                                               data-widget-setstyle="" rel="tooltip" data-placement="bottom"
+                                               data-original-title="Reset widget color to default">Remove</a></li>
+                                    </ul>
+                                </div>
+                                <span class="widget-icon"> <i class="fa fa-bar-chart-o"></i> </span>
+                                <h2>Users involved in Evaluation</h2>
+                                <span class="jarviswidget-loader"><i class="fa fa-refresh fa-spin"></i></span>
+                            </header>
+                            <div role="content">
+                                <div class="widget-body">
+                                    <div class="jarviswidget-editbox"><input class="form-control" type="text"></div>
+                                    <canvas involved-users data-involved="{{process.user}}" height="120"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a ui-sref="app.olset.process({processId : process.processId})"
+                               class="btn btn-primary btn-lg w-100">
+                                <i class="fa fa-fw fa-plus-circle txt-color-green"></i>
+                                {{process.process_title}} &nbsp;&nbsp; >>
+                            </a>
+                        </h4>
+                    </div>
+                </div>
+            </div>
+            <!--<div ng-repeat="process in olsetSurvey">-->
 
-				<!--<div class="col-md-6" jarvis-widget id="chartjs-doughnut-chart" data-widget-editbutton="false">-->
-					<!--<h2>Process by Status</h2>-->
-					<!--<div>-->
-						<!--<div class="widget-body">-->
-							<!--<canvas chartdata="{{olsetStatsInfo.count_organizations[0]}}" stats-organization height="120" ></canvas>-->
-						<!--</div>-->
-					<!--</div>-->
-				<!--</div>-->
+            <!--</div>-->
+            <!--<div id="processes_container"></div>-->
+        </div>
 
-				<div  ng-if="isManager" class="col-md-6" jarvis-widget id="chartjs-doughnut-chart" data-widget-editbutton="false">
-					<header>
-						<span class="widget-icon"> <i class="fa fa-bar-chart-o"></i> </span>
-						<h2>Users By Status</h2>
-					</header>
-					<div>
-						<div class="widget-body">
-							<canvas stats-organization countorgrun="{{olsetStatsInfo}}"  height="120" ></canvas>
-						</div>
-					</div>
-				</div>
-				<div  ng-if="isManager" class="col-md-6" jarvis-widget id="chartjs-doughnut-chart" data-widget-editbutton="false">
-					<header>
-						<span class="widget-icon"> <i class="fa fa-bar-chart-o"></i> </span>
-						<h2>Process by Status</h2>
-					</header>
-					<div>
-						<div class="widget-body">
-							<canvas stats-organization countorgrun="{{olsetStatsInfo}}"  height="120" ></canvas>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="panel-group">
-			<div class="panel panel-default" ng-repeat="process in olsetSurvey">
-				<div class="panel-heading">
-					<h4 class="panel-title">
-						<a ui-sref="app.olset.steps({processId : process.processId})">
-							<i class="fa fa-fw fa-plus-circle txt-color-green"></i> {{process.process_title}}
-						</a>
-					</h4>
-				</div>
-			</div>
-		</div>
+        <!-- end row -->
 
-		<!-- end row -->
-
-	</section>
-	<!-- end widget grid -->
+    </section>
+    <!-- end widget grid -->
 
 </div>
 <!-- END MAIN CONTENT -->
