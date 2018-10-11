@@ -10,7 +10,7 @@ angular.module('app.dashboard').directive('organizationStructure', function () {
             attrs.$observe('structure', function (value) {
                 if (value) {
                     var finalJson = JSON.parse(scope.structure);
-                    // console.log('dashboard final json', finalJson);
+
                     var doughnutOptions = {
                         //Boolean - Whether we should show a stroke on each segment
                         segmentShowStroke: true,

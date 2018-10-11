@@ -115,7 +115,7 @@ angular.module('app.auth').controller('LoginCtrl', function ($scope, $http, $win
             console.log('Auth authenticate', response.data.data.token);
             $window.localStorage.setItem("authToken", response.data.data.token);
             $window.localStorage.setItem("userData", JSON.stringify(response.data.data.user));
-            $window.location.href = '#/sysmap/manager';
+            $window.location.href = '#/dashboard';
 
         }, function errorCallback(response) {
             console.log(

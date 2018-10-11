@@ -131,22 +131,33 @@ angular.module('app', [
     //     };
     // }])
     .config(function ($provide, $httpProvider, RestangularProvider) {
-
-        // console.log('Auth config start');
         // Intercept http calls.
-        $provide.factory('ErrorHttpInterceptor', function ($q) {
+        $provide.factory('ErrorHttpInterceptor', function ($q, $window, $location) {
             var errorCounter = 0;
 
             function notifyError(rejection) {
-                // console.log(rejection);
+                // console.log('rejection', rejection);
                 $.bigBox({
                     title: rejection.status + ' ' + rejection.statusText,
-                    content: rejection.data,
+                    content: typeof rejection.data.error.message !== 'undefined'
+                        ? rejection.data.error.message
+                        : rejection.data,
                     color: "#C46A69",
                     icon: "fa fa-warning shake animated",
                     number: ++errorCounter,
                     timeout: 6000
                 });
+
+                if ('Authentication: Login Failed' === rejection.data.error.message) {
+                    localStorage.removeItem('authToken');
+                    localStorage.removeItem('userData');
+                    var addUser = '/users/addNew';
+                    var registerUser = '/register';
+                    var logPath = $location.path();
+                    if (logPath !== addUser && logPath !== registerUser) {
+                        $location.path('/login');
+                    }
+                }
             }
 
             return {
@@ -181,59 +192,23 @@ angular.module('app', [
 
             $rootScope.$state = $state;
             $rootScope.$stateParams = $stateParams;
+            var addUser = '/users/addNew';
+            var registerUser = '/register';
+            var logPath = $location.path();
 
+            if (!Auth.isLoggedIn()) {
+                if (logPath !== addUser && logPath !== registerUser) {
+                    $location.path('/login')
+                }
+            }
 
             $rootScope.$on('$locationChangeStart', function (event) {
-                //Pages -- - --//
-                //var viewSysMap = '/sysmap/view/';
-
-                //Users
-                var manageUsers = '/users/manager';
-                var addUser = '/users/addNew';
-                //SysMaps
-                var manageSysMaps = '/sysmap/manager';
-                //Groups
-                var manageGroups = '/groups/manager';
-                var registerUser = '/register';
-
-                var userRole = Auth.userHaveRole();
-                var logPath = $location.path();
-
+                logPath = $location.path();
                 if (!Auth.isLoggedIn()) {
-
-                    // console.log('DENY');
-                    if (logPath == addUser) {
-
-                    } else if (logPath == registerUser) {
-
-                    } else {
+                    if (logPath !== addUser && logPath !== registerUser) {
                         $location.path('/login');
                     }
-
                 }
-                else {
-                    //Routing Allow by Role
-                    // console.log('ALLOW');
-                    //$location.path('#/dashboard');
-                    switch (userRole) {
-                        case "Manager":
-                            //(logPath != manageUsers) ? $location.path('/login') : '';
-                            // console.log('role:', userRole);
-                            break;
-                        case "User":
-                            // console.log('role:', userRole);
-                            break;
-                        case "Administrator":
-                            // console.log('role:', userRole);
-                            break;
-                        default:
-                            // console.log('role:default');
-                    }
-
-                }
-
             });
-
-
         }
     );

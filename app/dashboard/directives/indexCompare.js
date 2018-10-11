@@ -10,7 +10,7 @@ angular.module('app.dashboard').directive('indexCompare', function () {
             attrs.$observe('index', function (value) {
                 if (value) {
                     var finalJson = JSON.parse(scope.index);
-                    console.log('index', finalJson);
+
                     var doughnutOptions = {
                         //Boolean - Whether we should show a stroke on each segment
                         segmentShowStroke: true,

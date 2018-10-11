@@ -36,9 +36,9 @@ angular.module('app.dashboard').controller(
                         // console.log('dashboard resp', $scope.olsetStatsInfo.count_organizations[0]);
 
                     }, function errorCallback(response) {
-                        // console.warn('Dashboard data error', response);
+                        console.warn('Dashboard data error', response);
                         // alert('Dashboard data error');
-                        $scope.olsetStatsInfo = response.data.data.data;
+                        // $scope.olsetStatsInfo = response.data.data.data;
                         // console.log('data error', $scope.olsetStatsInfo);
                     });
                 }
@@ -61,9 +61,9 @@ angular.module('app.dashboard').controller(
                     console.log('user surveys:: ', $scope.olsetSurvey);
 
                 }, function errorCallback(response) {
-                    // console.warn('Dashboard getAvailableSurveys data error', response);
+                    console.warn('Dashboard getAvailableSurveys data error', response);
                     // alert('Dashboard getAvailableSurveys data error');
-                    $scope.olsetProcessData = response.data.process;
+                    // $scope.olsetProcessData = response.data.process;
                     // console.log('error process data ', $scope.olsetProcessData);
                 });
 
