@@ -10,7 +10,7 @@ angular.module('app.dashboard').directive('involvedUsers', function () {
             attrs.$observe('involved', function (value) {
                 if (value) {
                     var finalJson = JSON.parse(scope.involved);
-
+                    console.log('iu - finalJSON' , finalJson);
                     var doughnutOptions = {
                         //Boolean - Whether we should show a stroke on each segment
                         segmentShowStroke: true,

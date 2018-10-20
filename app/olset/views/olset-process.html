@@ -39,7 +39,7 @@
                                 <center><h2>Step 0</h2></center>
                                 <center><img src="/styles/img/banners/b2.png" width="250"></center>
 
-                                <div class="col-md-12 m-t-5">
+                                <div data-ng-if="isManager || isAdmin" class="col-md-12 m-t-5">
                                     <div data-ng-if="openCRS">
                                         <a data-ui-sref="app.olset.evaluation({evaluationId : olsetProcessData.reality})"
                                            class="btn btn-primary btn-lg btn-block">
@@ -53,7 +53,7 @@
                                         </a>
                                     </div>
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-md-12" id="block_cr">
                                     <h3>Current Reality</h3>
                                     <div id="current_reality_input">
                                         <form id="current_reality_form">
@@ -66,7 +66,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-12  m-t-5 m-b-5">
+                                <div class="col-md-12  m-t-5 m-b-5" id="block_sv">
                                     <h3>Shared Vision</h3>
                                     <div id="shared vision_input">
                                         <form id="shared_vision_form">
@@ -79,7 +79,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-12 m-t-5">
+                                <div data-ng-if="isManager || isAdmin" class="col-md-12 m-t-5">
                                     <div data-ng-if="openVS">
                                         <a data-ui-sref="app.olset.evaluation({evaluationId : olsetProcessData.vision})"
                                            class="btn btn-primary btn-lg btn-block">
@@ -93,7 +93,7 @@
                                         </a>
                                     </div>
                                 </div>
-                                <div class="col-md-12  m-t-5">
+                                <div class="col-md-12  m-t-5" id="block_ii">
                                     <h3>Initial Intentions</h3>
                                     <div id="initial_intentions_input">
                                         <form id="initial_intentions_form">
@@ -105,9 +105,8 @@
                                         </form>
                                     </div>
                                 </div>
-
                             </div>
-                            <div class="col-md-12  m-t-5">
+                            <div class="col-md-12  m-t-5" data-ssm="{{openSSM}}">
                                 <center><h2>Step 1: Understand</h2></center>
                                 <center><img src="/styles/img/banners/b3.png" class="m-b-5" width="250"></center>
                                 <div data-ng-if="openSSM">

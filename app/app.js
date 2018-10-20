@@ -136,7 +136,7 @@ angular.module('app', [
             var errorCounter = 0;
 
             function notifyError(rejection) {
-                // console.log('rejection', rejection);
+                console.log('rejection', rejection);
                 $.bigBox({
                     title: rejection.status + ' ' + rejection.statusText,
                     content: typeof rejection.data.error.message !== 'undefined'

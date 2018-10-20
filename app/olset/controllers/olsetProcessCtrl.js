@@ -1,6 +1,6 @@
 angular.module('app.olset').controller(
     'olsetProcessCtrl',
-    function ($rootScope, $scope, $http, $window, $stateParams, $document, $state, $timeout, MainConf, ngDialog) {
+    function ($rootScope, $scope, $http, $window, $stateParams, $document, $state, $timeout, MainConf, ngDialog, Auth) {
         var authToken = $window.localStorage.getItem('authToken');
         $scope.token = authToken;
         $scope.processId = $stateParams.processId;
@@ -13,9 +13,17 @@ angular.module('app.olset').controller(
         $scope.openEvaluation = false;
         $scope.openAAR = false;
         $scope.openItemsAAR = false;
+        $scope.openCRText = false;
+        $scope.openIIText = false;
+        $scope.openSVText = false;
 
         $scope.openSAM = false;
         $scope.openSSM = false;
+
+        $scope.isCreator = false;
+
+        $scope.isManager = false;
+        $scope.isAdmin = false;
 
 
         if ('app.olset.evaluation' === $rootScope.previousState.name) {
@@ -56,12 +64,49 @@ angular.module('app.olset').controller(
             });
         };
 
+
+        $scope.role = Auth.userHaveRole();
+
+        if ($scope.role) {
+            if ($scope.role === 'Manager') {
+                $scope.isManager = true;
+            } else if ($scope.role === 'User') {
+                $scope.isUser = true;
+            } else if ($scope.role === 'Administrator') {
+                $scope.isAdmin = true;
+            }
+            console.log('User role: ', $scope.role);
+        } else {
+            $scope.userRole = false;
+        }
+
+        $scope.$watch(Auth.userHaveRole, function (value, oldValue) {
+            // console.log('roleValueW: ', value);
+            $scope.userRole = value;
+
+            if (value) {
+                if (value == 'Manager') {
+                    $scope.isManager = true;
+                } else if (value == 'User') {
+                    $scope.isUser = true;
+                } else if (value == 'Administrator') {
+                    $scope.isAdmin = true;
+                }
+                // console.log('the val: ', value);
+            } else {
+                $scope.userRole = false;
+            }
+
+        }, true);
+
         var flow = {
             awe_url: MainConf.servicesUrl() + 'process/awe/' + $scope.processId,
             action_survey_url: MainConf.servicesUrl() + 'survey/action/aar/create/',
             pis_url: MainConf.servicesUrl() + 'process/pis/' + $scope.processId,
             init: function () {
                 var self = this;
+                var time = new Date().getTime();
+                console.log('start', new Date().getTime());
                 $http({
                     method: 'GET',
                     url: MainConf.servicesUrl() + 'process/data/' + $scope.processId,
@@ -71,6 +116,7 @@ angular.module('app.olset').controller(
                     }
 
                 }).then(function successCallback(response) {
+                    console.log('finish', time - new Date().getTime());
                     console.log('Olset process data success', response);
                     $scope.olsetProcessData = response.data.data.process;
                     $scope.olsetStepsFlags = response.data.data.steps;
@@ -204,6 +250,7 @@ angular.module('app.olset').controller(
                         }
                     });
                 }, function errorCallback(response) {
+                    console.log('error finish', time - new Date().getTime());
                     $scope.olsetProcessData = response.data.process;
                     console.log('Olset process data error', response);
                     alert('Olset process data error');
@@ -344,6 +391,55 @@ angular.module('app.olset').controller(
                 $state.go('app.olset.evaluation', {evaluationId: id});
             },
             setSequence: function (steps) {
+                if (steps.hasOwnProperty('hasCRText') && !steps.hasCRText) {
+                    $scope.openCRText = true;
+                }
+
+                if (steps.hasOwnProperty('hasIIText') && steps.hasIIText) {
+                    $scope.openIIText = true;
+                }
+
+                if (steps.hasOwnProperty('hasSVText') && steps.hasSVText) {
+                    $scope.openSVText = true;
+                }
+
+                if (steps.hasOwnProperty('isCreator') && steps.isCreator) {
+                    $scope.isCreator = true;
+                }
+
+                angular.element(document).ready(function () {//todo remove after testing
+                    var block_ii = document.getElementById('block_ii');
+                    var block_sv = document.getElementById('block_sv');
+                    var block_cr = document.getElementById('block_cr');
+
+                    var owner = $scope.isManager || $scope.isAdmin || $scope.isCreator;
+                    if (block_ii && owner && $scope.openIIText) {
+                        var btn_ii = block_ii.querySelector('button');
+                        if (btn_ii) {
+                            btn_ii.parentNode.removeChild(btn_ii);
+                        }
+                        // block_ii.style.display = 'none';
+                    }
+
+                    if (block_sv && owner && $scope.openIIText) {
+                        var btn_sv = block_sv.querySelector('button');
+                        if (btn_sv) {
+                            btn_sv.parentNode.removeChild(btn_sv);
+                        }
+                        // block_sv.style.display = 'none';
+                    }
+
+                    if (block_cr && owner && $scope.openIIText) {
+                        var btn_cr = block_cr.querySelector('button');
+                        if (btn_cr) {
+                            btn_cr.parentNode.removeChild(btn_cr);
+                        }
+
+
+                        // block_cr.style.display = 'none';
+                    }
+                });
+
                 if (steps.hasOwnProperty('hasDemographics')
                     && !steps.hasDemographics
                 ) {
@@ -360,20 +456,38 @@ angular.module('app.olset').controller(
                 } else if (steps.hasOwnProperty('hasInitial') && !steps.hasInitial) {
                     $scope.openInitial = true;
                 } else if (steps.hasOwnProperty('hasCRS') && !steps.hasCRS) {
-                    $scope.openCRS = true;
-                    $scope.openSAM = true;
-                    $scope.openSSM = true;
+                    if ($scope.isManager || $scope.isAdmin) {
+                        $scope.openCRS = true;
+                    } else {
+                        if (steps.hasOwnProperty('hasEvaluation') && !steps.hasEvaluation) {
+                            $scope.openEvaluation = true;
+                        }else if (steps.hasOwnProperty('hasAAR') && !steps.hasAAR) {
+                            $scope.openAAR = true;
+                        } else {
+                            $scope.openItemsAAR = true;
+                            $scope.openSAM = true;
+                            $scope.openSSM = true;
+                        }
+                    }
                 } else if (steps.hasOwnProperty('hasVS') && !steps.hasVS) {
-                    $scope.openVS = true;
-                    $scope.openSAM = true;
-                    $scope.openSSM = true;
+                    if ($scope.isManager || $scope.isAdmin) {
+                        $scope.openVS = true;
+                    } else {
+                        if (steps.hasOwnProperty('hasEvaluation') && !steps.hasEvaluation) {
+                            $scope.openEvaluation = true;
+                        }else if (steps.hasOwnProperty('hasAAR') && !steps.hasAAR) {
+                            $scope.openAAR = true;
+                        } else {
+                            $scope.openItemsAAR = true;
+                            $scope.openSAM = true;
+                            $scope.openSSM = true;
+                        }
+                    }
                 } else if (steps.hasOwnProperty('hasEvaluation') && !steps.hasEvaluation) {
                     $scope.openEvaluation = true;
-                    $scope.openSAM = true;
-                    $scope.openSSM = true;
-                } else {
-                    $scope.openEvaluation = true;
+                } else if (steps.hasOwnProperty('hasAAR') && !steps.hasAAR) {
                     $scope.openAAR = true;
+                } else {
                     $scope.openItemsAAR = true;
                     $scope.openSAM = true;
                     $scope.openSSM = true;
@@ -385,7 +499,7 @@ angular.module('app.olset').controller(
 
         flow.init();
         flow.getItems();
-        angular.element(document).ready(function () {
+        angular.element(document).ready(function () {//todo remove after testing
             // flow.openModalPIS();
         });
     }

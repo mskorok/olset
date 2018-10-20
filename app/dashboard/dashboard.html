@@ -24,6 +24,12 @@
             <h3>Your corporate brain</h3>
             <center class="m-b-5"><img src="/styles/img/banners/b1.png" width="250"></center>
 
+            <h3><a href="javascript:void 0">Single Report</a></h3>
+
+            <center data-ng-if="isManager || isAdmin">
+                <h3><a href="javascript:void 0">Group Report</a></h3>
+            </center>
+
 
         </article>
         <div class="row">
@@ -66,7 +72,7 @@
                 </div>
             </div>
         </div>
-        <center><h2>Processes</h2></center>
+        <center data-ng-if="olsetSurvey.length > 0"><h2>Processes</h2></center>
         <div class="panel-group">
             <div ng-repeat="process in olsetSurvey">
                 <div class="panel panel-default m-t-5">
@@ -167,7 +173,10 @@
                             <div role="content">
                                 <div class="widget-body">
                                     <div class="jarviswidget-editbox"><input class="form-control" type="text"></div>
-                                    <canvas index-compare data-index="{{process.absolute}}" height="120"></canvas>
+                                    <canvas index-compare data-index="{{process.absolute}}"
+                                            data-last="{{process.lastIndex}}"
+                                            data-previous="{{process.previousIndex}}"
+                                            height="120"></canvas>
                                 </div>
                             </div>
                         </div>

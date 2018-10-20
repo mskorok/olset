@@ -10,7 +10,6 @@ angular.module('app.dashboard').directive('organizationStructure', function () {
             attrs.$observe('structure', function (value) {
                 if (value) {
                     var finalJson = JSON.parse(scope.structure);
-
                     var doughnutOptions = {
                         //Boolean - Whether we should show a stroke on each segment
                         segmentShowStroke: true,
@@ -37,24 +36,31 @@ angular.module('app.dashboard').directive('organizationStructure', function () {
                         "<%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
                     };
 
-                    var doughnutData = [
-                        {
-                            value: finalJson.count_users[0].count,
-                            color: "rgba(220,220,220,0.8)",
-                            highlight: "rgba(220,220,220,0.7)",
-                            label: "User"
-                        },
-                        {
-                            value: finalJson.count_users[1].count,
-                            color: "rgba(151,187,205,1)",
-                            highlight: "rgba(151,187,205,0.8)",
-                            label: "Manager"
-                        }
-                    ];
+                    if (finalJson.count_users.length > 1) {
+                        var doughnutData = [
+                            {
+                                value: finalJson.count_users[0].count,
+                                color: "rgba(220,220,220,0.8)",
+                                highlight: "rgba(220,220,220,0.7)",
+                                label: "User"
+                            },
+                            {
+                                value: finalJson.count_users[1].count,
+                                color: "rgba(151,187,205,1)",
+                                highlight: "rgba(151,187,205,0.8)",
+                                label: "Manager"
+                            }
+                        ];
 
-                    // render chart
-                    var ctx = element[0].getContext("2d");
-                    new Chart(ctx).Doughnut(doughnutData, doughnutOptions);
+                        // render chart
+                        var ctx = element[0].getContext("2d");
+                        new Chart(ctx).Doughnut(doughnutData, doughnutOptions);
+                    } else {
+                        var container = $(element).get(0).closest('div.jarviswidget');
+                        if (container) {
+                            container.style.display = 'none';
+                        }
+                    }
                 }
             });
         }

@@ -70,7 +70,7 @@ angular.module('app.users').controller('usrAddNewCtrl', function (MainConf, $sco
                 data: org_data
             }).then(function successCallback(response) {
                 console.log('Users createUser data success', response);
-                $scope.theUserId = response.data.data.data.userid;
+                $scope.theUserId = response.data.data.data.userId;
             }, function errorCallback(response) {
                 console.warn('Users createUser data error', response);
                 alert('Users createUser data error');

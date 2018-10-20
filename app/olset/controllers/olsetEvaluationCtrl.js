@@ -40,8 +40,9 @@ angular.module('app.olset').controller(
                     throw 'Answer type not found'
             }
             if ($scope.userAnswersToSend.length !== count) {
+                console.log('answers', $scope.userAnswers);
                 $.bigBox({
-                    title: 'Answer all questions!',
+                    title: 'Answer all questions! ' + $scope.userAnswersToSend.length + ' ' + count,
                     //content: question + ", just created also
                     // a new systemic map Item is here for you just to begin.",
                     color: "#C46A69",
@@ -66,30 +67,44 @@ angular.module('app.olset').controller(
                     data: $scope.userAnswersToSend
 
                 }).then(function successCallback(response) {
+                    console.log('Create answers: ', response);
                     ngDialog.close();
-                    var bmessage;
-                    var bcolor;
+                    var b_message;
+                    var b_color;
                     if (response.data.data.status == "Error") {
-                        bmessage = 'Could not save answers';
-                        bcolor = '#d81e1e';
+                        b_message = 'Could not save answers ' + response.data.data.data;
+                        b_color = '#d81e1e';
+                        $.bigBox({
+                            title: b_message,
+                            //content: question + ", just created also
+                            // a new systemic map Item is here for you just to begin.",
+                            color: b_color,
+                            timeout: 5000,
+                            icon: "fa fa-check",
+                            number: "1"
+                        });
                     } else {
-                        bmessage = 'Answers updated';
-                        bcolor = '#739E73';
+                        b_message = 'Answers updated';
+                        b_color = '#739E73';
+                        $.bigBox({
+                            title: b_message,
+                            //content: question + ", just created also
+                            // a new systemic map Item is here for you just to begin.",
+                            color: b_color,
+                            timeout: 5000,
+                            icon: "fa fa-check",
+                            number: "1"
+                        });
+                        $timeout(function () {
+                            if (!(typeof $scope.olsetEvaluationProcess.id === 'undefined')) {
+                                $state.go('app.olset.process', {processId: $scope.olsetEvaluationProcess.id});
+                            } else {
+                                $state.go('app.dashboard');
+                            }
+                        }, 2000)
                     }
-                    $.bigBox({
-                        title: bmessage,
-                        //content: question + ", just created also
-                        // a new systemic map Item is here for you just to begin.",
-                        color: bcolor,
-                        timeout: 5000,
-                        icon: "fa fa-check",
-                        number: "1"
-                    });
-                    if (!(typeof $scope.olsetEvaluationProcess.id === 'undefined')) {
-                        $state.go('app.olset.process', {processId: $scope.olsetEvaluationProcess.id});
-                    } else {
-                        $state.go('app.dashboard');
-                    }
+
+
                 }, function errorCallback(response) {
                     console.log('Olset makeUpdate data error', response);
                     alert('Olset makeUpdate data error');

@@ -3,6 +3,43 @@ angular.module('app.dashboard').controller(
     function ($rootScope, $scope, $http, $window, $stateParams, $document, $state, $timeout, MainConf, Auth) {
         $scope.token = $window.localStorage.getItem('authToken');
 
+        $scope.isManager = false;
+        $scope.isAdmin = false;
+
+        $scope.role = Auth.userHaveRole();
+
+        if ($scope.role) {
+            if ($scope.role === 'Manager') {
+                $scope.isManager = true;
+            } else if ($scope.role === 'User') {
+                $scope.isUser = true;
+            } else if ($scope.role === 'Administrator') {
+                $scope.isAdmin = true;
+            }
+            console.log('User role: ', $scope.role);
+        } else {
+            $scope.userRole = false;
+        }
+
+        $scope.$watch(Auth.userHaveRole, function (value, oldValue) {
+            // console.log('roleValueW: ', value);
+            $scope.userRole = value;
+
+            if (value) {
+                if (value == 'Manager') {
+                    $scope.isManager = true;
+                } else if (value == 'User') {
+                    $scope.isUser = true;
+                } else if (value == 'Administrator') {
+                    $scope.isAdmin = true;
+                }
+                // console.log('the val: ', value);
+            } else {
+                $scope.userRole = false;
+            }
+
+        }, true);
+
         var dashboard = {
             addTexts: function (firstProcess) {
                 var crs = document.getElementById('crs_text');
@@ -18,7 +55,7 @@ angular.module('app.dashboard').controller(
             data: function () {
                 var self = this;
                 console.log('token', $scope.token);
-                if (Auth.userHaveRole() == "Manager") {
+                if (Auth.userHaveRole() === "Manager") {
                     $http({
                         method: 'GET',
                         url: MainConf.servicesUrl() + 'statistics/dashboard',
@@ -52,7 +89,7 @@ angular.module('app.dashboard').controller(
                     }
 
                 }).then(function successCallback(response) {
-                    // console.log('Dashboard getAvailableSurveys data success', response);
+                    console.log('Dashboard getAvailableSurveys data success', response);
                     $scope.olsetSurvey = response.data.data.data;
                     angular.element(document).ready(function () {
                         // self.renderProcessesData();

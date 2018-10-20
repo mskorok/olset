@@ -10,7 +10,7 @@ angular.module('app.dashboard').directive('processesStatus', function () {
             attrs.$observe('status', function (value) {
                 if (value) {
                     var finalJson = JSON.parse(scope.status);
-
+                    console.log('ps - finalJSON' , finalJson.process === null);
                     var doughnutOptions = {
                         //Boolean - Whether we should show a stroke on each segment
                         segmentShowStroke: true,
@@ -37,24 +37,32 @@ angular.module('app.dashboard').directive('processesStatus', function () {
                         "<%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
                     };
 
-                    var doughnutData = [
-                        {
-                            value: finalJson.running,
-                            color: "rgba(220,220,220,0.8)",
-                            highlight: "rgba(220,220,220,0.7)",
-                            label: "Running"
-                        },
-                        {
-                            value: finalJson.stopped,
-                            color: "rgba(151,187,205,1)",
-                            highlight: "rgba(151,187,205,0.8)",
-                            label: "Stopped"
-                        }
-                    ];
+                    if (finalJson.process !== null) {
+                        var doughnutData = [
+                            {
+                                value: finalJson.running,
+                                color: "rgba(220,220,220,0.8)",
+                                highlight: "rgba(220,220,220,0.7)",
+                                label: "Running"
+                            },
+                            {
+                                value: finalJson.stopped,
+                                color: "rgba(151,187,205,1)",
+                                highlight: "rgba(151,187,205,0.8)",
+                                label: "Stopped"
+                            }
+                        ];
 
-                    // render chart
-                    var ctx = element[0].getContext("2d");
-                    new Chart(ctx).Doughnut(doughnutData, doughnutOptions);
+                        // render chart
+                        var ctx = element[0].getContext("2d");
+                        new Chart(ctx).Doughnut(doughnutData, doughnutOptions);
+                    } else {
+                        var container = $(element).get(0).closest('div.jarviswidget');
+                        if (container) {
+                            container.style.display = 'none';
+                        }
+                    }
+
                 }
             });
         }

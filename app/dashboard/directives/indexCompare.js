@@ -3,14 +3,18 @@ angular.module('app.dashboard').directive('indexCompare', function () {
         restrict: 'EA',
         scope: {
             countorgstop: '=countorgstop',
-            index: '@index'
+            index: '@index',
+            last: '@last',
+            previous: '@previous'
         },
         transclude: true,
         link: function (scope, element, attrs) {
             attrs.$observe('index', function (value) {
                 if (value) {
                     var finalJson = JSON.parse(scope.index);
-
+                    // var previousIndex = JSON.parse(scope.previousIndex);
+                    // var lastIndex = JSON.parse(scope.lastIndex);
+                    console.log('ic - finalJSON' , finalJson, scope.last, scope.previous, scope);
                     var doughnutOptions = {
                         //Boolean - Whether we should show a stroke on each segment
                         segmentShowStroke: true,
@@ -39,16 +43,16 @@ angular.module('app.dashboard').directive('indexCompare', function () {
 
                     var doughnutData = [
                         {
-                            value: 100,
+                            value:  100,
                             color: "rgba(220,220,220,0.8)",
                             highlight: "rgba(220,220,220,0.7)",
-                            label: "Previous Index"
+                            label: "Previous Index : " + scope.previous + ', absolute '
                         },
                         {
                             value: parseInt(finalJson*100),
                             color: "rgba(151,187,205,1)",
                             highlight: "rgba(151,187,205,0.8)",
-                            label: "Last Indexed"
+                            label: "Last Indexed : " + scope.last + ', absolute '
                         }
                     ];
 
