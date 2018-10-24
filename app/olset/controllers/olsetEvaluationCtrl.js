@@ -12,12 +12,27 @@ angular.module('app.olset').controller(
         $scope.userAnswersToSend = [];
 
         $scope.makeUpdate = function () {
-
+            // var error = false;
             $scope.userAnswers.forEach(function (item) {
-                if (item.answer) {
+                if (item.answer && item.answer !== '') {
                     $scope.userAnswersToSend.push(item);
                 }
+                // else {
+                //     $.bigBox({
+                //         title: 'Answer all questions!!!! ',
+                //         color: "#C46A69",
+                //         timeout: 5000,
+                //         icon: "fa fa-check",
+                //         number: "1"
+                //     });
+                //     $scope.userAnswersToSend = [];
+                //     error = true;
+                // }
             });
+            // if (error) {
+            //     return false;
+            // }
+            console.log('userAnswers', $scope.userAnswersToSend);
             var count;
             switch (parseInt($scope.olsetEvaluationData[0].answered_type)) {
                 case 1:

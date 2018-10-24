@@ -41,6 +41,8 @@ angular.module('app.dashboard').controller(
         }, true);
 
         var dashboard = {
+            single_report_url: 'report/single',
+            group_report_url: 'report/group',
             addTexts: function (firstProcess) {
                 var crs = document.getElementById('crs_text');
                 if (crs) {
@@ -104,6 +106,9 @@ angular.module('app.dashboard').controller(
                     // console.log('error process data ', $scope.olsetProcessData);
                 });
 
+                this.getSingleReport();
+                this.getGroupReport();
+
                 //$scope.$apply();
             },
             startWidget: function () {
@@ -114,6 +119,50 @@ angular.module('app.dashboard').controller(
                         $rootScope.$emit('jarvisWidgetAdded', element )
                     })
                 }
+            },
+            getSingleReport: function () {
+                $http({
+                    method: 'GET',
+                    url: MainConf.servicesUrl() + this.single_report_url,
+                    headers: {
+                        'Authorization': 'Bearer ' + $scope.token,
+                        'Content-Type': 'application/json'
+                    }
+
+                }).then(function successCallback(response) {
+                    console.log('Single Report', response);
+                    $scope.singleReport = response.data.data.data.report;
+                    angular.element(document).ready(function () {
+                        var link = document.getElementById('single_report_link');
+                        if (link) {
+                            link.setAttribute('href', $scope.singleReport);
+                        }
+                    });
+                }, function errorCallback(response) {
+                    console.warn('Single Report data error', response);
+                });
+            },
+            getGroupReport: function () {
+                $http({
+                    method: 'GET',
+                    url: MainConf.servicesUrl() + this.group_report_url,
+                    headers: {
+                        'Authorization': 'Bearer ' + $scope.token,
+                        'Content-Type': 'application/json'
+                    }
+
+                }).then(function successCallback(response) {
+                    console.log('Group Report', response);
+                    $scope.groupReport = response.data.data.data.report;
+                    angular.element(document).ready(function () {
+                        var link = document.getElementById('group_report_link');
+                        if (link) {
+                            link.setAttribute('href', $scope.groupReport);
+                        }
+                    });
+                }, function errorCallback(response) {
+                    console.warn('Group Report data error', response);
+                });
             }
         };
 

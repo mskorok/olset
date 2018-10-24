@@ -291,6 +291,7 @@ angular.module('app.olset').controller(
                     list = list.filter(function (x, i, a) {
                         return a.indexOf(x) === i;
                     });
+                    console.log('list', list);
                     new Awesomplete(document.querySelector(item.selector), {list: list});
                 });
             },
@@ -407,13 +408,13 @@ angular.module('app.olset').controller(
                     $scope.isCreator = true;
                 }
 
-                angular.element(document).ready(function () {//todo remove after testing
+                angular.element(document).ready(function () {
                     var block_ii = document.getElementById('block_ii');
                     var block_sv = document.getElementById('block_sv');
                     var block_cr = document.getElementById('block_cr');
 
                     var owner = $scope.isManager || $scope.isAdmin || $scope.isCreator;
-                    if (block_ii && owner && $scope.openIIText) {
+                    if (block_ii && !owner && $scope.openIIText) {
                         var btn_ii = block_ii.querySelector('button');
                         if (btn_ii) {
                             btn_ii.parentNode.removeChild(btn_ii);
@@ -421,7 +422,7 @@ angular.module('app.olset').controller(
                         // block_ii.style.display = 'none';
                     }
 
-                    if (block_sv && owner && $scope.openIIText) {
+                    if (block_sv && !owner && $scope.openIIText) {
                         var btn_sv = block_sv.querySelector('button');
                         if (btn_sv) {
                             btn_sv.parentNode.removeChild(btn_sv);
@@ -429,7 +430,7 @@ angular.module('app.olset').controller(
                         // block_sv.style.display = 'none';
                     }
 
-                    if (block_cr && owner && $scope.openIIText) {
+                    if (block_cr && !owner && $scope.openIIText) {
                         var btn_cr = block_cr.querySelector('button');
                         if (btn_cr) {
                             btn_cr.parentNode.removeChild(btn_cr);
