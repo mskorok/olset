@@ -6,10 +6,16 @@ angular.module('app.sysmap').controller(
         $scope.timeInMs = 0;
         $scope.processId = $stateParams.processId;
 
+        $scope.urls = {
+            'prefix': 'systemicmap/',
+            'getMap': 'get/',
+            'actionList': 'createActionListGroup'
+        };
+
         var datas = function () {
             $http({
                 method: 'GET',
-                url: MainConf.servicesUrl() + 'systemicmap/getSystemic/' + $scope.processId,
+                url: MainConf.servicesUrl() + $scope.urls.prefix + $scope.urls.getMap + $scope.processId,
                 headers: {
                     'Authorization': 'Bearer ' + authToken,
                     'Content-Type': 'application/json'
@@ -36,7 +42,7 @@ angular.module('app.sysmap').controller(
                 if (ButtonPressed === "Yes") {
                     $http({
                         method: 'DELETE',
-                        url: MainConf.servicesUrl() + 'systemicmap/' + sysmid,
+                        url: MainConf.servicesUrl() + $scope.urls.prefix + sysmid,
                         headers: {
                             'Authorization': 'Bearer ' + authToken,
                             'Content-Type': 'application/json'
@@ -79,12 +85,11 @@ angular.module('app.sysmap').controller(
         };
 
 
-        $scope.exportit = function (sysmid, name) {
+        $scope.exportSAMActionList = function (sysmid, name) {
 
             $http({
-
                 method: 'POST',
-                url: MainConf.servicesUrl() + 'systemicmap/createActionListGroup',
+                url: MainConf.servicesUrl() + $scope.urls.prefix + $scope.urls.actionList,
                 headers: {
                     'Authorization': 'Bearer ' + authToken,
                     'Content-Type': 'application/json'
@@ -95,12 +100,9 @@ angular.module('app.sysmap').controller(
                     'description': 'Action List: ' + name
 
                 }
-
             }).then(function successCallback(response) {
                 console.log('SysMap createActionListGroup data success', response);
                 var getItemsIntoArray = function (updatedArr, arr) {
-
-                    //console.log('arr: ', arr);
                     updatedArr.push(
                         {
                             id: arr.id,
@@ -115,12 +117,9 @@ angular.module('app.sysmap').controller(
                             groupTitle: arr.groupTitle
                         }
                     );
-
                     if (arr.items.length > 0) {
                         getItemsIntoArray(updatedArr, arr.items[0]);
                     }
-
-
                 };
                 var tdatasr = response.data.data.tree;
                 var mySpreadSheet = [];
@@ -129,9 +128,7 @@ angular.module('app.sysmap').controller(
                     getItemsIntoArray(mySheetItems, tdatasr[j]);
                     mySpreadSheet.push(mySheetItems);
                 }
-
                 console.log('myspreedsheet', mySpreadSheet);
-
                 var sheetsCountsAndNames = [];
                 for (var i = 0; mySpreadSheet.length > i; i++) {
                     var headOrNot = i === 0;

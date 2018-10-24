@@ -25,7 +25,7 @@ angular.module('app.sysmap').directive('sysMapItemsEdit', function (MainConf) {
         '<select class="selectpicker" data-ng-model="sysMapData.group"><option data-ng-repeat="group in groupsData"' +
         ' value={{group.id}} style="color: grey !important;">{{group.title}}</option></select></div></div></div></div>' +
         '<div class="modal-footer"><button type="button" class="btn btn-default"' +
-        ' data-dismiss="modal">Cancel</button><button type="button" data-ng-click="editItem()" data-dismiss="modal"' +
+        ' data-dismiss="modal">Cancel</button><button type="button" data-ng-click="editSysMapItem()" data-dismiss="modal"' +
         ' class="btn btn-primary">Edit Item</button></div></div></div></div>',
         transclude: true,
         link: function (scope, element, attributes) {
@@ -39,7 +39,7 @@ angular.module('app.sysmap').directive('sysMapItemsEdit', function (MainConf) {
             };
 
 
-            scope.editItem = function () {//todo strange function
+            scope.editSysMapItem = function () {//todo strange function
 
                 scope.editFunc({
                     sysmid: scope.datasp,

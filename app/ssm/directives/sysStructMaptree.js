@@ -1,4 +1,4 @@
-angular.module('app.sysmap').directive('sysMaptree', function ($compile, $sce) {
+angular.module('app.ssm').directive('sysStructMaptree', function ($compile, $sce) {
     return {
         restrict: 'A',
         scope: {
@@ -6,7 +6,7 @@ angular.module('app.sysmap').directive('sysMaptree', function ($compile, $sce) {
         },
         template: '<a class="fa fa-lg fa-trash-o" data-ng-click="testScope()"></a>' +
         '<li data-ng-class="{parent_li: item.children.length}" data-ng-repeat="item in items" role="treeitem">' +
-        '<sys-maptree-content></sys-maptree-content>' +
+        '<sys-struct-maptree-content></sys-struct-maptree-content>' +
         '<ul data-ng-if="item.children.length" smart-treeview data-ng-show="item.expanded"' +
         '  items="item.children" role="group" class="smart-treeview-group" ></ul>' +
         '</li>',

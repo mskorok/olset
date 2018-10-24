@@ -1,4 +1,4 @@
-angular.module('app.sysmap').directive('sysmaptableBasic', function ($compile) {
+angular.module('app.ssm').directive('sysmaptableStructBasic', function ($compile) {
     return {
         restrict: 'A',
         scope: {

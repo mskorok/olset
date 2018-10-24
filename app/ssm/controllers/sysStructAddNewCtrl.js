@@ -1,5 +1,5 @@
-angular.module('app.sysmap').controller(
-    'sysAddNewCtrl',
+angular.module('app.ssm').controller(
+    'sysStructAddNewCtrl',
     function ($scope, $http, $window, $state, MainConf, $stateParams) {
         var authToken = $window.localStorage.getItem('authToken');
         $scope.token = authToken;
@@ -11,36 +11,33 @@ angular.module('app.sysmap').controller(
             'proposal': ''
         };
 
-        $scope.sysMap = function () {
+        $scope.urls = {
+            'prefix': 'ssm/',
+            'create': 'create',
+            'createItem': 'createItem'
+        };
+
+        $scope.sysStructureMap = function () {
             $http({
-
                 method: 'POST',
-
-                url: MainConf.servicesUrl() + 'systemicmap/create',
-
+                url: MainConf.servicesUrl() + $scope.urls.prefix + $scope.urls.create,
                 headers: {
-
                     'Authorization': 'Bearer ' + authToken,
                     'Content-Type': 'application/json'
-
                 },
-
                 data: {
                     'processId': $scope.processId,
                     'name': $scope.sysMapData.name,
                     'department': '',
                     'lang': 'en',
                     'isActive': '1'
-
                 }
-
             }).then(function successCallback(response) {
-                console.log('SysMap systemicmap/create data success', response);
+                console.log('SysStructureMap ssm/create data success', response);
                 var sysMapID = Number(response.data.data.data.systemicMapId);
                 $http({
-
                     method: 'POST',
-                    url: MainConf.servicesUrl() + 'systemicmap/createItem',
+                    url: MainConf.servicesUrl() + $scope.urls.prefix + $scope.urls.createItem,
                     headers: {
                         'Authorization': 'Bearer ' + authToken,
                         'Content-Type': 'application/json'
@@ -52,9 +49,8 @@ angular.module('app.sysmap').controller(
                         'from_item': '',
                         'groupId': 10000
                     }
-
                 }).then(function successCallback(response) {
-                    console.log('SysMap systemicmap/createItem data success', response);
+                    console.log('SysStructureMap ssm/createItem data success', response);
                     $.bigBox({
                         title: "Systemic Map Ready!",
                         content: $scope.sysMapData.name + ", just created also a new" +
@@ -64,31 +60,15 @@ angular.module('app.sysmap').controller(
                         icon: "fa fa-check",
                         number: "1"
                     });
-
-                    $scope.closedthis = function () {
-
-                        // var des = "sws";
-                        /*$.smallBox({
-                            title: "Closed!",
-                            content: "",
-                            color: "#739E73",
-                            iconSmall: "fa fa-cloud",
-                            timeout: 1000
-                        });*/
-                    };
-
-                    $state.go('app.sysmap.manager.process', {processId: $scope.processId});
+                    $state.go('app.ssm.manager.process', {processId: $scope.processId});
                 }, function errorCallback(response) {
                     console.warn('SysMap systemicmap/createItem data error', response);
-                    alert('SysMap systemicmap/createItem data error');
+                    alert('SysStructureMap ssm/createItem data error');
                 });
-
-
                 console.log(response);
-
             }, function errorCallback(response) {
-                console.warn('SysMap systemicmap/create data error', response);
-                alert('SysMap systemicmap/create data error');
+                console.warn('SysStructureMap ssm/create data error', response);
+                alert('SysStructureMap ssm/create data error');
             });
         }
     });

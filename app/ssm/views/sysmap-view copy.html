@@ -1,106 +1,107 @@
 <div id="content">
-<div class="row">
-    <big-breadcrumbs items="['UI Elements', 'Nestable Lists']" icon="desktop" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></big-breadcrumbs>
-    <div smart-include="app/layout/partials/sub-header.tpl.html"></div>
-</div>
-<!-- widget grid -->
-<section id="widget-grid" data-widget-grid data-easy-pie-chart-container>
-<!-- row -->
-<div class="row">
-<!-- NEW WIDGET START -->
-<article class="col-sm-12">
-<!-- Widget ID (each widget will need unique ID)-->
-<div class="well" id="my-data-widget" data-jarvis-widget>
-<div class="row">
-<div class="col-sm-12 col-lg-12">
-    <h6>{{sysMapName}}</h6>
-
-    <!-- widget div-->
-    <div>
-
-        <!-- widget edit box -->
-        <div class="jarviswidget-editbox">
-            <!-- This area used as dropdown edit box -->
-
-        </div>
-        <!-- end widget edit box -->
-
-        <!-- widget content -->
-        <div class="widget-body">
-            <ul id="myTab1" class="nav nav-tabs bordered">
-                <li class="active">
-                    <a href="#s1" data-toggle="tab">Items Manager <span class="badge bg-color-blue txt-color-white"><i class="fa fa-fw fa-lg fa-gear"></i></span></a>
-                </li>
-                <li>
-                    <a href="#s2" data-toggle="tab"><i class="fa fa-fw fa-lg fa-sitemap"></i> Systemic Map</a>
-                </li>
-            </ul>
-
-            <div id="myTabContent1" class="tab-content padding-10">
-                <div class="tab-pane fade in active" id="s1">
-				    <div class="dd" data-sys-nestable>
-				        <ol class="dd-list">
-					         <sys-map-render content="dataToRender"></sys-map-render>
-					        
-					        <!--<div ng-bind-html="dataToRender"></div>
-						        <sys-map-render content="dataToRender"></sys-map-render>
-						        <div ng-bind-html="dataToRender"></div>
-				            <li class="dd-item dd3-item" ng-repeat="sysItems in sysMapItemsData" data-id="16">
-				                <div class="dd3-content">
-					                
-				                    {{sysItems.question}}
-				                 
-									<span class="pull-right">
-										<a class="fa fa-lg fa-trash-o" ng-click="deleteSysMapItem(sysItems.id)"></a>
-										<a class="fa fa-lg fa-plus" data-toggle="modal" data-target="#myModal{{sysItems.id}}C"></a>
-										<a class="fa fa-lg fa-pencil-square-o" data-toggle="modal" data-target="#myModal{{sysItems.id}}E"></a>
-									</span>
-				                </div>
-				           
-								<data-sys-map-items-add lolo="myModal" add-func="addSysMapItem(sysmid,question,proposal,group)" datasp="sysItems.id" dataprop="sysItems.id"></data-sys-map-items-add>
-								
-								<data-sys-map-items-edit lolo="myModal" edit-func="editSysMapItem(sysmid,question,proposal,group)" datasp="sysItems.id" dataprop="sysItems.proposal" dataque="sysItems.question" datagrp="sysItems.groupId" dataclr="sysItems.color"></data-sys-map-items-add>
-								
-				            </li>-->
-				        </ol>
-				    </div>
-                </div>
-                <div class="tab-pane fade" id="s2">
-                    <p>
-                        Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee.
-                    </p>
-                </div>
-            </div>
-
-        </div>
-        <!-- end widget content -->
-
+    <div class="row">
+        <big-breadcrumbs items="['UI Elements', 'Nestable Lists']" icon="desktop"
+                         class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></big-breadcrumbs>
+        <div smart-include="app/layout/partials/sub-header.tpl.html"></div>
     </div>
-    <!-- end widget div -->
+    <!-- widget grid -->
+    <section id="widget-grid" data-widget-grid data-easy-pie-chart-container>
+        <!-- row -->
+        <div class="row">
+            <!-- NEW WIDGET START -->
+            <article class="col-sm-12">
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="well" id="my-data-widget" data-jarvis-widget>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <h6>{{sysMapName}}</h6>
+
+                            <!-- widget div-->
+                            <div>
+
+                                <!-- widget edit box -->
+                                <div class="jarviswidget-editbox">
+                                    <!-- This area used as dropdown edit box -->
+
+                                </div>
+                                <!-- end widget edit box -->
+
+                                <!-- widget content -->
+                                <div class="widget-body">
+                                    <ul id="myTab1" class="nav nav-tabs bordered">
+                                        <li class="active">
+                                            <a href="#s1" data-toggle="tab">Items Manager <span
+                                                    class="badge bg-color-blue txt-color-white"><i
+                                                    class="fa fa-fw fa-lg fa-gear"></i></span></a>
+                                        </li>
+                                        <li>
+                                            <a href="#s2" data-toggle="tab"><i class="fa fa-fw fa-lg fa-sitemap"></i>
+                                                Systemic Map</a>
+                                        </li>
+                                    </ul>
+
+                                    <div id="myTabContent1" class="tab-content padding-10">
+                                        <div class="tab-pane fade in active" id="s1">
+                                            <div class="dd" data-sys-struct-nestable>
+                                                <ol class="dd-list">
+                                                    <sys-struct-map-render content="dataToRender"></sys-struct-map-render>
 
 
 
+                                                    <!--<div ng-bind-html="dataToRender"></div>
+                                                        <sys-struct-map-render content="dataToRender"></sys-map-render>
+                                                        <div ng-bind-html="dataToRender"></div>
+                                                    <li class="dd-item dd3-item" ng-repeat="sysItems in sysMapItemsData" data-id="16">
+                                                        <div class="dd3-content">
+
+                                                            {{sysItems.question}}
+
+                                                            <span class="pull-right">
+                                                                <a class="fa fa-lg fa-trash-o" ng-click="deleteSysStructureMapItem(sysItems.id)"></a>
+                                                                <a class="fa fa-lg fa-plus" data-toggle="modal" data-target="#myModal{{sysItems.id}}C"></a>
+                                                                <a class="fa fa-lg fa-pencil-square-o" data-toggle="modal" data-target="#myModal{{sysItems.id}}E"></a>
+                                                            </span>
+                                                        </div>
+
+                                                        <data-sys-struct-map-items-add lolo="myModal" add-func="addSysStructureMapItem(sysmid,question,proposal,group)" datasp="sysItems.id" dataprop="sysItems.id"></data-sys-map-items-add>
+
+                                                        <data-sys-struct-map-items-edit lolo="myModal" edit-func="editSysStructureMapItem(sysmid,question,proposal,group)" datasp="sysItems.id" dataprop="sysItems.proposal" dataque="sysItems.question" datagrp="sysItems.groupId" dataclr="sysItems.color"></data-sys-map-items-add>
+
+                                                    </li>-->
 
 
+                                                </ol>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="s2">
+                                            <p>
+                                                Food truck fixie locavore, accusamus mcsweeney's marfa nulla
+                                                single-origin coffee squid. Exercitation +1 labore velit, blog sartorial
+                                                PBR leggings next level wes anderson artisan four loko farm-to-table
+                                                craft beer twee.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- end widget content -->
+
+                            </div>
+                            <!-- end widget div -->
 
 
-</div>
-</div>
-</div>
-<!-- end widget content -->
-</div>
-<!-- end widget div -->
-</div>
-<!-- end widget -->
-</article>
-<!-- WIDGET END -->
-</div>
-<!-- end row -->
-</section>
-<!-- end widget grid -->
-
-
-
+                        </div>
+                        <!-- end widget content -->
+                    </div>
+                    <!-- end widget div -->
+                </div>
+                <!-- end widget -->
+            </article>
+            <!-- WIDGET END -->
+        </div>
+        <!-- end row -->
+    </section>
+    <!-- end widget grid -->
 
 
 </div>

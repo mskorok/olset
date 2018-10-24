@@ -1,15 +1,21 @@
-angular.module('app.sysmap').controller(
-    'sysMapCtrl',
+angular.module('app.ssm').controller(
+    'sysStructMapCtrl',
     function ($scope, $http, $window, $state, $timeout, MainConf, $stateParams) {
 
         var authToken = $window.localStorage.getItem('authToken');
         $scope.timeInMs = 0;
         $scope.processId = $stateParams.processId;
 
+        $scope.urls = {
+            'prefix': 'ssm/',
+            'getMap': 'get/',
+            'actionList': 'createActionListGroup'
+        };
+
         var datas = function () {
             $http({
                 method: 'GET',
-                url: MainConf.servicesUrl() + 'systemicmap/getSystemic/' + $scope.processId,
+                url: MainConf.servicesUrl() + $scope.urls.prefix + $scope.urls.getMap + $scope.processId,
                 headers: {
                     'Authorization': 'Bearer ' + authToken,
                     'Content-Type': 'application/json'
@@ -27,7 +33,7 @@ angular.module('app.sysmap').controller(
 
         datas();
 
-        $scope.deleteSysmap = function (sysmid) {
+        $scope.deleteStructureSysmap = function (sysmid) {
             $.SmartMessageBox({
                 title: "This move cannot undone!",
                 content: "The Systemic Map will be removed, are you sure about that ?",
@@ -36,7 +42,7 @@ angular.module('app.sysmap').controller(
                 if (ButtonPressed === "Yes") {
                     $http({
                         method: 'DELETE',
-                        url: MainConf.servicesUrl() + 'systemicmap/' + sysmid,
+                        url: MainConf.servicesUrl() + $scope.urls.prefix + sysmid,
                         headers: {
                             'Authorization': 'Bearer ' + authToken,
                             'Content-Type': 'application/json'
@@ -79,12 +85,12 @@ angular.module('app.sysmap').controller(
         };
 
 
-        $scope.exportit = function (sysmid, name) {
+        $scope.exportSSMActionList = function (sysmid, name) {
 
             $http({
 
                 method: 'POST',
-                url: MainConf.servicesUrl() + 'systemicmap/createActionListGroup',
+                url: MainConf.servicesUrl() + $scope.urls.prefix + $scope.urls.actionList,
                 headers: {
                     'Authorization': 'Bearer ' + authToken,
                     'Content-Type': 'application/json'
@@ -99,8 +105,6 @@ angular.module('app.sysmap').controller(
             }).then(function successCallback(response) {
                 console.log('SysMap createActionListGroup data success', response);
                 var getItemsIntoArray = function (updatedArr, arr) {
-
-                    //console.log('arr: ', arr);
                     updatedArr.push(
                         {
                             id: arr.id,
@@ -164,14 +168,11 @@ angular.module('app.sysmap').controller(
                     number: "1"
                 });
                 //console.log('action list: ',response.data.data);
-                //$state.go('app.sysmap.manager.view.'+$scope.sysMapId);
+                //$state.go('app.ssm.manager.view.'+$scope.sysMapId);
 
             }, function errorCallback(response) {
                 console.warn('SysMap createActionListGroup data error', response);
                 alert('SysMap createActionListGroup data error');
             });
-
         }
-
-
     });

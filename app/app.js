@@ -26,6 +26,7 @@ angular.module('app', [
     'app.layout',
     'app.users',
     'app.sysmap',
+    'app.ssm',
     'app.groups',
     'app.departments',
     'app.surveys',

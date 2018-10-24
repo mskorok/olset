@@ -1,66 +1,71 @@
 <div id="content">
-<div class="row">
-    <!--<big-breadcrumbs items="['Systemic Map', 'Manage']" icon="desktop" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></big-breadcrumbs>-->
-    <div smart-include="app/layout/partials/sub-header.tpl.html"></div>
-</div>
-<div style="margin-bottom:15px;">
-	<a ui-sref="app.sysmap.addnew({processId : processId})">
-	<button type="button" class="btn btn-labeled btn-primary">
+    <div class="row">
+        <!--<big-breadcrumbs items="['Systemic Map', 'Manage']" icon="desktop" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></big-breadcrumbs>-->
+        <div smart-include="app/layout/partials/sub-header.tpl.html"></div>
+    </div>
+    <div style="margin-bottom:15px;">
+        <a ui-sref="app.sysmap.addnew({processId : processId})">
+            <button type="button" class="btn btn-labeled btn-primary">
 		 <span class="btn-label">
 		  <i class="glyphicon glyphicon-plus-sign"></i>
 		 </span>Create Systemic Map
-	</button>
-	</a>
-</div>
-<!-- widget grid -->
-<section id="widget-grid" data-widget-grid>
-<!-- row -->
-<div class="row">
+            </button>
+        </a>
+    </div>
+    <!-- widget grid -->
+    <section id="widget-grid" data-widget-grid>
+        <!-- row -->
+        <div class="row">
 
-<!-- NEW WIDGET START -->
-<article class="col-sm-12 col-md-12 col-lg-12">
+            <!-- NEW WIDGET START -->
+            <article class="col-sm-12 col-md-12 col-lg-12">
 
-    <div jarvis-widget id="table-hover-states-widget" data-widget-color="nightSky" data-widget-editbutton="false">
+                <div jarvis-widget id="table-hover-states-widget" data-widget-color="nightSky"
+                     data-widget-editbutton="false">
 
-        <div>
-            <div class="widget-body no-padding">
-                <div class="table-responsive">
+                    <div>
+                        <div class="widget-body no-padding">
+                            <div class="table-responsive">
 
-                    <table class="table table-hover">
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th><i class="fa fa-building"></i> Name</th>
-                            <th><i class="fa fa-calendar"></i> Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr ng-repeat="sysm in sysMapData">
-                            <td>{{sysm.id}}</td>
-                            <td><a ui-sref="app.sysmap.view({sysMapId : sysm.id})">{{sysm.name}}</a></td>
-                            <td><a class="fa fa-lg fa-trash-o" ng-click="deleteSysmap(sysm.id)"></a><a style="margin-left: 10px;" class="fa fa-lg fa-eye" ui-sref="app.sysmap.view({sysMapId : sysm.id})"></a> 
+                                <table class="table table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th><i class="fa fa-building"></i> Name</th>
+                                        <th><i class="fa fa-calendar"></i> Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="sysm in sysMapData">
+                                        <td>{{sysm.id}}</td>
+                                        <td><a ui-sref="app.sysmap.view({sysMapId : sysm.id})">{{sysm.name}}</a></td>
+                                        <td><a class="fa fa-lg fa-trash-o" ng-click="deleteSysmap(sysm.id)"></a><a
+                                                style="margin-left: 10px;" class="fa fa-lg fa-eye"
+                                                ui-sref="app.sysmap.view({sysMapId : sysm.id})"></a>
 
-                            <a style="margin-left: 10px;" ng-click="exportit(sysm.id,sysm.name)" class="fa fa-lg fa-list-ol"></a></td>
-                        </tr>
-                        </tbody>
-                    </table>
+                                            <a style="margin-left: 10px;"
+                                               ng-click="exportSAMActionList(sysm.id, sysm.name)"
+                                               class="fa fa-lg fa-list-ol"></a></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
 
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
 
-            </div>
+            </article>
+            <!-- WIDGET END -->
+
+
         </div>
-    </div>
-
-</article>
-<!-- WIDGET END -->
-
-
-</div>
-<!-- end row -->
-<!-- row -->
-<div class="row">
-</div>
-<!-- end row -->
-</section>
-<!-- end widget grid -->
+        <!-- end row -->
+        <!-- row -->
+        <div class="row">
+        </div>
+        <!-- end row -->
+    </section>
+    <!-- end widget grid -->
 </div>

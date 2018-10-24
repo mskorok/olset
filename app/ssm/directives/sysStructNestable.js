@@ -1,4 +1,4 @@
-angular.module('app.sysmap').directive('sysNestable', function () {
+angular.module('app.ssm').directive('sysStructNestable', function () {
     return {
         restrict: 'A',
         scope: {

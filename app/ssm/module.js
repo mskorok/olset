@@ -1,33 +1,33 @@
-angular.module('app.sysmap', ['ui.router']);
+angular.module('app.ssm', ['ui.router']);
 
-angular.module('app.sysmap').config(function ($stateProvider) {
+angular.module('app.ssm').config(function ($stateProvider) {
 
     $stateProvider
-        .state('app.sysmap', {
+        .state('app.ssm', {
             abstract: true,
             data: {
-                title: 'Systemic Map'
+                title: 'Systemic Structure Map'
             }
         })
-        .state('app.sysmap.manager', {
-            url: '/sysmap/manager',
+        .state('app.ssm.manager', {
+            url: '/ssm/manager',
 
             views: {
                 "content@app": {
-                    controller: 'sysMapCtrl',
-                    templateUrl: "app/sysmap/views/sysmap-manager.html"
+                    controller: 'sysStructMapCtrl',
+                    templateUrl: "app/ssm/views/sysmap-manager.html"
                 }
             },
 
             data: {
-                title: 'Systemic Map Manager'
+                title: 'Systemic Structure Map Manager'
                 //rootId: 'extra-page'
             }
 
         })
-        .state('app.sysmap.view', {
+        .state('app.ssm.view', {
 
-            url: '/sysmap/view/{sysMapId:int}',
+            url: '/ssm/view/{sysMapId:int}',
 
             params: {
                 sysMapId: {value: null, squash: true}
@@ -35,8 +35,8 @@ angular.module('app.sysmap').config(function ($stateProvider) {
 
             views: {
                 "content@app": {
-                    controller: 'sysMapViewCtrl',
-                    templateUrl: "app/sysmap/views/sysmap-view.html"
+                    controller: 'sysStructMapViewCtrl',
+                    templateUrl: "app/ssm/views/sysmap-view.html"
                 }
             },
 
@@ -53,9 +53,9 @@ angular.module('app.sysmap').config(function ($stateProvider) {
             }
 
         })
-        .state('app.sysmap.manager.process', {
+        .state('app.ssm.manager.process', {
 
-            url: '/sysmap/manager/process/{processId:int}',
+            url: '/ssm/manager/process/{processId:int}',
 
             params: {
                 processId: {value: null, squash: true}
@@ -63,8 +63,8 @@ angular.module('app.sysmap').config(function ($stateProvider) {
 
             views: {
                 "content@app": {
-                    controller: 'sysMapCtrl',
-                    templateUrl: "app/sysmap/views/sysmap-manager.html"
+                    controller: 'sysStructMapCtrl',
+                    templateUrl: "app/ssm/views/sysmap-manager.html"
                 }
             },
 
@@ -81,8 +81,8 @@ angular.module('app.sysmap').config(function ($stateProvider) {
             }
 
         })
-        .state('app.sysmap.addnew', {
-            url: '/sysmap/addNew/{processId:int}',
+        .state('app.ssm.addnew', {
+            url: '/ssm/addNew/{processId:int}',
 
             params: {
                 processId: {value: null, squash: true}
@@ -90,13 +90,13 @@ angular.module('app.sysmap').config(function ($stateProvider) {
 
             views: {
                 "content@app": {
-                    controller: 'sysAddNewCtrl as newSysmap',
-                    templateUrl: "app/sysmap/views/new-sysmap.html"
+                    controller: 'sysStructAddNewCtrl as newSysmap',
+                    templateUrl: "app/ssm/views/new-sysmap.html"
                 }
             },
 
             data: {
-                title: 'Create Systemic Map'
+                title: 'Create Systemic Structure Map'
                 //rootId: 'extra-page'
             }
 

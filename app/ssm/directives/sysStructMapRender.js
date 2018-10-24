@@ -1,4 +1,4 @@
-angular.module('app.sysmap').directive('sysMapRender', function ($compile, $parse, $timeout) {
+angular.module('app.ssm').directive('sysStructMapRender', function ($compile, $parse, $timeout) {
     return {
         restrict: 'EA',
         link: function (scope, element, attributes) {

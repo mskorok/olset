@@ -11,20 +11,20 @@ angular.module('app.sysmap').controller(
             'proposal': ''
         };
 
+        $scope.urls = {
+            'prefix': 'systemicmap/',
+            'create': 'create',
+            'createItem': 'createItem'
+        };
+
         $scope.sysMap = function () {
             $http({
-
                 method: 'POST',
-
-                url: MainConf.servicesUrl() + 'systemicmap/create',
-
+                url: MainConf.servicesUrl() + $scope.urls.prefix + $scope.urls.create,
                 headers: {
-
                     'Authorization': 'Bearer ' + authToken,
                     'Content-Type': 'application/json'
-
                 },
-
                 data: {
                     'processId': $scope.processId,
                     'name': $scope.sysMapData.name,
@@ -33,14 +33,13 @@ angular.module('app.sysmap').controller(
                     'isActive': '1'
 
                 }
-
             }).then(function successCallback(response) {
                 console.log('SysMap systemicmap/create data success', response);
                 var sysMapID = Number(response.data.data.data.systemicMapId);
                 $http({
 
                     method: 'POST',
-                    url: MainConf.servicesUrl() + 'systemicmap/createItem',
+                    url: MainConf.servicesUrl() + $scope.urls.prefix + $scope.urls.createItem,
                     headers: {
                         'Authorization': 'Bearer ' + authToken,
                         'Content-Type': 'application/json'
@@ -52,7 +51,6 @@ angular.module('app.sysmap').controller(
                         'from_item': '',
                         'groupId': 10000
                     }
-
                 }).then(function successCallback(response) {
                     console.log('SysMap systemicmap/createItem data success', response);
                     $.bigBox({
@@ -64,28 +62,12 @@ angular.module('app.sysmap').controller(
                         icon: "fa fa-check",
                         number: "1"
                     });
-
-                    $scope.closedthis = function () {
-
-                        // var des = "sws";
-                        /*$.smallBox({
-                            title: "Closed!",
-                            content: "",
-                            color: "#739E73",
-                            iconSmall: "fa fa-cloud",
-                            timeout: 1000
-                        });*/
-                    };
-
                     $state.go('app.sysmap.manager.process', {processId: $scope.processId});
                 }, function errorCallback(response) {
                     console.warn('SysMap systemicmap/createItem data error', response);
                     alert('SysMap systemicmap/createItem data error');
                 });
-
-
                 console.log(response);
-
             }, function errorCallback(response) {
                 console.warn('SysMap systemicmap/create data error', response);
                 alert('SysMap systemicmap/create data error');

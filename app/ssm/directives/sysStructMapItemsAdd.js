@@ -1,4 +1,4 @@
-angular.module('app.sysmap').directive('sysMapItemsAdd', function (MainConf) {
+angular.module('app.ssm').directive('sysStructMapItemsAdd', function (MainConf) {
     return {
 
         restrict: 'EA',
@@ -20,7 +20,7 @@ angular.module('app.sysmap').directive('sysMapItemsAdd', function (MainConf) {
         '<option data-ng-repeat="group in groupsData" value={{group.id}} style="color: grey !important;">' +
         '{{group.title}}</option></select></div>' +
         '</div></div></div><div class="modal-footer"><button type="button" class="btn btn-default"' +
-        ' data-dismiss="modal">Cancel</button><button type="button" data-ng-click="addItem()" data-dismiss="modal"' +
+        ' data-dismiss="modal">Cancel</button><button type="button" data-ng-click="addSysStructureMapItem()" data-dismiss="modal"' +
         ' class="btn btn-primary">Add Item</button></div></div></div></div>',
         transclude: true,
         link: function (scope, element, attributes) {
@@ -30,7 +30,7 @@ angular.module('app.sysmap').directive('sysMapItemsAdd', function (MainConf) {
                 'group': ''
             };
 
-            scope.addItem = function () {
+            scope.addSysStructureMapItem = function () {
 
                 scope.addFunc({
                     sysmid: scope.datasp,

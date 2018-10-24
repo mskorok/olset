@@ -1,40 +1,25 @@
-angular.module('app.sysmap').controller(
-    'sysMapViewCtrl',
+angular.module('app.ssm').controller(
+    'sysStructMapViewCtrl',
     function ($scope, $http, $window, $stateParams, $document, $state, $sce, $timeout, MainConf) {
 
         var authToken = $window.localStorage.getItem('authToken');
         $scope.token = authToken;
         $scope.sysMapId = $stateParams.sysMapId;
 
+        $scope.urls = {
+            'prefix': 'ssm/',
+            'tree': 'getItemTree/',
+            'createItem': 'createItem',
+            'item': 'item/'
+        };
+
         $scope.sysMapName = "Systemic Map Items";
-        // var datas2 = function () {
-        //     $http({
-        //         method: 'GET',
-        //         url: MainConf.servicesUrl() + 'systemicmap/getItem/' + $scope.sysMapId,
-        //         headers: {
-        //             'Authorization': 'Bearer ' + authToken,
-        //             'Content-Type': 'application/json'
-        //         }
-        //
-        //     }).then(function successCallback(response) {
-        //
-        //         var sysmapn = response.data.data.data.nodes;
-        //         var i = 0;
-        //         var sysmapl = response.data.data.data.links;
-        //         var finaldatas = [];
-        //
-        //         $scope.sysMapItemsData = sysmapn;
-        //
-        //     }, function errorCallback(response) {
-        //
-        //     });
-        // }
 
         var datas2 = function () {
             $http({
 
                 method: 'GET',
-                url: MainConf.servicesUrl() + 'systemicmap/getItemTree/' + $scope.sysMapId,
+                url: MainConf.servicesUrl() + $scope.urls.prefix + $scope.urls.tree + $scope.sysMapId,
                 headers: {
                     'Authorization': 'Bearer ' + authToken,
                     'Content-Type': 'application/json'
@@ -43,16 +28,10 @@ angular.module('app.sysmap').controller(
             }).then(function successCallback(response) {
                 console.log('SysMap getItemTree data success', response);
                 $scope.dataToRender = response.data.data.htmlCode;
-                // var urlSmall = MainConf.servicesUrl() + "public/sam_view.php?token="
-                //     + authToken + "&id=" + $scope.sysMapId + "&t=" + Date.now() + "&v=0";
-                // var urlBig = MainConf.servicesUrl() + "public/sam_view.php?token="
-                //     + authToken + "&id=" + $scope.sysMapId
-                //     + "&t=" + Date.now() + "&v=1";
 
-
-                var urlSmall = MainConf.servicesUrl() + "sam_view1.php?token="
+                var urlSmall = MainConf.servicesUrl() + "ssm_view.php?token="
                     + authToken + "&id=" + $scope.sysMapId + "&t=" + Date.now() + "&v=0";
-                var urlBig = MainConf.servicesUrl() + "sam_view1.php?token="
+                var urlBig = MainConf.servicesUrl() + "ssm_view.php?token="
                     + authToken + "&id=" + $scope.sysMapId
                     + "&t=" + Date.now() + "&v=1";
 
@@ -67,11 +46,11 @@ angular.module('app.sysmap').controller(
 
         datas2();
 
-        $scope.addSysMapItem = function (sysmid, question, proposal, groupId, color) {
+        $scope.addSysStructureMapItem = function (sysmid, question, proposal, groupId, color) {
             $http({
 
                 method: 'POST',
-                url: MainConf.servicesUrl() + 'systemicmap/createItem',
+                url: MainConf.servicesUrl() + $scope.urls.prefix + $scope.urls.createItem,
                 headers: {
                     'Authorization': 'Bearer ' + authToken,
                     'Content-Type': 'application/json'
@@ -96,34 +75,22 @@ angular.module('app.sysmap').controller(
                     number: "1"
                 });
 
-                $scope.closedthis = function () {
-
-                    // var des = "sws";
-                    /*$.smallBox({
-                        title: "Closed!",
-                        content: "",
-                        color: "#739E73",
-                        iconSmall: "fa fa-cloud",
-                        timeout: 1000
-                    });*/
-                };
-
                 $timeout(function () {
                     datas2();
                     $scope.$apply();
                 }, 2);
-                //$state.go('app.sysmap.manager.view.'+$scope.sysMapId);
+                //$state.go('app.ssm.manager.view.'+$scope.sysMapId);
             }, function errorCallback(response) {
                 console.warn('SysMap systemicmap/createItem data error', response);
                 alert('SysMap systemicmap/createItem data error');
             });
         };
 
-        $scope.editSysMapItem = function (sysmid, question, proposal, groupId) {
+        $scope.editSysStructureMapItem = function (sysmid, question, proposal, groupId) {
             $http({
 
                 method: 'PUT',
-                url: MainConf.servicesUrl() + 'systemicmap/item/' + sysmid,
+                url: MainConf.servicesUrl() + $scope.urls.prefix + $scope.urls.item + sysmid,
                 headers: {
                     'Authorization': 'Bearer ' + authToken,
                     'Content-Type': 'application/json'
@@ -145,22 +112,8 @@ angular.module('app.sysmap').controller(
                     number: "1"
                 });
 
-                $scope.closedthis = function () {
-
-                    // var desde = "swseew";
-                    /*$.smallBox({
-                        title: "Closed!",
-                        content: "",
-                        color: "#739E73",
-                        iconSmall: "fa fa-cloud",
-                        timeout: 1000
-                    });*/
-                };
-
                 $timeout(function () {
                     datas2();
-                    //$scope.frameUrl = "http://144.76.5.203/olsetapp/public/sam_view.php?token="
-                    // +authToken+"&id="+$scope.sysMapId+"&t="+Date.now()+"";
                     $scope.$apply();
                 }, 2);
 
@@ -170,7 +123,7 @@ angular.module('app.sysmap').controller(
             });
         };
 
-        $scope.deleteSysMapItem = function (sysmid) {
+        $scope.deleteSysStructureMapItem = function (sysmid) {
 
             $.SmartMessageBox({
                 title: "This move cannot undone!",
@@ -183,7 +136,7 @@ angular.module('app.sysmap').controller(
                     $http({
 
                         method: 'DELETE',
-                        url: MainConf.servicesUrl() + 'systemicmap/item/' + sysmid,
+                        url: MainConf.servicesUrl() + $scope.urls.prefix + $scope.urls.item + sysmid,
                         headers: {
                             'Authorization': 'Bearer ' + authToken,
                             'Content-Type': 'application/json'

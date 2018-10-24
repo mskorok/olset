@@ -1,4 +1,4 @@
-angular.module('app.sysmap').directive('sysmaptableTableTools', function () {
+angular.module('app.ssm').directive('sysmaptableStructTableTools', function () {
     return {
         restrict: 'A',
         link: function (scope, element, attributes) {

@@ -1,4 +1,4 @@
-angular.module('app.sysmap').directive('sysMaptreeContent', function ($compile) {
+angular.module('app.ssm').directive('sysStructMaptreeContent', function ($compile) {
     return {
         restrict: 'E',
         link: function (scope, element) {

@@ -1,94 +1,87 @@
 <div id="content">
-<div class="row">
-    <!--<big-breadcrumbs items="['UI Elements', 'Nestable Lists']" icon="desktop" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></big-breadcrumbs>-->
-    <div smart-include="app/layout/partials/sub-header.tpl.html"></div>
-</div>
-<!-- widget grid -->
-<section id="widget-grid" data-widget-grid data-easy-pie-chart-container>
-<!-- row -->
-<div class="row">
-<!-- NEW WIDGET START -->
-<article class="col-sm-12">
-<!-- Widget ID (each widget will need unique ID)-->
-<div class="well" id="my-data-widget" data-jarvis-widget>
-<div class="row">
-<div class="col-sm-12 col-lg-12">
-      <!--  <h6>{{sysMapName}}</h6>
-
- widget div-->
-    <div>
-
-        <!-- widget edit box -->
-        <div class="jarviswidget-editbox">
-            <!-- This area used as dropdown edit box -->
-
-        </div>
-        <!-- end widget edit box -->
-
-        <!-- widget content -->
-        <div class="widget-body">
-            <ul id="myTab1" class="nav nav-tabs bordered">
-                <li class="active">
-                    <a href="#s1" data-toggle="tab">Items Manager <span class="badge bg-color-blue txt-color-white"><i class="fa fa-fw fa-lg fa-gear"></i></span></a>
-                </li>
-                <li>
-                    <a href="#s2" data-toggle="tab"><i class="fa fa-fw fa-lg fa-sitemap"></i> Systemic Map</a>
-                </li>
-            </ul>
-
-            <div id="myTabContent1" class="tab-content padding-10">
-                <div class="tab-pane fade in active" id="s1">
-	                <div class="col-md-6">
-					    <div class="dd" data-sys-nestable>
-					        <ol class="dd-list">
-						         <sys-map-render content="dataToRender"></sys-map-render>
-					        </ol>
-					    </div> 
-	                </div>
-	                
-	                <div class="col-md-6">
-
-		                <sys-map-iframe theurl="frameUrl" state="0"></sys-map-iframe>
-
-	                </div>
-
-                </div>
-                <div class="tab-pane fade" id="s2">
-	                
-                   <sys-map-iframe theurl="frameUrl0" state="1"></sys-map-iframe>
-                    
-                </div>
-            </div>
-
-        </div>
-        <!-- end widget content -->
-
+    <div class="row">
+        <!--<big-breadcrumbs items="['UI Elements', 'Nestable Lists']" icon="desktop" class="col-xs-12 col-sm-7 col-md-7 col-lg-4"></big-breadcrumbs>-->
+        <div smart-include="app/layout/partials/sub-header.tpl.html"></div>
     </div>
-    <!-- end widget div -->
+    <!-- widget grid -->
+    <section id="widget-grid" data-widget-grid data-easy-pie-chart-container>
+        <!-- row -->
+        <div class="row">
+            <!-- NEW WIDGET START -->
+            <article class="col-sm-12">
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="well" id="my-data-widget" data-jarvis-widget>
+                    <div class="row">
+                        <div class="col-sm-12 col-lg-12">
+                            <!--  <h6>{{sysMapName}}</h6>
+
+                       widget div-->
+                            <div>
+
+                                <!-- widget edit box -->
+                                <div class="jarviswidget-editbox">
+                                    <!-- This area used as dropdown edit box -->
+
+                                </div>
+                                <!-- end widget edit box -->
+
+                                <!-- widget content -->
+                                <div class="widget-body">
+                                    <ul id="myTab1" class="nav nav-tabs bordered">
+                                        <li class="active">
+                                            <a href="#s1" data-toggle="tab">Items Manager <span
+                                                    class="badge bg-color-blue txt-color-white"><i
+                                                    class="fa fa-fw fa-lg fa-gear"></i></span></a>
+                                        </li>
+                                        <li>
+                                            <a href="#s2" data-toggle="tab"><i class="fa fa-fw fa-lg fa-sitemap"></i>
+                                                Systemic Map</a>
+                                        </li>
+                                    </ul>
+
+                                    <div id="myTabContent1" class="tab-content padding-10">
+                                        <div class="tab-pane fade in active" id="s1">
+                                            <div class="col-md-6">
+                                                <div class="dd" data-sys-nestable>
+                                                    <ol class="dd-list">
+                                                        <sys-map-render content="dataToRender"></sys-map-render>
+                                                    </ol>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+
+                                                <sys-map-iframe theurl="frameUrl" state="0"></sys-map-iframe>
+
+                                            </div>
+
+                                        </div>
+                                        <div class="tab-pane fade" id="s2">
+
+                                            <sys-map-iframe theurl="frameUrl0" state="1"></sys-map-iframe>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- end widget content -->
+
+                            </div>
+                            <!-- end widget div -->
 
 
-
-
-
-
-
-</div>
-</div>
-</div>
-<!-- end widget content -->
-</div>
-<!-- end widget div -->
-</div>
-<!-- end widget -->
-</article>
-<!-- WIDGET END -->
-</div>
-<!-- end row -->
-</section>
-<!-- end widget grid -->
-
-
-
+                        </div>
+                        <!-- end widget content -->
+                    </div>
+                    <!-- end widget div -->
+                </div>
+                <!-- end widget -->
+            </article>
+            <!-- WIDGET END -->
+        </div>
+        <!-- end row -->
+    </section>
+    <!-- end widget grid -->
 
 
 </div>

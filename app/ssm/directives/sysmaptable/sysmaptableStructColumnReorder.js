@@ -1,7 +1,7 @@
-angular.module('app.sysmap').directive('sysmaptableColumnFilter', function () {
+angular.module('app.ssm').directive('sysmaptableStructColumnReorder', function () {
     return {
         restrict: 'A',
-        link: function (scope, element, attributes) {
+        link: function (scope, element) {
             /* // DOM Position key index //
 
              l - Length changing (dropdown)
@@ -25,16 +25,10 @@ angular.module('app.sysmap').directive('sysmaptableColumnFilter', function () {
                 phone: 480
             };
 
-            var otable = element.DataTable({
-                //"bFilter": false,
-                //"bInfo": false,
-                //"bLengthChange": false
-                //"bAutoWidth": false,
-                //"bPaginate": false,
-                //"bStateSave": true // saves sort state using localStorage
-                "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6 hidden-xs'f><'col-sm-6 col-xs-12 hidden-xs'<'toolbar'>>r>" +
+            element.dataTable({
+                "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'f><'col-sm-6 hidden-xs'C>r>" +
                 "t" +
-                "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
+                "<'dt-toolbar-footer'<'col-sm-6 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
                 oLanguage: {
                     "sSearch": "<span class='input-group-addon input-sm'><i class='glyphicon glyphicon-search'>" +
                     "</i></span> "
@@ -52,23 +46,6 @@ angular.module('app.sysmap').directive('sysmaptableColumnFilter', function () {
                 "drawCallback": function (oSettings) {
                     responsiveHelper.respond();
                 }
-
-            });
-
-            // custom toolbar
-            element.parent().find("div.toolbar").html(
-                '<div class="text-right"><img src="styles/img/logo.png"' +
-                ' alt="SmartAdmin" style="width: 111px; margin-top: 3px; margin-right: 10px;"></div>'
-            );
-
-            // Apply the filter
-            element.on('keyup change', 'thead th input[type=text]', function () {
-
-                otable
-                    .column($(this).parent().index() + ':visible')
-                    .search(this.value)
-                    .draw();
-
             });
         }
     }

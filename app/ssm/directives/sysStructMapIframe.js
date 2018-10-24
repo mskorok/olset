@@ -1,4 +1,4 @@
-angular.module('app.sysmap').directive('sysMapIframe', function ($compile, $parse, $timeout) {
+angular.module('app.ssm').directive('sysStructMapIframe', function ($compile, $parse, $timeout) {
     return {
         restrict: 'EA',
         scope: {
