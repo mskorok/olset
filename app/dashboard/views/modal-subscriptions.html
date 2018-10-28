@@ -1,0 +1,24 @@
+<div class="dialog-contents app-subscription">
+    <div class="dialog-header">
+        <h4>Choose subscription</h4>
+    </div>
+    <div class="col-md-12">
+        <div class="form-group">
+            <select class="form-control"
+                    data-ng-model="Subscription"
+                    id="subscription_select"
+                    name="subscription_select"
+                    data-ng-options="value.id as value.description for (key, value) in subscriptions" style="overflow: hidden;">
+            </select>
+            <small id="actions_select_help" class="form-text text-muted">
+                Choose subscription
+            </small>
+        </div>
+    </div>
+
+    <div class="ngdialog-buttons">
+        <button type="button" data-ng-click="closeThisDialog()" class="btn btn-default f-right">Cancel</button>
+
+        <button type="button" data-ng-click="addSubscription()" class="btn btn-primary">Choose</button>
+    </div>
+</div>

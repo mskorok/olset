@@ -1,6 +1,6 @@
 angular.module('app.dashboard').controller(
     'DashboardCtrl',
-    function ($rootScope, $scope, $http, $window, $stateParams, $document, $state, $timeout, MainConf, Auth) {
+    function ($rootScope, $scope, $http, $window, $stateParams, $document, $state, $timeout, MainConf, Auth, ngDialog) {
         $scope.token = $window.localStorage.getItem('authToken');
 
         $scope.isManager = false;
@@ -39,10 +39,15 @@ angular.module('app.dashboard').controller(
             }
 
         }, true);
+        $scope.i++;
+
+
+        console.log('ææ', $window.localStorage.getItem("subscription"));
 
         var dashboard = {
             single_report_url: 'report/single',
             group_report_url: 'report/group',
+            subscription_url : 'process/subscription/',
             addTexts: function (firstProcess) {
                 var crs = document.getElementById('crs_text');
                 if (crs) {
@@ -71,8 +76,18 @@ angular.module('app.dashboard').controller(
                         $scope.olsetStatsInfo = response.data.data.data;
                         $scope.firstProcess = response.data.data.data.process;
                         $scope.isProcess = $scope.firstProcess !== null;
+                        $scope.subscriptions = response.data.data.data.subscriptions;
+                        if ($scope.subscriptions.length > 0 && $scope.i === 2) {
+                            angular.element(document).ready(function () {
+                                var current_subscription = $window.localStorage.getItem("subscription");
+
+                                if (typeof current_subscription === 'undefined' || current_subscription === null) {
+                                    self.openModalSubscriptions();
+                                }
+                            });
+                        }
                         self.addTexts($scope.firstProcess);
-                        // console.log('dashboard resp', $scope.olsetStatsInfo.count_organizations[0]);
+                        console.log('dashboard resp', $scope.subscriptions, $scope.subscriptions.length);
 
                     }, function errorCallback(response) {
                         console.warn('Dashboard data error', response);
@@ -91,18 +106,17 @@ angular.module('app.dashboard').controller(
                     }
 
                 }).then(function successCallback(response) {
-                    console.log('Dashboard getAvailableSurveys data success', response);
+                    // console.log('Dashboard getAvailableSurveys data success', response);
                     $scope.olsetSurvey = response.data.data.data;
                     angular.element(document).ready(function () {
                         // self.renderProcessesData();
                         self.startWidget();
                     });
-                    console.log('user surveys:: ', $scope.olsetSurvey);
+                    // console.log('user surveys:: ', $scope.olsetSurvey);
 
                 }, function errorCallback(response) {
                     console.warn('Dashboard getAvailableSurveys data error', response);
                     // alert('Dashboard getAvailableSurveys data error');
-                    // $scope.olsetProcessData = response.data.process;
                     // console.log('error process data ', $scope.olsetProcessData);
                 });
 
@@ -130,7 +144,7 @@ angular.module('app.dashboard').controller(
                     }
 
                 }).then(function successCallback(response) {
-                    console.log('Single Report', response);
+                    // console.log('Single Report', response);
                     $scope.singleReport = response.data.data.data.report;
                     angular.element(document).ready(function () {
                         var link = document.getElementById('single_report_link');
@@ -152,7 +166,7 @@ angular.module('app.dashboard').controller(
                     }
 
                 }).then(function successCallback(response) {
-                    console.log('Group Report', response);
+                    // console.log('Group Report', response);
                     $scope.groupReport = response.data.data.data.report;
                     angular.element(document).ready(function () {
                         var link = document.getElementById('group_report_link');
@@ -162,6 +176,86 @@ angular.module('app.dashboard').controller(
                     });
                 }, function errorCallback(response) {
                     console.warn('Group Report data error', response);
+                });
+            },
+            openModalSubscriptions: function () {
+                var self = this;
+                ngDialog.open({
+                    template: MainConf.mainAppPath() + '/dashboard/views/modal-subscriptions.html',
+                    scope: $scope
+                });
+
+                // $rootScope.$on('ngDialog.closed', function (e, $dialog) {
+                //     var subscription = $window.localStorage.getItem("subscription");
+                //     if (typeof subscription === 'undefined' && subscription === null) {
+                //         window.location.reload();
+                //     }
+                // });
+
+                $rootScope.$on('ngDialog.opened', function (e, $dialog) {
+                    $timeout(function() {
+                        $('.subscription').animate({ scrollTop: 0 }, 'slow');
+                    }, 1000);
+                    $scope.addSubscription = function () {
+                        var value = subscription_select.value;
+                        value = value.replace('string:', '');
+                        value = value.replace('number:', '');
+
+                        console.log('ø', value, value === '?');
+                        if (value === '?') {
+                            $.bigBox({
+                                title: 'Please choose value!',
+                                //content: question + ", just created also
+                                // a new systemic map Item is here for you just to begin.",
+                                color: "#C46A69",
+                                timeout: 2000,
+                                icon: "fa fa-check",
+                                number: "1"
+                            });
+                        } else {
+                            $http({
+                                method: 'POST',
+                                url: MainConf.servicesUrl() + self.subscription_url + value,
+                                headers: {
+                                    'Authorization': 'Bearer ' + $scope.token,
+                                    'Content-Type': 'application/json'
+                                }
+                            }).then(function successCallback(response) {
+                                if (parseInt(response.data.data.code) === 1) {
+                                    $window.localStorage.setItem("subscription", value);
+                                    console.log('Subscription data success', response);
+                                    $timeout(function() {
+                                        window.location.reload();
+                                    }, 500);
+                                } else {
+                                    console.log('Subscription data error', response);
+                                    $.bigBox({
+                                        title: 'Subscription not saved!',
+                                        //content: question + ", just created also
+                                        // a new systemic map Item is here for you just to begin.",
+                                        color: "#C46A69",
+                                        timeout: 5000,
+                                        icon: "fa fa-check",
+                                        number: "1"
+                                    });
+                                }
+                            }, function errorCallback(response) {
+                                console.log('Subscription data error', response);
+                                $.bigBox({
+                                    title: 'Subscription not saved!',
+                                    //content: question + ", just created also
+                                    // a new systemic map Item is here for you just to begin.",
+                                    color: "#C46A69",
+                                    timeout: 5000,
+                                    icon: "fa fa-check",
+                                    number: "1"
+                                });
+                            });
+                            ngDialog.closeAll();
+                        }
+
+
+                    };
                 });
             }
         };

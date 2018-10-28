@@ -8,6 +8,7 @@ angular.module('app.layout').controller(
         $(document).ready(function () {
             $('.app-tooltip').tooltip({placement : 'top'});
         });
+        $scope.i = 0;
         var getInfo = function () {
             $scope.slug.slug = $location.path().replace("/", "");
             $scope.slug.slug = $scope.slug.slug.replace(new RegExp('/', 'g'), "_");
@@ -83,12 +84,45 @@ angular.module('app.layout').controller(
         // console.log('Layout Role: ', Auth.userHaveRole);
 
         $scope.userLogout = function () {
+            var token = $window.localStorage.getItem("authToken");
+            $http({
+                method: 'GET',
+                url: MainConf.servicesUrl() + 'process/subscription/unset',
+                headers: {
+                    'Authorization': 'Bearer ' + token,
+                    'Content-Type': 'application/json'
+                },
+                data: $scope.slug
 
-            $window.localStorage.removeItem("authToken");
-            $window.localStorage.removeItem("userData");
+            }).then(function successCallback(response) {
+                console.log('subscription unset', response);
+                if (response.data.data.code === 1) {
+                    $window.localStorage.removeItem("authToken");
+                    $window.localStorage.removeItem("userData");
+                    $window.localStorage.removeItem("subscription");
+                    $state.go('realLogin');
+                } else {
+                    $.bigBox({
+                        title: 'Subscription not removed!',
+                        color: "#C46A69",
+                        timeout: 5000,
+                        icon: "fa fa-check",
+                        number: "1"
+                    });
+                }
 
-            $state.go('realLogin');
-
-        }
+            }, function errorCallback(response) {
+                $.bigBox({
+                    title: 'Subscription not saved!',
+                    //content: question + ", just created also
+                    // a new systemic map Item is here for you just to begin.",
+                    color: "#C46A69",
+                    timeout: 5000,
+                    icon: "fa fa-check",
+                    number: "1"
+                });
+                console.log('Subscription unset error', response);
+            });
+        };
     }
 );

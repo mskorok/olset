@@ -10,7 +10,7 @@ angular.module('app.dashboard').directive('processesStatus', function () {
             attrs.$observe('status', function (value) {
                 if (value) {
                     var finalJson = JSON.parse(scope.status);
-                    console.log('ps - finalJSON' , finalJson.process === null);
+                    // console.log('ps - finalJSON' , finalJson.process === null);
                     var doughnutOptions = {
                         //Boolean - Whether we should show a stroke on each segment
                         segmentShowStroke: true,

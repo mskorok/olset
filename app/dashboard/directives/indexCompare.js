@@ -14,7 +14,7 @@ angular.module('app.dashboard').directive('indexCompare', function () {
                     var finalJson = JSON.parse(scope.index);
                     // var previousIndex = JSON.parse(scope.previousIndex);
                     // var lastIndex = JSON.parse(scope.lastIndex);
-                    console.log('ic - finalJSON' , finalJson, scope.last, scope.previous, scope);
+                    // console.log('ic - finalJSON' , finalJson, scope.last, scope.previous, scope);
                     var doughnutOptions = {
                         //Boolean - Whether we should show a stroke on each segment
                         segmentShowStroke: true,
