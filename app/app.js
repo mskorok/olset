@@ -195,11 +195,19 @@ angular.module('app', [
             $rootScope.$stateParams = $stateParams;
             var addUser = '/users/addNew';
             var registerUser = '/register';
+            var dashboard = '/dashboard';
             var logPath = $location.path();
 
             if (!Auth.isLoggedIn()) {
                 if (logPath !== addUser && logPath !== registerUser) {
                     $location.path('/login')
+                }
+            } else {
+                if (logPath !== dashboard) {
+                    var subscription = $window.localStorage.getItem("subscription");
+                    if (typeof subscription === 'undefined' || subscription === null) {
+                        $location.path('/dashboard')
+                    }
                 }
             }
 

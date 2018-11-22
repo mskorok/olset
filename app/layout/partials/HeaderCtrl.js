@@ -9,6 +9,7 @@ angular.module('app.layout').controller(
             $('.app-tooltip').tooltip({placement : 'top'});
         });
         $scope.i = 0;
+        $scope.subscription = $window.localStorage.getItem('subscription');
         var getInfo = function () {
             $scope.slug.slug = $location.path().replace("/", "");
             $scope.slug.slug = $scope.slug.slug.replace(new RegExp('/', 'g'), "_");

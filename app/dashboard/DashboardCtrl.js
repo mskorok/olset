@@ -62,6 +62,7 @@ angular.module('app.dashboard').controller(
             data: function () {
                 var self = this;
                 console.log('token', $scope.token);
+                console.log('subscription', $scope.subscription);
                 if (Auth.userHaveRole() === "Manager") {
                     $http({
                         method: 'GET',
@@ -77,17 +78,18 @@ angular.module('app.dashboard').controller(
                         $scope.firstProcess = response.data.data.data.process;
                         $scope.isProcess = $scope.firstProcess !== null;
                         $scope.subscriptions = response.data.data.data.subscriptions;
+                        // console.log ('si', $scope.subscriptions.length, $scope.i);
                         if ($scope.subscriptions.length > 0 && $scope.i === 2) {
                             angular.element(document).ready(function () {
                                 var current_subscription = $window.localStorage.getItem("subscription");
-
+                                console.log(123, $scope.i, current_subscription);
                                 if (typeof current_subscription === 'undefined' || current_subscription === null) {
                                     self.openModalSubscriptions();
                                 }
                             });
                         }
                         self.addTexts($scope.firstProcess);
-                        console.log('dashboard resp', $scope.subscriptions, $scope.subscriptions.length);
+                        // console.log('dashboard resp', $scope.subscriptions, $scope.subscriptions.length);
 
                     }, function errorCallback(response) {
                         console.warn('Dashboard data error', response);
@@ -106,7 +108,7 @@ angular.module('app.dashboard').controller(
                     }
 
                 }).then(function successCallback(response) {
-                    // console.log('Dashboard getAvailableSurveys data success', response);
+                    console.log('Dashboard getAvailableSurveys data success', response);
                     $scope.olsetSurvey = response.data.data.data;
                     angular.element(document).ready(function () {
                         // self.renderProcessesData();
