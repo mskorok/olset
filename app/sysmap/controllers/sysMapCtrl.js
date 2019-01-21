@@ -117,18 +117,23 @@ angular.module('app.sysmap').controller(
                             groupTitle: arr.groupTitle
                         }
                     );
-                    if (arr.items.length > 0) {
-                        getItemsIntoArray(updatedArr, arr.items[0]);
-                    }
+                    //console.log(arr);
+                    //console.log(size);
+                    //these ares objects not array
+                    //var size = Object.keys(arr).length;
+                    //if (arr.items.length > 0) {
+                        //getItemsIntoArray(updatedArr, arr.items[0]);
+                    //}
                 };
                 var tdatasr = response.data.data.tree;
-                var mySpreadSheet = [];
+                var mySpreadSheet = [];                  
                 for (var j = 0; j < tdatasr.length; j++) {
                     var mySheetItems = [];
                     getItemsIntoArray(mySheetItems, tdatasr[j]);
                     mySpreadSheet.push(mySheetItems);
                 }
                 console.log('myspreedsheet', mySpreadSheet);
+
                 var sheetsCountsAndNames = [];
                 for (var i = 0; mySpreadSheet.length > i; i++) {
                     var headOrNot = i === 0;
@@ -142,6 +147,7 @@ angular.module('app.sysmap').controller(
                 var data2 = [{a: 100, b: 10}, {a: 200, b: 20}];
                 var opts = sheetsCountsAndNames;
                 console.log(sheetsCountsAndNames);
+
                 var res = alasql(
                     'SELECT * INTO XLSX("' + name + '.xlsx",?) FROM ?',
                     [sheetsCountsAndNames, mySpreadSheet]

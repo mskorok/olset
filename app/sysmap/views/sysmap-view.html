@@ -50,16 +50,24 @@
                                             </div>
 
                                             <div class="col-md-6">
-
                                                 <sys-map-iframe theurl="frameUrl" state="0"></sys-map-iframe>
-
                                             </div>
 
                                         </div>
                                         <div class="tab-pane fade" id="s2">
-
+                                            <!-- no proper width - height since it is a tab reload the iframe on click -->
+                                            <script type='text/javascript'>//<![CDATA[
+                                                var clicked1st = false;
+                                                $("a[data-toggle='tab']").click(function() {
+                                                    if( ($(this).attr("href") == "#s2") && (clicked1st == false) ){
+                                                        setTimeout(function(){ 
+                                                             $("#s2").find("iframe").attr( 'src', function ( i, val ) { return val; });
+                                                        }, 300);
+                                                        clicked1st = true;
+                                                    }
+                                                });
+                                            //]]> </script>
                                             <sys-map-iframe theurl="frameUrl0" state="1"></sys-map-iframe>
-
                                         </div>
                                     </div>
 

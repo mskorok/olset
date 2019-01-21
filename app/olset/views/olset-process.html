@@ -20,25 +20,24 @@
                 <div>
                     <div class="widget-body no-padding">
                         <div class="table-responsive" style="padding:13px;">
-                            <div class="col-md-12 m-t-5">
+                            <div data-ng-if="!openInitial && isFirstInitialSurvey" class="col-md-12 m-t-5">
                                 <center><h2>Initial Survey</h2></center>
-                                <div data-ng-if="openInitial">
+                                <div data-ng-if="!openInitial">
                                     <a data-ui-sref="app.olset.evaluation({evaluationId : olsetProcessData.step0})"
                                        class="btn btn-primary btn-lg btn-block">
                                         Initial  Survey >>
                                     </a>
                                 </div>
-                                <div ng-if="!openInitial">
+                                <div ng-if="openInitial">
                                     <a href="javascript:void 0"
                                        class="btn btn-primary btn-lg btn-block">
-                                        Initial  Survey >>
+                                        Only One Survey is Possible
                                     </a>
                                 </div>
                             </div>
                             <div class="col-md-12 m-t-5">
                                 <center><h2>Step 0</h2></center>
-                                <!--<center><img src="/styles/img/banners/b2.png" width="250"></center>-->
-                                <center><img src="/backoffice/styles/img/banners/b2.png" width="250"></center>
+                                <center><img src="styles/img/banners/b2.png" width="250"></center>
 
                                 <div data-ng-if="isManager || isAdmin" class="col-md-12 m-t-5">
                                     <div data-ng-if="openCRS">
@@ -67,19 +66,6 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-12  m-t-5 m-b-5" id="block_sv">
-                                    <h3>Shared Vision</h3>
-                                    <div id="shared vision_input">
-                                        <form id="shared_vision_form">
-                                            <textarea class="w-100" rows="7" id="shared_vision_editor">
-                                                {{olsetProcessData.SharedVision}}
-                                            </textarea>
-                                            <br>
-                                            <button type="submit" class="btn btn-success">Save</button>
-                                        </form>
-                                    </div>
-                                </div>
-
                                 <div data-ng-if="isManager || isAdmin" class="col-md-12 m-t-5">
                                     <div data-ng-if="openVS">
                                         <a data-ui-sref="app.olset.evaluation({evaluationId : olsetProcessData.vision})"
@@ -94,6 +80,20 @@
                                         </a>
                                     </div>
                                 </div>
+
+                                <div class="col-md-12  m-t-5 m-b-5" id="block_sv">
+                                    <h3>Shared Vision</h3>
+                                    <div id="shared vision_input">
+                                        <form id="shared_vision_form">
+                                            <textarea class="w-100" rows="7" id="shared_vision_editor">
+                                                {{olsetProcessData.SharedVision}}
+                                            </textarea>
+                                            <br>
+                                            <button type="submit" class="btn btn-success">Save</button>
+                                        </form>
+                                    </div>
+                                </div>
+
                                 <div class="col-md-12  m-t-5" id="block_ii">
                                     <h3>Initial Intentions</h3>
                                     <div id="initial_intentions_input">
@@ -109,8 +109,7 @@
                             </div>
                             <div class="col-md-12  m-t-5" data-ssm="{{openSSM}}">
                                 <center><h2>Step 1: Understand</h2></center>
-                                <!--<center><img src="/styles/img/banners/b3.png" class="m-b-5" width="250"></center>-->
-                                <center><img src="/backoffice/styles/img/banners/b3.png" class="m-b-5" width="250"></center>
+                                <center><img src="styles/img/banners/b3.png" class="m-b-5" width="250"></center>
                                 <div data-ng-if="openSSM">
                                     <a data-ui-sref="app.ssm.manager.process({processId : processId})"
                                        class="btn btn-primary btn-lg btn-block">
@@ -127,8 +126,7 @@
 
                             <div class="col-md-12 m-t-5">
                                 <center><h2>Step 2: Design and Implement</h2></center>
-                                <!--<center><img src="/styles/img/banners/b4.png" class="m-b-5" width="250"></center>-->
-                                <center><img src="/backoffice/styles/img/banners/b4.png" class="m-b-5" width="250"></center>
+                                <center><img src="styles/img/banners/b4.png" class="m-b-5" width="250"></center>
                                 <div data-ng-if="openSAM">
                                     <a data-ui-sref="app.sysmap.manager.process({processId : processId})"
                                        class="btn btn-primary btn-lg btn-block">
@@ -144,8 +142,7 @@
                             </div>
                             <div class="col-md-12 m-t-5">
                                 <center><h2>Step 3: Self-Evaluate</h2></center>
-                                <!--<center><img src="/styles/img/banners/b5.png" class="m-b-5" width="250"></center>-->
-                                <center><img src="/backoffice/styles/img/banners/b5.png" class="m-b-5" width="250"></center>
+                                <center><img src="styles/img/banners/b5.png" class="m-b-5" width="250"></center>
                                 <div class="col-md-12">
                                     <div data-ng-if="openEvaluation">
                                         <a data-ui-sref="app.olset.evaluation({evaluationId : olsetProcessData.step3_0})"
@@ -161,7 +158,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12 m-b-5">
-                                    <h2>After Action Review for Process</h2>
+                                    <center><h2>After Action Review for Process</h2></center>
                                     <div data-ng-if="openAAR">
                                         <a data-ui-sref="app.olset.evaluation({evaluationId : olsetProcessData.step3_1})"
                                            class="btn btn-primary btn-lg btn-block">
