@@ -63,7 +63,8 @@ angular.module('app.dashboard').controller(
                 var self = this;
                 console.log('token', $scope.token);
                 console.log('subscription', $scope.subscription);
-                if (Auth.userHaveRole() === "Manager") {
+                //if (Auth.userHaveRole() === "Manager") {
+                if (Auth.userHaveRole() != null ) {     
                     $http({
                         method: 'GET',
                         url: MainConf.servicesUrl() + 'statistics/dashboard',
@@ -76,6 +77,11 @@ angular.module('app.dashboard').controller(
                         // console.log('Dashboard data success', response);
                         $scope.olsetStatsInfo = response.data.data.data;
                         $scope.firstProcess = response.data.data.data.process;
+                        //alex edit
+                        //console.log("firstProcess");
+                        //console.log($scope.firstProcess.id);
+                        $window.localStorage.setItem('firstProcessId', $scope.firstProcess.id);
+
                         $scope.isProcess = $scope.firstProcess !== null;
                         $scope.subscriptions = response.data.data.data.subscriptions;
                         // console.log ('si', $scope.subscriptions.length, $scope.i);
@@ -146,7 +152,7 @@ angular.module('app.dashboard').controller(
                     }
 
                 }).then(function successCallback(response) {
-                    // console.log('Single Report', response);
+                     console.log('Single Report', response);
                     $scope.singleReport = response.data.data.data.report;
                     angular.element(document).ready(function () {
                         var link = document.getElementById('single_report_link');
