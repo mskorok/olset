@@ -67,18 +67,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-12  m-t-5 m-b-5" id="block_sv">
-                                    <h3>Shared Vision</h3>
-                                    <div id="shared vision_input">
-                                        <form id="shared_vision_form">
-                                            <textarea class="w-100" rows="7" id="shared_vision_editor">
-                                                {{olsetProcessData.SharedVision}}
-                                            </textarea>
-                                            <br>
-                                            <button type="submit" class="btn btn-success">Save</button>
-                                        </form>
-                                    </div>
-                                </div>
+
 
                                 <div data-ng-if="isManager || isAdmin" class="col-md-12 m-t-5">
                                     <div data-ng-if="openVS">
@@ -94,6 +83,21 @@
                                         </a>
                                     </div>
                                 </div>
+
+
+                                <div class="col-md-12  m-t-5 m-b-5" id="block_sv">
+                                    <h3>Shared Vision</h3>
+                                    <div id="shared vision_input">
+                                        <form id="shared_vision_form">
+                                            <textarea class="w-100" rows="7" id="shared_vision_editor">
+                                                {{olsetProcessData.SharedVision}}
+                                            </textarea>
+                                            <br>
+                                            <button type="submit" class="btn btn-success">Save</button>
+                                        </form>
+                                    </div>
+                                </div>
+
                                 <div class="col-md-12  m-t-5" id="block_ii">
                                     <h3>Initial Intentions</h3>
                                     <div id="initial_intentions_input">
@@ -161,7 +165,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12 m-b-5">
-                                    <h2>After Action Review for Process</h2>
+                                    <center><h2>After Action Review for Process</h2></center>
                                     <div data-ng-if="openAAR">
                                         <a data-ui-sref="app.olset.evaluation({evaluationId : olsetProcessData.step3_1})"
                                            class="btn btn-primary btn-lg btn-block">

@@ -30,16 +30,6 @@ angular.module('app.help').config(function ($stateProvider) {
                 }
             }
         })
-        .state('app.help.afteraction', {
-            url: '/help/subject/after-action-review',
-
-            views: {
-                "content@app": {
-                    controller: 'helpSubjectCtrl',
-                    templateUrl: "app/help/views/help-subject.html"
-                }
-            }
-        })
         .state('app.help.step-3-self-evaluate', {
             url: '/help/subject/step-3-self-evaluate',
 
@@ -52,6 +42,16 @@ angular.module('app.help').config(function ($stateProvider) {
         })
         .state('app.help.step-2-design-and-impement', {
             url: '/help/subject/step-2-design-and-impement',
+
+            views: {
+                "content@app": {
+                    controller: 'helpSubjectCtrl',
+                    templateUrl: "app/help/views/help-subject.html"
+                }
+            }
+        })
+        .state('app.help.afteraction', {
+            url: '/help/subject/afteraction',
 
             views: {
                 "content@app": {
@@ -80,8 +80,8 @@ angular.module('app.help').config(function ($stateProvider) {
                 }
             }
         })
-        .state('app.help.step-1-understand', {
-            url: '/help/subject/step-1-understand',
+        .state('app.help.ol-measurement-report', {
+            url: '/help/subject/ol-measurement-report',
 
             views: {
                 "content@app": {
@@ -110,18 +110,8 @@ angular.module('app.help').config(function ($stateProvider) {
                 }
             }
         })
-        .state('app.help.cycle-intro', {
-            url: '/help/subject/cycle-intro',
-
-            views: {
-                "content@app": {
-                    controller: 'helpSubjectCtrl',
-                    templateUrl: "app/help/views/help-subject.html"
-                }
-            }
-        })
-        .state('app.help.ol-measurement-report', {
-            url: '/help/subject/ol-measurement-report',
+        .state('app.help.step-1-understand', {
+            url: '/help/subject/step-1-understand',
 
             views: {
                 "content@app": {
@@ -142,6 +132,16 @@ angular.module('app.help').config(function ($stateProvider) {
         })
         .state('app.help.ol-measurement-intro', {
             url: '/help/subject/ol-measurement-intro',
+
+            views: {
+                "content@app": {
+                    controller: 'helpSubjectCtrl',
+                    templateUrl: "app/help/views/help-subject.html"
+                }
+            }
+        })
+        .state('app.help.cycle-intro', {
+            url: '/help/subject/cycle-intro',
 
             views: {
                 "content@app": {

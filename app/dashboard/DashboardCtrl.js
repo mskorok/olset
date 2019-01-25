@@ -63,7 +63,7 @@ angular.module('app.dashboard').controller(
                 var self = this;
                 console.log('token', $scope.token);
                 console.log('subscription', $scope.subscription);
-                if (Auth.userHaveRole() === "Manager") {
+                if (Auth.userHaveRole() !== null) {
                     $http({
                         method: 'GET',
                         url: MainConf.servicesUrl() + 'statistics/dashboard',

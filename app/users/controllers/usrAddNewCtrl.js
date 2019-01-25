@@ -51,8 +51,9 @@ angular.module('app.users').controller('usrAddNewCtrl', function (MainConf, $sco
                 data: org_data
             }).then(function successCallback(response) {
                 console.log('Users createManager data success', response);
-                $scope.theUserId = response.data.data.data.userid;
+                $scope.theUserId = response.data.data.data.userId;
                 console.log("resp", $scope.theUserId);
+                alert('Users createManager data success');
             }, function errorCallback(response) {
                 console.warn('Users createManager data error', response);
                 alert('Users createManager data error');
@@ -71,6 +72,7 @@ angular.module('app.users').controller('usrAddNewCtrl', function (MainConf, $sco
             }).then(function successCallback(response) {
                 console.log('Users createUser data success', response);
                 $scope.theUserId = response.data.data.data.userId;
+                alert('Users createUser data success');
             }, function errorCallback(response) {
                 console.warn('Users createUser data error', response);
                 alert('Users createUser data error');

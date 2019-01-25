@@ -53,6 +53,7 @@ angular.module('app.users').controller(
                 data: org_data
             }).then(function successCallback(response) {
                 console.log('Users updateOtherUser data success', response);
+                alert('Users updateUser data success');
             }, function errorCallback(response) {
                 console.warn('Users updateOtherUser data error', response);
                 alert('Users updateOtherUser data error');
